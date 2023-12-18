@@ -24,3 +24,18 @@ int Time::getMinute() {
 bool Time::compareTime(Time &time) {
     return true;
 }
+
+TimePeriod::TimePeriod(Time startTime, Time endTime) : startTime(startTime), endTime(endTime) {
+};
+
+Time TimePeriod::getStart() {
+    return startTime;
+}
+
+Time TimePeriod::getEnd() {
+    return endTime;
+}
+
+bool TimePeriod::isOverlapsWith(TimePeriod &timePeriod) {
+    return true;
+}
