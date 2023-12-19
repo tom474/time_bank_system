@@ -35,31 +35,31 @@ bool Time::compareTime(Time &time) {
     // Convert date to vector for comparison
     vector<int> date1 = sliptDate(date);
     vector<int> date2 = sliptDate(time.getDate());
-    // Compare year, month, day, hour, and minute
- if (date1[2] > date2[2]) {
+    // Compare year
+    if (date1[2] > date2[2]) {
         return true;
     } else if (date1[2] < date2[2]) {
         return false;
     }
-
+    // compare month
     if (date1[1] > date2[1]) {
         return true;
     } else if (date1[1] < date2[1]) {
         return false;
     }
-
+    // compare day
     if (date1[0] > date2[0]) {
         return true;
     } else if (date1[0] < date2[0]) {
         return false;
     }
-
+    // compare hour
     if (hour > time.getHour()) {
         return true;
     } else if (hour < time.getHour()) {
         return false;
     }
-
+    // compare minute
     if (minute > time.getMinute()) {
         return true;
     } else if (minute < time.getMinute()) {
