@@ -2,9 +2,10 @@
 #define _TIME_MANAGER_H_
 
 #include <iostream>
+#include <vector>
 
 using std::string;
-
+using std::vector;
 class Time {
     private:
         string date;
@@ -15,6 +16,7 @@ class Time {
         string getDate();
         int getHour();
         int getMinute();
+        vector<int> sliptDate(string date);
         bool compareTime(Time &time);
 };
 

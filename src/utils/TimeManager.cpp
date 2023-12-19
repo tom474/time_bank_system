@@ -1,8 +1,12 @@
 #include "./TimeManager.h"
 
 #include <iostream>
+#include <sstream>
+#include <vector>
 
+using std::vector;
 using std::string;
+using std::stringstream;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -28,19 +32,45 @@ int Time::getMinute() {
 }
 
 bool Time::compareTime(Time &time) {
-    return true;
-}
+    // Convert date to vector for comparison
+    vector<int> date1 = sliptDate(date);
+    vector<int> date2 = sliptDate(time.getDate());
+
+    // Compare year, month, day, hour, and minute
+    if (date1[2] > date2[2] ||
+        date1[1] > date2[1] ||
+        date1[0] > date2[0] ||
+        hour > time.getHour() ||
+        minute > time.getMinute()) {
+        return true;
+    }
+
+    return false;
+};
+
+vector<int> Time::sliptDate(string date) {
+    string tmp;
+    vector<int> dateVector;
+    stringstream ss(date);
+    while(std::getline(ss,tmp,'/')) {
+        dateVector.push_back(std::stoi(tmp));
+    }
+    return dateVector;
+};
 
 TimePeriod::TimePeriod(Time startTime, Time endTime) : startTime(startTime), endTime(endTime) {};
 
+
 Time TimePeriod::getStartTime() {
     return startTime;
-}
+};
 
 Time TimePeriod::getEndTime() {
     return endTime;
-}
+};
 
 bool TimePeriod::isOverlapsWith(TimePeriod &timePeriod) {
-    return true;
+    // start time of timePeriod should be larger than start time of request
+    // end time of timePeriod should be smaller than end time of request
+    return timePeriod.getStartTime().compareTime(startTime) && !timePeriod.getEndTime().compareTime(endTime);
 }
