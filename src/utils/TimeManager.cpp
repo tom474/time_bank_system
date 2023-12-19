@@ -33,10 +33,8 @@ int Time::getMinute() {
 
 bool Time::compareTime(Time &time) {
     // Convert date to vector for comparison
-    vector<int> date1 = sliptDate(this->date);
+    vector<int> date1 = sliptDate(date);
     vector<int> date2 = sliptDate(time.getDate());
-    cout << date1[0] << "/" << date1[1] << "/" << date1[2] << " " << hour << " : " << minute << endl;
-    cout << date2[0] <<"/" << date2[1] << "/" << date2[2] << " " << time.hour << " : " << time.minute << endl;
     // Compare year, month, day, hour, and minute
  if (date1[2] > date2[2]) {
         return true;
@@ -68,7 +66,7 @@ bool Time::compareTime(Time &time) {
         return false;
     }
 
-    return false; // Dates and times are identical
+    return true; // Dates and times are equal
 };
 
 vector<int> Time::sliptDate(string date) {
