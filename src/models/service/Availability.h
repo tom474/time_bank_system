@@ -1,7 +1,8 @@
 #ifndef _AVAILABILITY_H_
 #define _AVAILABILITY_H_
 
-#include "../../utils/TimeManagement.h"
+#include "../../utils/TimeManager.h"
+
 #include <iostream>
 #include <vector>
 
@@ -10,14 +11,15 @@ using std::vector;
 
 class TimePeriod;
 class Skill;
+
 class Availability {
     private:
-        TimePeriod* availableTime;
+        TimePeriod *availableTime;
         vector<Skill*> performedSkills;
         int pointPerHour;
         double minHostRating;
     public:
-        Availability(TimePeriod* availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal);
+        Availability(TimePeriod *availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal);
         TimePeriod* getAvailableTime();
         int getPointPerHour();
         double getMinHostRating();

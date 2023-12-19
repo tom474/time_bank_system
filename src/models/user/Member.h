@@ -1,7 +1,7 @@
 #ifndef _MEMBER_H_
 #define _MEMBER_H_
 
-#include "User.h"
+#include "./User.h"
 #include "../service/Skill.h"
 #include "../service/Availability.h"
 #include "../service/Request.h"
@@ -72,6 +72,7 @@ class Member : public User {
         void rateSupporter();
         void rateHost();
         void addAvailability(Availability &availability);
+        ~Member();
 };
 
 #endif

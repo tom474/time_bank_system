@@ -1,4 +1,5 @@
 #include "./Review.h"
+
 #include <iostream>
 
 using std::string;
@@ -12,8 +13,7 @@ Review::Review(
     string reviewedIDVal = "", 
     reviewType typeVal = reviewType::Supporter, 
     string commentVal = "", int ratingVal = 0) 
-    : 
-    reviewID(reviewIDVal), 
+    : reviewID(reviewIDVal), 
     reviewerID(reviewerIDVal), 
     reviewedID(reviewedIDVal), 
     type(typeVal), 

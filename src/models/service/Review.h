@@ -27,4 +27,4 @@ class Review {
         string getComment();
 };
 
-#endif // _REVIEW_H_
+#endif

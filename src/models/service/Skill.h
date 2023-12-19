@@ -21,4 +21,4 @@ class Skill {
         string getMemberID();
 };
 
-#endif // _SKILL_H_
+#endif

@@ -90,3 +90,21 @@ void Member::rateHost() {
 void Member::addAvailability(Availability &availability) {
 
 }
+
+Member::~Member() {
+    for (auto &skill : skills) {
+        delete skill;
+    }
+    for (auto &availability : availability) {
+        delete availability;
+    }
+    for (auto &user : blockedUsers) {
+        delete user;
+    }
+    for (auto &request : requests) {
+        delete request;
+    }
+    for (auto &review : reviews) {
+        delete review;
+    }
+}

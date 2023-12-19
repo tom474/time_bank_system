@@ -1,5 +1,5 @@
-#ifndef _TIMEMANEGEMENT_H_
-#define _TIMEMANEGEMENT_H_
+#ifndef _TIME_MANAGER_H_
+#define _TIME_MANAGER_H_
 
 #include <iostream>
 
@@ -24,10 +24,9 @@ class TimePeriod {
         Time endTime;
     public:
         TimePeriod(Time startTimeVal, Time endTimeVal);
-        Time getStart();
-        Time getEnd();
+        Time getStartTime();
+        Time getEndTime();
         bool isOverlapsWith(TimePeriod &timePeriod);
 };
 
-
-#endif // _TIMEMANEGEMENT_H_
+#endif

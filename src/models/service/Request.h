@@ -1,7 +1,8 @@
 #ifndef _REQUEST_H_
 #define _REQUEST_H_
 
-#include "../../utils/TimeManagement.h"
+#include "../../utils/TimeManager.h"
+
 #include <iostream>
 #include <vector>
 
@@ -16,16 +17,17 @@ enum requestStatus {
 
 class TimePeriod;
 class Skill;
+
 class Request {
     private:
         string requestID;
         string hostID;
         string supporterID;
-        TimePeriod* desiredTime;
+        TimePeriod *desiredTime;
         vector<Skill*> requestedSkills;
         requestStatus status;
     public:
-        Request(string requestIDVal, string hostIDVal, string supporterIDVal, TimePeriod* desiredTimeVal, vector<Skill*> requestedSkillsVal, requestStatus statusVal);
+        Request(string requestIDVal, string hostIDVal, string supporterIDVal, TimePeriod *desiredTimeVal, vector<Skill*> requestedSkillsVal, requestStatus statusVal);
         string getRequestID();
         TimePeriod* getRequestedTime();
         string getHostID();
@@ -35,4 +37,4 @@ class Request {
         ~Request();
 };
 
-#endif // _REQUEST_H_
+#endif

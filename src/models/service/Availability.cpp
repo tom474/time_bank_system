@@ -1,4 +1,5 @@
 #include "./Availability.h"
+
 #include <iostream>
 #include <vector>
 
@@ -9,26 +10,22 @@ using std::endl;
 
 Availability::Availability(
     TimePeriod *availableTimeVal = nullptr, 
-    vector<Skill *> performedSkillsVal = {},
+    vector<Skill*> performedSkillsVal = {},
     int pointPerHourVal = 0,
-    double minHostRatingVal = 0.0
-    )
-    : 
-    availableTime(availableTimeVal),
+    double minHostRatingVal = 0.0)
+    : availableTime(availableTimeVal),
     performedSkills(performedSkillsVal),
     pointPerHour(pointPerHourVal),
-    minHostRating(minHostRatingVal) {
-
-    };
+    minHostRating(minHostRatingVal) {}
 
 Availability::~Availability() {
     delete availableTime;
-    for (auto skill : performedSkills) {
+    for (auto &skill : performedSkills) {
         delete skill;
     }
 }
 
-TimePeriod *Availability::getAvailableTime() {
+TimePeriod* Availability::getAvailableTime() {
     return availableTime;
 }
 
@@ -40,6 +37,6 @@ double Availability::getMinHostRating() {
     return minHostRating;
 }
 
-vector<Skill *> Availability::getPerformedSkills() {
+vector<Skill*> Availability::getPerformedSkills() {
     return performedSkills;
 }

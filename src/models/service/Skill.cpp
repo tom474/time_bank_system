@@ -1,4 +1,5 @@
 #include "Skill.h"
+
 #include <iostream>
 #include <vector>
 
@@ -12,10 +13,8 @@ Skill::Skill(
     string nameVal = "",
     string descriptionVal ="",
     string memberIDVal = "",
-    vector<int> ratingScoreVal = {}
-    ) 
-    : 
-    name(nameVal),
+    vector<int> ratingScoreVal = {}) 
+    : name(nameVal),
     description(descriptionVal),
     memberID(memberIDVal),
     ratingScore(ratingScoreVal){

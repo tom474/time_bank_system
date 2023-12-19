@@ -11,7 +11,6 @@ class User {
         string password;
     public:
         User(string usernameVal, string passwordVal);
-        
         string getUsername();
         string getPassword();
         void setPassword(string passwordVal);

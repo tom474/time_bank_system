@@ -1,4 +1,5 @@
 #include "./Request.h"
+
 #include <iostream>
 #include <vector>
 
@@ -12,17 +13,15 @@ Request::Request(
     string requestIDVal = "", 
     string hostIDVal = "", 
     string supporterIDVal= "", 
-    TimePeriod* desiredTimeVal = nullptr, 
+    TimePeriod *desiredTimeVal = nullptr, 
     vector<Skill*> requestedSkillsVal = {}, 
-    requestStatus statusVal = requestStatus::Pending
-    ) 
+    requestStatus statusVal = requestStatus::Pending) 
     : requestID(requestIDVal), 
     hostID(hostIDVal), 
     supporterID(supporterIDVal), 
     desiredTime(desiredTimeVal), 
     requestedSkills(requestedSkillsVal), 
-    status(statusVal) {
-}
+    status(statusVal) {}
 
 Request::~Request() {
     delete desiredTime;
