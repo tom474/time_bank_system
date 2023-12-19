@@ -17,7 +17,7 @@ class Time {
         int getHour();
         int getMinute();
         vector<int> sliptDate(string date);
-        bool compareTime(Time &time);
+        int compareTime(Time &time);
 };
 
 class TimePeriod {

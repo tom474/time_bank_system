@@ -31,42 +31,41 @@ int Time::getMinute() {
     return minute;
 }
 
-bool Time::compareTime(Time &time) {
+int Time::compareTime(Time &time) {
     // Convert date to vector for comparison
     vector<int> date1 = sliptDate(date);
     vector<int> date2 = sliptDate(time.getDate());
     // Compare year
     if (date1[2] > date2[2]) {
-        return true;
+        return 1;
     } else if (date1[2] < date2[2]) {
-        return false;
+        return -1;
     }
     // compare month
     if (date1[1] > date2[1]) {
-        return true;
+        return 1;
     } else if (date1[1] < date2[1]) {
-        return false;
+        return -1;
     }
     // compare day
     if (date1[0] > date2[0]) {
-        return true;
+        return 1;
     } else if (date1[0] < date2[0]) {
-        return false;
+        return -1;
     }
     // compare hour
     if (hour > time.getHour()) {
-        return true;
+        return 1;
     } else if (hour < time.getHour()) {
-        return false;
+        return -1;
     }
     // compare minute
     if (minute > time.getMinute()) {
-        return true;
+        return 1;
     } else if (minute < time.getMinute()) {
-        return false;
+        return -1;
     }
-
-    return true; // Dates and times are equal
+    return 0; // Dates and times are equal
 };
 
 vector<int> Time::sliptDate(string date) {
@@ -93,5 +92,12 @@ Time TimePeriod::getEndTime() {
 bool TimePeriod::isOverlapsWith(TimePeriod &timePeriod) {
     // start time of timePeriod should be smaller than start time of request
     // end time of timePeriod should be larger than end time of request
-    return !timePeriod.getStartTime().compareTime(startTime) && timePeriod.getEndTime().compareTime(endTime);
+    int isOverlapStart = timePeriod.getStartTime().compareTime(startTime); 
+    int isOverlapEnd = timePeriod.getEndTime().compareTime(endTime);
+
+    if ((isOverlapStart <= 0) && (isOverlapEnd >= 0)) {
+        return true; 
+    } else {
+        return false; 
+    }
 }
