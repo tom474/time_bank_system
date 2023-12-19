@@ -33,19 +33,42 @@ int Time::getMinute() {
 
 bool Time::compareTime(Time &time) {
     // Convert date to vector for comparison
-    vector<int> date1 = sliptDate(date);
+    vector<int> date1 = sliptDate(this->date);
     vector<int> date2 = sliptDate(time.getDate());
-
+    cout << date1[0] << "/" << date1[1] << "/" << date1[2] << " " << hour << " : " << minute << endl;
+    cout << date2[0] <<"/" << date2[1] << "/" << date2[2] << " " << time.hour << " : " << time.minute << endl;
     // Compare year, month, day, hour, and minute
-    if (date1[2] > date2[2] ||
-        date1[1] > date2[1] ||
-        date1[0] > date2[0] ||
-        hour > time.getHour() ||
-        minute > time.getMinute()) {
+ if (date1[2] > date2[2]) {
         return true;
+    } else if (date1[2] < date2[2]) {
+        return false;
     }
 
-    return false;
+    if (date1[1] > date2[1]) {
+        return true;
+    } else if (date1[1] < date2[1]) {
+        return false;
+    }
+
+    if (date1[0] > date2[0]) {
+        return true;
+    } else if (date1[0] < date2[0]) {
+        return false;
+    }
+
+    if (hour > time.getHour()) {
+        return true;
+    } else if (hour < time.getHour()) {
+        return false;
+    }
+
+    if (minute > time.getMinute()) {
+        return true;
+    } else if (minute < time.getMinute()) {
+        return false;
+    }
+
+    return false; // Dates and times are identical
 };
 
 vector<int> Time::sliptDate(string date) {
@@ -70,7 +93,7 @@ Time TimePeriod::getEndTime() {
 };
 
 bool TimePeriod::isOverlapsWith(TimePeriod &timePeriod) {
-    // start time of timePeriod should be larger than start time of request
-    // end time of timePeriod should be smaller than end time of request
-    return timePeriod.getStartTime().compareTime(startTime) && !timePeriod.getEndTime().compareTime(endTime);
+    // start time of timePeriod should be smaller than start time of request
+    // end time of timePeriod should be larger than end time of request
+    return !timePeriod.getStartTime().compareTime(startTime) && timePeriod.getEndTime().compareTime(endTime);
 }
