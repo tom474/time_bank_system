@@ -11,7 +11,7 @@ using std::endl;
 
 Skill::Skill(
     string nameVal = "",
-    string descriptionVal ="",
+    string descriptionVal = "",
     string memberIDVal = "",
     vector<int> ratingScoreVal = {}) 
     : name(nameVal),
@@ -32,7 +32,11 @@ string Skill::getName() {
     return name;
 }
 
-int Skill::getRatingScore() {
+vector<int> Skill::getRatingScore() {
+    return ratingScore;
+}
+
+int Skill::getAverageRatingScore() {
     int sum = 0;
     for (auto rating : ratingScore) {
         sum += rating;

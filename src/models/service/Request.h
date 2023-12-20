@@ -33,7 +33,7 @@ class Request {
         string getHostID();
         string getSupporterID();
         vector<Skill*> getRequestedSkills();
-        requestStatus getStatus();
+        string getStatus();
         ~Request();
 };
 

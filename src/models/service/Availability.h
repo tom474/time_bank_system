@@ -14,16 +14,19 @@ class Skill;
 
 class Availability {
     private:
+        string memberID;
         TimePeriod *availableTime;
-        vector<Skill*> performedSkills;
+        vector<Skill *> performedSkills;
         int pointPerHour;
         double minHostRating;
+
     public:
-        Availability(TimePeriod *availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal);
-        TimePeriod* getAvailableTime();
+        Availability(TimePeriod *availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal, string memberIDVal);
+        string getMemberID();
+        TimePeriod *getAvailableTime();
         int getPointPerHour();
         double getMinHostRating();
-        vector<Skill*> getPerformedSkills();
+        vector<Skill *> getPerformedSkills();
         ~Availability();
 };
 
