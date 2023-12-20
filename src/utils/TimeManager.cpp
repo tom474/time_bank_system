@@ -87,7 +87,6 @@ vector<int> Time::splitDate(string date) {
 
 TimePeriod::TimePeriod(Time startTime, Time endTime) : startTime(startTime), endTime(endTime) {};
 
-
 Time TimePeriod::getStartTime() {
     return startTime;
 };
