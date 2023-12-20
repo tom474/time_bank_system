@@ -10,7 +10,10 @@ class User;
 
 class Admin : public User {
     public:
+        Admin();
         Admin(string usernameVal, string passwordVal);
+        void setUsername(string usernameVal);
+        void setPassword(string passwordVal);
         void login();
         void resetPassword(Member &member);
 };
