@@ -32,7 +32,11 @@ string Skill::getName() {
     return name;
 }
 
-int Skill::getRatingScore() {
+vector<int> Skill::getRatingScore() {
+    return ratingScore;
+}
+
+int Skill::getAverageRatingScore() {
     int sum = 0;
     for (auto rating : ratingScore) {
         sum += rating;

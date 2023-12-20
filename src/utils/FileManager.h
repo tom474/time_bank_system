@@ -16,11 +16,11 @@
 using std::cout;
 using std::vector;
 
-void saveMemberDatabase(vector<Member*>);
-void saveAvailabilityDatabase(vector<Availability*>);
-void saveRequestDatabase(vector<Request*>);
-void saveReviewDatabase(vector<Review*>);
-void saveSkillDatabase(vector<Skill*>);
+void saveMemberDatabase(vector<Member*> members);
+void saveAvailabilityDatabase(vector<Availability*> availabilities);
+void saveRequestDatabase(vector<Request*> requests);
+void saveReviewDatabase(vector<Review*> reviews);
+void saveSkillDatabase(vector<Skill*> skills);
 Admin loadAdminDatabase();
 vector<Member> loadMemberDatabase();
 vector<Availability> loadAvailabilityDatabase();
