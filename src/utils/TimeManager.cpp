@@ -33,46 +33,53 @@ int Time::getMinute() {
 
 int Time::compareTime(Time &time) {
     // Convert date to vector for comparison
-    vector<int> date1 = sliptDate(date);
-    vector<int> date2 = sliptDate(time.getDate());
+    vector<int> date1 = splitDate(date);
+    vector<int> date2 = splitDate(time.getDate());
+
     // Compare year
     if (date1[2] > date2[2]) {
         return 1;
     } else if (date1[2] < date2[2]) {
         return -1;
     }
-    // compare month
+
+    // Compare month
     if (date1[1] > date2[1]) {
         return 1;
     } else if (date1[1] < date2[1]) {
         return -1;
     }
-    // compare day
+
+    // Compare day
     if (date1[0] > date2[0]) {
         return 1;
     } else if (date1[0] < date2[0]) {
         return -1;
     }
-    // compare hour
+
+    // Compare hour
     if (hour > time.getHour()) {
         return 1;
     } else if (hour < time.getHour()) {
         return -1;
     }
-    // compare minute
+
+    // Compare minute
     if (minute > time.getMinute()) {
         return 1;
     } else if (minute < time.getMinute()) {
         return -1;
     }
+
     return 0; // Dates and times are equal
 };
 
-vector<int> Time::sliptDate(string date) {
+vector<int> Time::splitDate(string date) {
     string tmp;
     vector<int> dateVector;
-    stringstream ss(date);
-    while(std::getline(ss,tmp,'/')) {
+    stringstream sstr;
+    sstr << date;
+    while(getline(sstr, tmp, '/')) {
         dateVector.push_back(std::stoi(tmp));
     }
     return dateVector;
@@ -89,13 +96,13 @@ Time TimePeriod::getEndTime() {
     return endTime;
 };
 
-bool TimePeriod::isOverlapsWith(TimePeriod &timePeriod) {
-    // start time of timePeriod should be smaller than start time of request
-    // end time of timePeriod should be larger than end time of request
-    int isOverlapStart = timePeriod.getStartTime().compareTime(startTime); 
-    int isOverlapEnd = timePeriod.getEndTime().compareTime(endTime);
+bool TimePeriod::isOverlapsWith(TimePeriod &timeRequest) {
+    // Start time of timeRequest should be after the start time of supporter's available time period
+    // End time of timeRequest should be before than end time of supporter's available time period
+    int isOverlapStart = timeRequest.getStartTime().compareTime(startTime); 
+    int isOverlapEnd = timeRequest.getEndTime().compareTime(endTime);
 
-    if ((isOverlapStart <= 0) && (isOverlapEnd >= 0)) {
+    if ((isOverlapStart >= 0) && (isOverlapEnd <= 0)) {
         return true; 
     } else {
         return false; 

@@ -16,7 +16,7 @@ class Time {
         string getDate();
         int getHour();
         int getMinute();
-        vector<int> sliptDate(string date);
+        vector<int> splitDate(string date);
         int compareTime(Time &time);
 };
 
@@ -28,7 +28,7 @@ class TimePeriod {
         TimePeriod(Time startTimeVal, Time endTimeVal);
         Time getStartTime();
         Time getEndTime();
-        bool isOverlapsWith(TimePeriod &timePeriod);
+        bool isOverlapsWith(TimePeriod &timeRequest);
 };
 
 #endif
