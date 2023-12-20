@@ -1,10 +1,8 @@
-#include <./FileManager.h>
-
+#include "./FileManager.h"
 
 #include <iostream>
 #include <vector>
 #include <fstream>
-
 
 using std::cout;
 using std::string;
@@ -13,59 +11,59 @@ using std::fstream;
 using std::cerr;
 using std::endl;
 
-#define MEMBER_DATABASE "member.csv"
-#define AVAILABILITY_DATABASE "availability.csv"
-#define REQUEST_DATABASE "request.csv"
-#define REVIEW_DATABASE "review.csv"
-#define SKILL_DATABASE "skill.csv"
+#define MEMBER_DATABASE "../data/member.csv"
+#define AVAILABILITY_DATABASE "../data/availability.csv"
+#define REQUEST_DATABASE "../data/request.csv"
+#define REVIEW_DATABASE "../data/review.csv"
+#define SKILL_DATABASE "../data/skill.csv"
 
 void saveMemberDatabase(vector<Member*> members) {
     fstream memberFile;
-    memberFile.open(MEMBER_DATABASE, std::ios::out | std::ios::app);
+    memberFile.open(MEMBER_DATABASE, std::ios::out);
     if (!memberFile.is_open()) {
-        cerr << "Fail to create/open " << MEMBER_DATABASE << " file" << endl;   
+        cerr << "Fail to create/open member.csv file" << endl;   
     }
     for (auto member : members) {
-        memberFile << "%s, %s, %d, %s, %s, %s, %s, %s", 
-                    member->getMemberId(), 
-                    member->getFullname(), 
-                    member->getCreditPoint(), 
-                    member->getPhoneNumber(),
-                    member->getEmail(), 
-                    member->getHomeAddress(),
-                    member->getAvailableCityName(member->getAvailableCity()), 
-                    member->boolToString(member->getAvailableStatus());
+        memberFile 
+            << member->getMemberId() << "," 
+            << member->getFullname() << "," 
+            << member->getCreditPoint() << "," 
+            << member->getPhoneNumber() << "," 
+            << member->getEmail() << "," 
+            << member->getHomeAddress() << "," 
+            << member->getAvailableCity() << "," 
+            << member->boolToString(member->getAvailableStatus());
         for (auto blockedUser : member->getBlockedUsers()) {
-            memberFile << ", %s", blockedUser->getMemberId();
+            memberFile << "," << blockedUser->getMemberId();
         }
+        memberFile << endl;
         saveAvailabilityDatabase(member->getAvailability());
         saveRequestDatabase(member->getRequest());
         saveReviewDatabase(member->getReview());
         saveSkillDatabase(member->getSkill());
-        memberFile << endl;
     }
     memberFile.close();
 }
 
 void saveAvailabilityDatabase(vector<Availability*> availabilities) {
     fstream availabilityFile;
-    availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out | std::ios::app);
+    availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out);
     if (!availabilityFile.is_open()) {
-        cerr << "Fail to create/open " << AVAILABILITY_DATABASE << " file" << endl;   
+        cerr << "Fail to create/open availability.csv file" << endl;   
     }
     for (auto availability : availabilities) {
-        availabilityFile << "%s, %d, %d, %s, %d, %d, %s, %d, %d", 
-                            availability->getMemberID(),
-                            availability->getPointPerHour(),
-                            availability->getMinHostRating(),
-                            availability->getAvailableTime()->getStartTime().getDate(),
-                            availability->getAvailableTime()->getStartTime().getHour(),
-                            availability->getAvailableTime()->getStartTime().getMinute(),
-                            availability->getAvailableTime()->getEndTime().getDate(),
-                            availability->getAvailableTime()->getEndTime().getHour(),
-                            availability->getAvailableTime()->getEndTime().getMinute();
+        availabilityFile 
+            << availability->getMemberID() << "," 
+            << availability->getPointPerHour() << "," 
+            << availability->getMinHostRating() << ","
+            << availability->getAvailableTime()->getStartTime().getDate() << ","
+            << availability->getAvailableTime()->getStartTime().getHour() << ","
+            << availability->getAvailableTime()->getStartTime().getMinute() << ","
+            << availability->getAvailableTime()->getEndTime().getDate() << ","
+            << availability->getAvailableTime()->getEndTime().getHour() << ","
+            << availability->getAvailableTime()->getEndTime().getMinute();
         for (auto skill : availability->getPerformedSkills()) {
-            availabilityFile << ", %s" , skill->getName();
+            availabilityFile << "," << skill->getName();
         }
         availabilityFile << endl;
     }
@@ -74,7 +72,7 @@ void saveAvailabilityDatabase(vector<Availability*> availabilities) {
 
 void saveRequestDatabase(vector<Request*> requests) {
     fstream requestFile;
-    requestFile.open(REQUEST_DATABASE, std::ios::out | std::ios::app);
+    requestFile.open(REQUEST_DATABASE, std::ios::out);
 
     if (!requestFile.is_open()) {
         cerr << "Fail to create/open request.csv file!\n"; 
@@ -82,19 +80,19 @@ void saveRequestDatabase(vector<Request*> requests) {
     }
 
     for (auto req : requests) {
-        if (req->getStatus() == true) {
-            requestFile << "%s, %s, %s, %d, %d, %s, %d, %d, %s", 
-            req->getSupporterID(), 
-            req->getHostID(), 
-            req->getRequestedTime()->getStartTime().getDate(), 
-            req->getRequestedTime()->getStartTime().getHour(), 
-            req->getRequestedTime()->getStartTime().getMinute(), 
-            req->getRequestedTime()->getEndTime().getDate(), 
-            req->getRequestedTime()->getEndTime().getHour(), 
-            req->getRequestedTime()->getEndTime().getMinute(), 
-            req->getStatus();
+        if (req->getStatus() != "Rejected") {
+            requestFile 
+                << req->getSupporterID() << ","
+                << req->getHostID() << ","
+                << req->getRequestedTime()->getStartTime().getDate() << ","
+                << req->getRequestedTime()->getStartTime().getHour() << "," 
+                << req->getRequestedTime()->getStartTime().getMinute() << "," 
+                << req->getRequestedTime()->getEndTime().getDate() << "," 
+                << req->getRequestedTime()->getEndTime().getHour() << "," 
+                << req->getRequestedTime()->getEndTime().getMinute() << "," 
+                << req->getStatus();
             for (auto skill : req->getRequestedSkills()) {
-                requestFile << ", %s", skill->getName();
+                requestFile << "," << skill->getName();
             }
             requestFile << endl;
         }
@@ -104,7 +102,7 @@ void saveRequestDatabase(vector<Request*> requests) {
 
 void saveReviewDatabase(vector<Review*> reviews) {
     fstream reviewFile;
-    reviewFile.open(REVIEW_DATABASE, std::ios::out | std::ios::app);
+    reviewFile.open(REVIEW_DATABASE, std::ios::out);
 
     if (!reviewFile.is_open()) {
         cerr << "Fail to create/open review.csv file!\n"; 
@@ -112,33 +110,34 @@ void saveReviewDatabase(vector<Review*> reviews) {
     }
 
     for (auto review : reviews) {
-        reviewFile << "%s, %s, %s, %s, %d, %s",
-        review->getReviewID(),
-        review->getReviewedID(),
-        review->getReviewerID(),
-        review->getType(),
-        review->getRatingScore(),
-        review->getComment();
+        reviewFile 
+            << review->getReviewID() << ","
+            << review->getReviewedID() << ","
+            << review->getReviewerID() << ","
+            << review->getType() << ","
+            << review->getRatingScore() << ","
+            << review->getComment();
+        reviewFile << endl;
     }
     reviewFile.close();
 }
 
 void saveSkillDatabase(vector<Skill*> skills) {
     fstream skillFile;
-    skillFile.open(SKILL_DATABASE, std::ios::out | std::ios::app);
+    skillFile.open(SKILL_DATABASE, std::ios::out);
 
     if (!skillFile.is_open()) {
-        cerr << "Fail to create/open review.csv file!\n"; 
+        cerr << "Fail to create/open skill.csv file!\n"; 
         return;
     }
 
     for (auto skill : skills) {
-        skillFile << "%s, %s, %s",
-        skill->getName(),
-        skill->getDescription(),
-        skill->getMemberID();
+        skillFile 
+            << skill->getName() << ","
+            << skill->getDescription() << ","
+            << skill->getMemberID();
         for (auto ratingScore : skill->getRatingScore()) {
-            skillFile << ", %d", ratingScore;
+            skillFile << "," << ratingScore;
         }
         skillFile << endl;
     }

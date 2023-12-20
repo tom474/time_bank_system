@@ -47,6 +47,7 @@ class Member : public User {
             string fullnameVal, 
             int creditPointVal, 
             string phoneNumberVal, 
+            string emailVal,
             string homeAddressVal, 
             availableCity cityVal, 
             bool availableStatusVal, 
@@ -79,8 +80,7 @@ class Member : public User {
         string getEmail();
         bool getAvailableStatus();
         string boolToString(bool status);
-        availableCity getAvailableCity();
-        string getAvailableCityName(availableCity city);
+        string getAvailableCity();
         string getHomeAddress();
         vector<Availability*> getAvailability();
         vector<Skill*> getSkill();

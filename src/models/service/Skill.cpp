@@ -11,7 +11,7 @@ using std::endl;
 
 Skill::Skill(
     string nameVal = "",
-    string descriptionVal ="",
+    string descriptionVal = "",
     string memberIDVal = "",
     vector<int> ratingScoreVal = {}) 
     : name(nameVal),
