@@ -1,4 +1,5 @@
 #include "./Request.h"
+#include "./Skill.h"
 
 #include <iostream>
 #include <vector>
@@ -50,6 +51,11 @@ vector<Skill*> Request::getRequestedSkills() {
     return requestedSkills;
 }
 
-requestStatus Request::getStatus() {
-    return status;
+string Request::getStatus() {
+    if (status == requestStatus::Rejected) {
+        return "Rejected";
+    } else if (status == requestStatus::Accepted) {
+        return "Accepted";
+    }
+    return "Pending";
 }

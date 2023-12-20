@@ -23,7 +23,7 @@ class Review {
         string getReviewID();
         string getReviewerID();
         string getReviewedID();
-        reviewType getType();
+        string getType();
         int getRatingScore();
         string getComment();
 };

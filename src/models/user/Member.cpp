@@ -9,6 +9,7 @@ Member::Member(
     string fullnameVal = "", 
     int creditPointVal = 0, 
     string phoneNumberVal = "", 
+    string emailVal = "",
     string homeAddressVal = "", 
     availableCity cityVal = availableCity::SaiGon, 
     bool availableStatusVal = false, 
@@ -22,6 +23,7 @@ Member::Member(
     fullname(fullnameVal), 
     creditPoint(creditPointVal), 
     phoneNumber(phoneNumberVal), 
+    email(emailVal),
     homeAddress(homeAddressVal), 
     city(cityVal), 
     availableStatus(availableStatusVal), 
@@ -118,11 +120,8 @@ bool Member::getAvailableStatus() {
 string Member::boolToString(bool status) {
     return status ? "true" : "false";
 }
-availableCity Member::getAvailableCity() { 
-    return city;
-}
-string Member::getAvailableCityName(availableCity availableCity) {
-    return availableCity == HaNoi ? "Ha Noi" : "Ho Chi Minh";
+string Member::getAvailableCity() { 
+    return city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon";
 }
 
 string Member::getHomeAddress() {
