@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 using std::cout;
 using std::string;
@@ -26,31 +27,31 @@ void resetDatabase() {
     if (!myFile.is_open()) {
         cerr << "Fail to reset member.csv file!\n";   
     }
-    myFile.clear();
+    myFile << "";
     
     myFile.open(AVAILABILITY_DATABASE, std::ios::out);
     if (!myFile.is_open()) {
         cerr << "Fail to reset availability.csv file!\n";   
     }
-    myFile.clear();
+    myFile << "";
 
     myFile.open(REQUEST_DATABASE, std::ios::out);
     if (!myFile.is_open()) {
         cerr << "Fail to reset request.csv file!\n";   
     }
-    myFile.clear();
+    myFile << "";
 
     myFile.open(REVIEW_DATABASE, std::ios::out);
     if (!myFile.is_open()) {
         cerr << "Fail to reset review.csv file!\n";   
     }
-    myFile.clear();
+    myFile << "";
 
     myFile.open(SKILL_DATABASE, std::ios::out);
     if (!myFile.is_open()) {
         cerr << "Fail to reset skill.csv file!\n";   
     }
-    myFile.clear();
+    myFile << "";
 
     myFile.close();
 }
@@ -231,7 +232,6 @@ vector<Member*> loadMemberDatabase() {
         // memberID
         string memberID;
         getline(memberFile, memberID, ',');
-        cout << memberID << "\n";
 
         // username
         string username;
@@ -302,16 +302,26 @@ vector<Member*> loadMemberDatabase() {
         }
 
         // blockedUsers
-        vector<string> blockedUsers = {};
-        while (true) {
-            string user;
-            getline(memberFile, user, ',');
-            if (user == "") {
-                break;
+        // vector<string> blockedUsers = {};
+        // while (true) {
+        //     string user;
+        //     getline(memberFile, user, ',');
+        //     if (user == "") {
+        //         break;
+        //     }
+        //     blockedUsers.push_back(user);
+        // }
+        // blockedUsers
+        string blockedUserData;
+        getline(memberFile, blockedUserData);
+        std::stringstream blockedUsersStream(blockedUserData);
+        string user;
+        vector<string> blockedUsers;
+        while (getline(blockedUsersStream, user, ',')) {
+            if (user != "") {
+                blockedUsers.push_back(user);
             }
-            blockedUsers.push_back(user);
         }
-
         // Break the while loop if there is no memberID on the line
         if (memberID == "") {
             break;
