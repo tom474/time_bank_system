@@ -22,10 +22,10 @@ void saveRequestDatabase(vector<Request*> requests);
 void saveReviewDatabase(vector<Review*> reviews);
 void saveSkillDatabase(vector<Skill*> skills);
 Admin loadAdminDatabase();
-vector<Member> loadMemberDatabase();
-vector<Availability> loadAvailabilityDatabase();
-vector<Request> loadRequestDatabase();
-vector<Review> loadReviewDatabase();
-vector<Skill> loadSkillDatabase();
+vector<Member*> loadMemberDatabase();
+vector<Availability*> loadAvailabilityDatabase();
+vector<Request*> loadRequestDatabase();
+vector<Review*> loadReviewDatabase();
+vector<Skill*> loadSkillDatabase();
 
 #endif
