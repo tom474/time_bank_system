@@ -22,12 +22,16 @@ using std::endl;
 void saveMemberDatabase(vector<Member*> members) {
     fstream memberFile;
     memberFile.open(MEMBER_DATABASE, std::ios::out);
+
     if (!memberFile.is_open()) {
         cerr << "Fail to create/open member.csv file" << endl;   
     }
+
     for (auto member : members) {
         memberFile 
             << member->getMemberId() << "," 
+            << member->getUsername() << "," 
+            << member->getPassword() << "," 
             << member->getFullname() << "," 
             << member->getCreditPoint() << "," 
             << member->getPhoneNumber() << "," 
@@ -50,9 +54,11 @@ void saveMemberDatabase(vector<Member*> members) {
 void saveAvailabilityDatabase(vector<Availability*> availabilities) {
     fstream availabilityFile;
     availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out);
+
     if (!availabilityFile.is_open()) {
         cerr << "Fail to create/open availability.csv file" << endl;   
     }
+
     for (auto availability : availabilities) {
         availabilityFile 
             << availability->getMemberID() << "," 
@@ -83,7 +89,7 @@ void saveRequestDatabase(vector<Request*> requests) {
 
     for (auto req : requests) {
         if (req->getStatus() != "Rejected") {
-            requestFile 
+            requestFile
                 << req->getRequestID() << ","
                 << req->getSupporterID() << ","
                 << req->getHostID() << ","
@@ -334,3 +340,171 @@ vector<Availability*> loadAvailabilityDatabase() {
     }
     return availabilities;
 } 
+
+vector<Request*> loadRequestDatabase() {
+    fstream requestFile;
+    requestFile.open(REQUEST_DATABASE, std::ios::in);
+
+    if (!requestFile.is_open()) {
+        cerr << "Fail to create/open request.csv file!\n"; 
+        return;
+    }
+
+    vector<Skill*> allSkills = loadSkillDatabase();
+    vector<Request*> requests = {};
+    while (true) {
+        // requestID
+        string requestID;
+        getline(requestFile, requestID, ',');
+
+        // Break the while loop if there is no requestID on the line
+        if (requestID == "") {
+            break;
+        }
+
+        // supporterID
+        string supporterID;
+        getline(requestFile, supporterID, ',');
+        
+        // hostID
+        string hostID;
+        getline(requestFile, hostID, ',');
+
+        // desiredTime
+        string startDate, startHourStr, startMinuteStr;
+        getline(requestFile, startDate, ',');
+        getline(requestFile, startHourStr, ',');
+        getline(requestFile, startMinuteStr, ',');
+        int startHour = std::stoi(startHourStr);
+        int startMinute = std::stoi(startMinuteStr);
+        string endDate, endHourStr, endMinuteStr;
+        getline(requestFile, endDate, ',');
+        getline(requestFile, endHourStr, ',');
+        getline(requestFile, endMinuteStr, ',');
+        int endHour = std::stoi(endHourStr);
+        int endMinute = std::stoi(endMinuteStr);
+        Time startTime(startDate, startHour, startMinute), endTime(endDate, endHour, endMinute);
+        TimePeriod *desiredTime = new (std::nothrow) TimePeriod(startTime, endTime);
+        
+        // status
+        string statusStr;
+        getline(requestFile, statusStr, ',');
+        requestStatus status;
+        if (statusStr == "Accepted") {
+            status = requestStatus::Accepted;
+        } else if (statusStr == "Rejected") {
+            status = requestStatus::Rejected;
+        } else {
+            status = requestStatus::Pending;
+        }
+
+        // requestedSkills
+        vector<Skill*> requestedSkills = {};
+        for (auto &skill : allSkills) {
+            if (skill->getMemberID() == supporterID) {
+                requestedSkills.push_back(skill);
+            }
+        }
+
+        Request *request = new (std::nothrow) Request(requestID, hostID, supporterID, desiredTime, requestedSkills, status);
+        requests.push_back(request);
+    }
+}
+
+vector<Review*> loadReviewDatabase() {
+    fstream reviewFile;
+    reviewFile.open(REVIEW_DATABASE, std::ios::in);
+
+    if (!reviewFile.is_open()) {
+        cerr << "Fail to create/open request.csv file!\n"; 
+        return;
+    }
+
+    vector<Review*> reviews = {};
+    while (true) {
+        // reviewID
+        string reviewID;
+        getline(reviewFile, reviewID, ',');
+
+        // Break the while loop if there is no reviewID on the line
+        if (reviewID == "") {
+            break;
+        }
+
+        // reviewedID
+        string reviewedID;
+        getline(reviewFile, reviewedID, ',');
+
+        // reviewerID
+        string reviewerID;
+        getline(reviewFile, reviewerID, ',');
+
+        // type
+        string typeStr;
+        getline(reviewFile, typeStr, ',');
+        reviewType type;
+        if (typeStr == "Supporter") {
+            type = reviewType::Supporter;
+        } else {
+            type = reviewType::Host;
+        }
+
+        // ratingScore
+        string ratingScoreStr;
+        getline(reviewFile, ratingScoreStr, ',');
+        int ratingScore = std::stoi(ratingScoreStr);
+
+        // comment
+        string comment;
+        getline(reviewFile, comment, ',');
+
+        Review *review = new (std::nothrow) Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
+        reviews.push_back(review);
+    }
+    return reviews;
+}
+
+vector<Skill*> loadSkillDatabase() {
+    fstream skillFile;
+    skillFile.open(SKILL_DATABASE, std::ios::in);
+
+    if (!skillFile.is_open()) {
+        cerr << "Fail to create/open request.csv file!\n"; 
+        return;
+    }
+
+    vector<Skill*> skills = {};
+    while (true) {
+        // name
+        string name;
+        getline(skillFile, name, ',');
+
+        // Break the while loop if there is no name on the line
+        if (name == "") {
+            break;
+        }
+
+        // description
+        string description;
+        getline(skillFile, description, ',');
+
+        // memberID
+        string memberID;
+        getline(skillFile, memberID, ',');
+
+        // ratingScore
+        vector<int> ratingScore = {};
+        while (true) {
+            string ratingStr;
+            getline(skillFile, ratingStr, ',');
+            if (ratingStr == "") {
+                break;
+            }
+            int rating = std::stoi(ratingStr);
+            ratingScore.push_back(rating);
+        }
+        Skill *skill = new (std::nothrow) Skill(name, description, memberID, ratingScore);
+        skills.push_back(skill);
+    }
+    return skills;
+}
