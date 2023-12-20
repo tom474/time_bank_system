@@ -6,6 +6,7 @@
 
 using std::string;
 using std::vector;
+
 class Time {
     private:
         string date;
