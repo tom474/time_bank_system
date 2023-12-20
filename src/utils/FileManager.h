@@ -9,6 +9,7 @@
 #include "../models/service/Review.h"
 #include "../models/service/Skill.h"
 #include "./TimeManager.h"
+#include "./Converter.h"
 
 #include <iostream>
 #include <vector>
@@ -16,6 +17,7 @@
 using std::cout;
 using std::vector;
 
+void resetDatabase();
 void saveMemberDatabase(vector<Member*> members);
 void saveAvailabilityDatabase(vector<Availability*> availabilities);
 void saveRequestDatabase(vector<Request*> requests);

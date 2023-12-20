@@ -36,7 +36,7 @@ class Member : public User {
         bool availableStatus;
         vector<Skill*> skills;
         vector<Availability*> availability;
-        vector<Member*> blockedUsers;
+        vector<string> blockedUsers;
         vector<Request*> requests;
         vector<Review*> reviews;
     public:
@@ -53,7 +53,7 @@ class Member : public User {
             bool availableStatusVal, 
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
-            vector<Member*> blockedUsersVal, 
+            vector<string> blockedUsersVal, 
             vector<Request*> requestsVal, 
             vector<Review*> reviews
         );
@@ -86,7 +86,7 @@ class Member : public User {
         vector<Skill*> getSkill();
         vector<Request*> getRequest();
         vector<Review*> getReview();
-        vector<Member*> getBlockedUsers();
+        vector<string> getBlockedUsers();
         ~Member();
 };
 

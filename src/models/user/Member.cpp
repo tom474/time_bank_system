@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using std::cout;
+
 Member::Member(
     string usernameVal = "", 
     string passwordVal = "", 
@@ -15,7 +17,7 @@ Member::Member(
     bool availableStatusVal = false, 
     vector<Skill*> skillsVal = {}, 
     vector<Availability*> availabilityVal = {}, 
-    vector<Member*> blockedUsersVal = {}, 
+    vector<string> blockedUsersVal = {}, 
     vector<Request*> requestsVal = {}, 
     vector<Review*> reviewsVal = {})
     : User(usernameVal, passwordVal), 
@@ -42,10 +44,6 @@ void Member::login() {
 }
 
 void Member::logout() {
-
-}
-
-void Member::showInfo() {
 
 }
 
@@ -143,8 +141,56 @@ vector<Review*> Member::getReview() {
     return reviews;
 }
 
-vector<Member*> Member::getBlockedUsers() {
+vector<string> Member::getBlockedUsers() {
     return blockedUsers;
+}
+
+// TESTING PURPOSE
+void Member::showInfo() {
+    cout << "Member ID: " << memberID << "\n";
+    cout << "Fullname: " << fullname << "\n";
+    cout << "Credit Point: " << creditPoint << "\n";
+    cout << "Phone Number: " << phoneNumber << "\n";
+    cout << "Email: " << email << "\n";
+    cout << "Home Address: " << homeAddress << "\n";
+    cout << "City: " << (city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon") << "\n";
+    cout << "Available Status: " << boolToString(availableStatus) << "\n";
+
+    cout << "Skills:" << "\n";
+    for (auto &skill : skills) {
+        cout << "- " << skill->getName() << ": " << skill->getDescription() << "\n";
+    }
+
+    cout << "Availability:" << "\n";
+    for (auto &avail : availability) {
+        cout << "- Available Time: " << avail->getAvailableTime()->getStartTime().getDate() << " "
+                  << avail->getAvailableTime()->getStartTime().getHour() << ":"
+                  << avail->getAvailableTime()->getStartTime().getMinute() << " - "
+                  << avail->getAvailableTime()->getEndTime().getDate() << " "
+                  << avail->getAvailableTime()->getEndTime().getHour() << ":"
+                  << avail->getAvailableTime()->getEndTime().getMinute() << "\n";
+
+        cout << "- Performed Skills:" << "\n";
+        for (auto &skill : avail->getPerformedSkills()) {
+            cout << "- " << skill->getName() << "\n";
+        }
+    }
+
+    cout << "Blocked Users:" << "\n";
+    for (auto &user : blockedUsers) {
+        cout << "- " << user << "\n";
+    }
+
+    cout << "Requests:" << "\n";
+    for (auto &req : requests) {
+        cout << "- Request ID: " << req->getRequestID() << ", Status: " << req->getStatus() << "\n";
+    }
+
+    cout << "Reviews:" << "\n";
+    for (auto &review : reviews) {
+        cout << "- Review ID: " << review->getReviewID() << ", Rating: " << review->getRatingScore()
+                  << ", Comment: " << review->getComment() << "\n";
+    }
 }
 
 Member::~Member() {
@@ -153,9 +199,6 @@ Member::~Member() {
     }
     for (auto &availability : availability) {
         delete availability;
-    }
-    for (auto &user : blockedUsers) {
-        delete user;
     }
     for (auto &request : requests) {
         delete request;

@@ -1,1 +1,2 @@
-M01,Test User,20,0123456789,testuser@gmail.com,RMIT University,Sai Gon,true
+M01,test,123456,Test User,20,0123456789,testuser@gmail.com,RMIT University,Sai Gon,true,M03,M04
+M02,anotherUser,654321,Another User,25,9876543210,anotheruser@gmail.com,ABC University,Ha Noi,true,M04,M05
