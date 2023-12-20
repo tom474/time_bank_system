@@ -12,19 +12,23 @@ using std::vector;
 class TimePeriod;
 class Skill;
 
-class Availability {
-    private:
-        TimePeriod *availableTime;
-        vector<Skill*> performedSkills;
-        int pointPerHour;
-        double minHostRating;
-    public:
-        Availability(TimePeriod *availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal);
-        TimePeriod* getAvailableTime();
-        int getPointPerHour();
-        double getMinHostRating();
-        vector<Skill*> getPerformedSkills();
-        ~Availability();
+class Availability
+{
+private:
+    string memberID;
+    TimePeriod *availableTime;
+    vector<Skill *> performedSkills;
+    int pointPerHour;
+    double minHostRating;
+
+public:
+    Availability(TimePeriod *availableTimeVal, vector<Skill *> performedSkillsVal, int pointPerHourVal, double minHostRatingVal, string memberIDVal);
+    string getMemberID();
+    TimePeriod *getAvailableTime();
+    int getPointPerHour();
+    double getMinHostRating();
+    vector<Skill *> getPerformedSkills();
+    ~Availability();
 };
 
 #endif

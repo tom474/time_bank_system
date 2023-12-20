@@ -3,29 +3,35 @@
 #include <iostream>
 #include <vector>
 
-using std::cout;
-using std::string;
 using std::cin;
+using std::cout;
 using std::endl;
+using std::string;
 
 Availability::Availability(
-    TimePeriod *availableTimeVal = nullptr, 
-    vector<Skill*> performedSkillsVal = {},
+    TimePeriod *availableTimeVal = nullptr,
+    vector<Skill *> performedSkillsVal = {},
     int pointPerHourVal = 0,
-    double minHostRatingVal = 0.0)
+    double minHostRatingVal = 0.0,
+    string memberIDVal = "")
     : availableTime(availableTimeVal),
-    performedSkills(performedSkillsVal),
-    pointPerHour(pointPerHourVal),
-    minHostRating(minHostRatingVal) {}
+      performedSkills(performedSkillsVal),
+      pointPerHour(pointPerHourVal),
+      minHostRating(minHostRatingVal),
+      memberID(memberIDVal) {}
 
-Availability::~Availability() {
+Availability::~Availability()
+{
     delete availableTime;
-    for (auto &skill : performedSkills) {
+    for (auto &skill : performedSkills)
+    {
         delete skill;
     }
 }
-
-TimePeriod* Availability::getAvailableTime() {
+string Availability::getMemberID() {
+    return memberID;
+}
+TimePeriod *Availability::getAvailableTime() {
     return availableTime;
 }
 
