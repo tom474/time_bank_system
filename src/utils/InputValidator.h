@@ -8,6 +8,7 @@ private:
     void clearInputStream();
     void displayError(const std::string& message);
 
+
 public:
     int getInt(const std::string& prompt);
     double getDouble(const std::string& prompt);

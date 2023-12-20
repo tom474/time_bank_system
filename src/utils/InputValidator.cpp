@@ -12,10 +12,12 @@ void InputValidator::clearInputStream() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+
 void InputValidator::displayError(const std::string& message) {
     std::cout << message << std::endl;
     clearInputStream();
 }
+
 
 /**
 * Prompts the user to enter an integer and validates the input.
@@ -41,7 +43,6 @@ int InputValidator::getInt(const std::string& prompt) {
         }
     }
 }
-
 
 
 /**
@@ -89,7 +90,6 @@ std::string InputValidator::getString(const std::string& prompt) {
 }
 
 
-
 /**
 * Prompts the user to enter a string. This method can capture strings
 * containing whitespaces.
@@ -120,6 +120,7 @@ bool InputValidator::getBool(const std::string& prompt) {
         }
     }
 }
+
 
 /**
 * Prompts the user to enter time in hh:mm format and validates it.
