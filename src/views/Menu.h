@@ -1,8 +1,6 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-// #include "function.h"
-
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -13,9 +11,8 @@ class Menu
 public:
     string currentScreen;
 
-    // declarations of constructors/methods
     Menu();
-    void printMenu();
+    void showWelcome();
 };
 
 #endif
