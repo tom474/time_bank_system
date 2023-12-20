@@ -14,7 +14,7 @@ Member::Member(
     bool availableStatusVal = false, 
     vector<Skill*> skillsVal = {}, 
     vector<Availability*> availabilityVal = {}, 
-    vector<User*> blockedUsersVal = {}, 
+    vector<Member*> blockedUsersVal = {}, 
     vector<Request*> requestsVal = {}, 
     vector<Review*> reviewsVal = {})
     : User(usernameVal, passwordVal), 
@@ -89,6 +89,63 @@ void Member::rateHost() {
 
 void Member::addAvailability(Availability &availability) {
 
+}
+
+string Member::getMemberId() {
+    return memberID;
+}
+
+string Member::getFullname() {
+    return fullname; 
+}
+
+int Member::getCreditPoint() {
+    return creditPoint;
+}
+
+string Member::getPhoneNumber() {
+    return phoneNumber;
+}
+
+string Member::getEmail() {
+    return email;
+}
+
+bool Member::getAvailableStatus() {
+    return availableStatus;
+}
+
+string Member::boolToString(bool status) {
+    return status ? "true" : "false";
+}
+availableCity Member::getAvailableCity() { 
+    return city;
+}
+string Member::getAvailableCityName(availableCity availableCity) {
+    return availableCity == HaNoi ? "Ha Noi" : "Ho Chi Minh";
+}
+
+string Member::getHomeAddress() {
+    return homeAddress;
+}
+vector<Availability*> Member::getAvailability() {
+    return availability;
+}
+
+vector<Skill*> Member::getSkill() {
+    return skills;
+}
+
+vector<Request*> Member::getRequest() {
+    return requests;
+}
+
+vector<Review*> Member::getReview() {
+    return reviews;
+}
+
+vector<Member*> Member::getBlockedUsers() {
+    return blockedUsers;
 }
 
 Member::~Member() {
