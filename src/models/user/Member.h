@@ -36,7 +36,7 @@ class Member : public User {
         bool availableStatus;
         vector<Skill*> skills;
         vector<Availability*> availability;
-        vector<User*> blockedUsers;
+        vector<Member*> blockedUsers;
         vector<Request*> requests;
         vector<Review*> reviews;
     public:
@@ -52,7 +52,7 @@ class Member : public User {
             bool availableStatusVal, 
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
-            vector<User*> blockedUsersVal, 
+            vector<Member*> blockedUsersVal, 
             vector<Request*> requestsVal, 
             vector<Review*> reviews
         );
@@ -72,6 +72,21 @@ class Member : public User {
         void rateSupporter();
         void rateHost();
         void addAvailability(Availability &availability);
+        string getMemberId();
+        string getFullname();
+        int getCreditPoint();
+        string getPhoneNumber();
+        string getEmail();
+        bool getAvailableStatus();
+        string boolToString(bool status);
+        availableCity getAvailableCity();
+        string getAvailableCityName(availableCity city);
+        string getHomeAddress();
+        vector<Availability*> getAvailability();
+        vector<Skill*> getSkill();
+        vector<Request*> getRequest();
+        vector<Review*> getReview();
+        vector<Member*> getBlockedUsers();
         ~Member();
 };
 

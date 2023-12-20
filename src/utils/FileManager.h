@@ -1,5 +1,5 @@
-#ifndef _TIME_MANAGER_H_
-#define _TIME_MANAGER_H_
+#ifndef _FILE_MANAGER_H_
+#define _FILE_MANAGER_H_
 
 #include "../models/user/User.h"
 #include "../models/user/Admin.h"
@@ -16,11 +16,11 @@
 using std::cout;
 using std::vector;
 
-void saveMemberDatabase(vector<Member *>);
-void saveAvailabilityDatabase(vector<Availability *>);
-void saveRequestDatabase(vector<Request *>);
-void saveReviewDatabase(vector<Review *>);
-void saveSkillDatabase(vector<Skill *>);
+void saveMemberDatabase(vector<Member*>);
+void saveAvailabilityDatabase(vector<Availability*>);
+void saveRequestDatabase(vector<Request*>);
+void saveReviewDatabase(vector<Review*>);
+void saveSkillDatabase(vector<Skill*>);
 Admin loadAdminDatabase();
 vector<Member> loadMemberDatabase();
 vector<Availability> loadAvailabilityDatabase();
