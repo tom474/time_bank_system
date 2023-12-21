@@ -142,12 +142,6 @@ string InputValidator::getDate(const string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter a phone number and validates it.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated phone number string from the user.
-*/
 std::string InputValidator::getPhoneNumber(const std::string& prompt) {
     std::regex phonePattern(R"(^\d{10}$)");
     std::string phoneNumber;
@@ -165,12 +159,6 @@ std::string InputValidator::getPhoneNumber(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter an email and validates it.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated email string from the user.
-*/
 std::string InputValidator::getEmail(const std::string& prompt) {
     std::regex emailPattern(R"(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$)");
     std::string email;
@@ -188,12 +176,6 @@ std::string InputValidator::getEmail(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter a city and validates it.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated city enum from the user.
-*/
 availableCity InputValidator::getCity(const std::string& prompt) {
     std::string input;
     while (true) {

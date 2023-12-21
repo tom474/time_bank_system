@@ -67,8 +67,32 @@ class InputValidator {
         * @return The validated date string from the user.
         */
         static string getDate(const string& prompt);
+
+
+        /**
+        * Prompts the user to enter a phone number and validates it.
+        * 
+        * @param prompt The message displayed to the user.
+        * @return The validated phone number string from the user.
+        */
         string getPhoneNumber(const string& prompt);
+
+
+        /**
+        * Prompts the user to enter an email and validates it.
+        * 
+        * @param prompt The message displayed to the user.
+        * @return The validated email string from the user.
+        */
         string getEmail(const string &prompt);
+
+
+        /**
+        * Prompts the user to enter a city and validates it.
+        * 
+        * @param prompt The message displayed to the user.
+        * @return The validated city enum from the user.
+        */
         availableCity getCity(const string &prompt);
 };
 
