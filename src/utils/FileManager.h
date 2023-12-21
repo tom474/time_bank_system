@@ -17,17 +17,21 @@
 using std::cout;
 using std::vector;
 
-void resetDatabase();
-void saveMemberDatabase(vector<Member*> members);
-void saveAvailabilityDatabase(vector<Availability*> availabilities);
-void saveRequestDatabase(vector<Request*> requests);
-void saveReviewDatabase(vector<Review*> reviews);
-void saveSkillDatabase(vector<Skill*> skills);
-Admin loadAdminDatabase();
-vector<Member*> loadMemberDatabase();
-vector<Availability*> loadAvailabilityDatabase();
-vector<Request*> loadRequestDatabase();
-vector<Review*> loadReviewDatabase();
-vector<Skill*> loadSkillDatabase();
+class FileManager {
+    private:
+        static void resetDatabase();
+    public:
+        static void saveMemberDatabase(vector<Member*> members);
+        static void saveAvailabilityDatabase(vector<Availability*> availabilities);
+        static void saveRequestDatabase(vector<Request*> requests);
+        static void saveReviewDatabase(vector<Review*> reviews);
+        static void saveSkillDatabase(vector<Skill*> skills);
+        static Admin loadAdminDatabase();
+        static vector<Member*> loadMemberDatabase();
+        static vector<Availability*> loadAvailabilityDatabase();
+        static vector<Request*> loadRequestDatabase();
+        static vector<Review*> loadReviewDatabase();
+        static vector<Skill*> loadSkillDatabase();
+};
 
-#endif
+#endif  // _FILE_MANAGER_H_

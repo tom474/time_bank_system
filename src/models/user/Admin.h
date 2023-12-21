@@ -12,10 +12,11 @@ class Admin : public User {
     public:
         Admin();
         Admin(string usernameVal, string passwordVal);
+        string getUsername();
         void setUsername(string usernameVal);
+        string getPassword();
         void setPassword(string passwordVal);
-        void login();
-        void resetPassword(Member &member);
+        ~Admin();
 };
 
-#endif
+#endif  // _ADMIN_H_

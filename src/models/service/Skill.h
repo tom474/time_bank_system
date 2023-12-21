@@ -14,12 +14,14 @@ class Skill {
         vector<int> ratingScore;
         string memberID;
     public:
+        Skill();
         Skill(string nameVal, string descriptionVal, string memberIDVal, vector<int> ratingScoreVal);
         string getName();
         string getDescription();
         vector<int> getRatingScore();
         int getAverageRatingScore();
         string getMemberID();
+        ~Skill();
 };
 
-#endif
+#endif  // _SKILL_H_

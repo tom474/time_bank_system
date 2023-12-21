@@ -7,18 +7,20 @@ Admin::Admin() {}
 Admin::Admin(string usernameVal = "", string passwordVal = "")
 : User(usernameVal, passwordVal) {}
 
-void Admin::setPassword(string passwordVal) {
-    User::setPassword(passwordVal);
+string Admin::getUsername() {
+    return User::getUsername();
 }
 
 void Admin::setUsername(string usernameVal) {
     User::setUsername(usernameVal);
 }
 
-void Admin::login() {
-
+string Admin::getPassword() {
+    return User::getPassword();
 }
 
-void Admin::resetPassword(Member &member) {
-
+void Admin::setPassword(string passwordVal) {
+    User::setPassword(passwordVal);
 }
+
+Admin::~Admin() {}

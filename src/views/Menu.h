@@ -2,17 +2,16 @@
 #define _MENU_H_
 
 #include <iostream>
+
 using std::cout;
-using std::endl;
 using std::string;
 
-class Menu
-{
-public:
-    string currentScreen;
+class Menu {
+    public:
+        string currentScreen;
 
-    Menu();
-    void showWelcome();
+        Menu();
+        void showWelcome();
 };
 
-#endif
+#endif  // _MENU_H_

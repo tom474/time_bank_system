@@ -27,6 +27,7 @@ class Request {
         vector<Skill*> requestedSkills;
         requestStatus status;
     public:
+        Request();
         Request(string requestIDVal, string hostIDVal, string supporterIDVal, TimePeriod *desiredTimeVal, vector<Skill*> requestedSkillsVal, requestStatus statusVal);
         string getRequestID();
         TimePeriod* getRequestedTime();
@@ -37,4 +38,4 @@ class Request {
         ~Request();
 };
 
-#endif
+#endif  // _REQUEST_H_

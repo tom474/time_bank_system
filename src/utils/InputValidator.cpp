@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <limits>
 
+using std::string;
 
 void InputValidator::clearInputStream() {
     std::cin.clear();
@@ -13,19 +14,13 @@ void InputValidator::clearInputStream() {
 }
 
 
-void InputValidator::displayError(const std::string& message) {
+void InputValidator::displayError(const string& message) {
     std::cout << message << std::endl;
     clearInputStream();
 }
 
 
-/**
-* Prompts the user to enter an integer and validates the input.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated integer input from the user.
-*/
-int InputValidator::getInt(const std::string& prompt) {
+int InputValidator::getInt(const string& prompt) {
     int value;
     while (true) {
         try {
@@ -45,13 +40,7 @@ int InputValidator::getInt(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter a double and validates the input.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated double input from the user.
-*/
-double InputValidator::getDouble(const std::string& prompt) {
+double InputValidator::getDouble(const string& prompt) {
     double value;
     while (true) {
         try {
@@ -70,15 +59,9 @@ double InputValidator::getDouble(const std::string& prompt) {
 }
 
 
-/***
- * Get string from the console
- * 
- * @param prompt is the prompt shows to the user when input the string
- * @return the string that the user input in the console
-*/
-std::string InputValidator::getString(const std::string& prompt) {
+string InputValidator::getString(const string& prompt) {
     std::cout << prompt;
-    std::string value;
+    string value;
     std::getline(std::cin, value);
 
     if (std::cin.fail()) {
@@ -90,15 +73,8 @@ std::string InputValidator::getString(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter a string. This method can capture strings
-* containing whitespaces.
-* 
-* @param prompt The message displayed to the user.
-* @return The string input from the user.
-*/
-bool InputValidator::getBool(const std::string& prompt) {
-    std::string input;
+bool InputValidator::getBool(const string& prompt) {
+    string input;
     while (true) {
         try {
             std::cout << prompt;
@@ -122,15 +98,9 @@ bool InputValidator::getBool(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter time in hh:mm format and validates it.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated time string from the user.
-*/
-std::string InputValidator::getTime(const std::string& prompt) {
+string InputValidator::getTime(const string& prompt) {
     std::regex timePattern(R"(^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$)");
-    std::string time;
+    string time;
 
     while (true) {
         try {
@@ -150,15 +120,9 @@ std::string InputValidator::getTime(const std::string& prompt) {
 }
 
 
-/**
-* Prompts the user to enter a date in dd/mm/yyyy format and validates it.
-* 
-* @param prompt The message displayed to the user.
-* @return The validated date string from the user.
-*/
-std::string InputValidator::getDate(const std::string& prompt) {
+string InputValidator::getDate(const string& prompt) {
     std::regex datePattern(R"(^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\d\d$)");
-    std::string date;
+    string date;
 
     while (true) {
         try {

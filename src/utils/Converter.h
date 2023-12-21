@@ -5,7 +5,11 @@
 
 using std::string;
 
-int stringToInteger(string str);
-double stringToDouble(string str);
+class Converter {
+    public:
+        static int stringToInteger(string stringVal);
+        static double stringToDouble(string stringVal);
+        static string boolToString(bool boolVal);
+};
 
-#endif
+#endif  // _CONVERTER_H_

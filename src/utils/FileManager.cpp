@@ -20,7 +20,7 @@ using std::endl;
 #define REVIEW_DATABASE "../data/review.csv"
 #define SKILL_DATABASE "../data/skill.csv"
 
-void resetDatabase() {
+void FileManager::resetDatabase() {
     fstream myFile;
 
     myFile.open(MEMBER_DATABASE, std::ios::out);
@@ -64,7 +64,8 @@ void resetDatabase() {
     }
 }
 
-void saveMemberDatabase(vector<Member*> members) {
+
+void FileManager::saveMemberDatabase(vector<Member*> members) {
     resetDatabase();
     fstream memberFile;
     memberFile.open(MEMBER_DATABASE, std::ios::out);
@@ -84,7 +85,7 @@ void saveMemberDatabase(vector<Member*> members) {
             << member->getEmail() << "," 
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
-            << member->boolToString(member->getAvailableStatus());
+            << Converter::boolToString(member->getAvailableStatus());
         for (auto blockedUser : member->getBlockedUsers()) {
             memberFile << "," << blockedUser;
         }
@@ -97,7 +98,8 @@ void saveMemberDatabase(vector<Member*> members) {
     memberFile.close();
 }
 
-void saveAvailabilityDatabase(vector<Availability*> availabilities) {
+
+void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities) {
     fstream availabilityFile;
     availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out | std::ios::app);
 
@@ -124,7 +126,8 @@ void saveAvailabilityDatabase(vector<Availability*> availabilities) {
     availabilityFile.close();
 }
 
-void saveRequestDatabase(vector<Request*> requests) {
+
+void FileManager::saveRequestDatabase(vector<Request*> requests) {
     fstream requestFile;
     requestFile.open(REQUEST_DATABASE, std::ios::out | std::ios::app);
 
@@ -155,7 +158,8 @@ void saveRequestDatabase(vector<Request*> requests) {
     requestFile.close();
 }
 
-void saveReviewDatabase(vector<Review*> reviews) {
+
+void FileManager::saveReviewDatabase(vector<Review*> reviews) {
     fstream reviewFile;
     reviewFile.open(REVIEW_DATABASE, std::ios::out | std::ios::app);
 
@@ -177,7 +181,8 @@ void saveReviewDatabase(vector<Review*> reviews) {
     reviewFile.close();
 }
 
-void saveSkillDatabase(vector<Skill*> skills) {
+
+void FileManager::saveSkillDatabase(vector<Skill*> skills) {
     fstream skillFile;
     skillFile.open(SKILL_DATABASE, std::ios::out | std::ios::app);
 
@@ -199,7 +204,8 @@ void saveSkillDatabase(vector<Skill*> skills) {
     skillFile.close();
 }
 
-Admin loadAdminDatabase() {
+
+Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
     Admin admin;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
@@ -222,7 +228,8 @@ Admin loadAdminDatabase() {
     return admin;
 }
 
-vector<Member*> loadMemberDatabase() {
+
+vector<Member*> FileManager::loadMemberDatabase() {
     vector<Availability*> allAvailabilities = loadAvailabilityDatabase();
     vector<Request*> allRequests = loadRequestDatabase();
     vector<Review*> allReviews = loadReviewDatabase();
@@ -310,16 +317,6 @@ vector<Member*> loadMemberDatabase() {
         }
 
         // blockedUsers
-        // vector<string> blockedUsers = {};
-        // while (true) {
-        //     string user;
-        //     getline(memberFile, user, ',');
-        //     if (user == "") {
-        //         break;
-        //     }
-        //     blockedUsers.push_back(user);
-        // }
-        // blockedUsers
         string blockedUserData;
         getline(memberFile, blockedUserData);
         std::stringstream blockedUsersStream(blockedUserData);
@@ -341,7 +338,7 @@ vector<Member*> loadMemberDatabase() {
             password, 
             memberID, 
             fullname, 
-            stringToInteger(creditPoint), 
+            Converter::stringToInteger(creditPoint), 
             phoneNumber, 
             email, 
             homeAddress, 
@@ -358,7 +355,8 @@ vector<Member*> loadMemberDatabase() {
     return members;
 }
 
-vector<Availability*> loadAvailabilityDatabase() {
+
+vector<Availability*> FileManager::loadAvailabilityDatabase() {
     vector<Skill*> skills = loadSkillDatabase();
     vector<Availability*> availabilities = {};
     fstream availabilityFile;
@@ -385,14 +383,14 @@ vector<Availability*> loadAvailabilityDatabase() {
         if (!getline(availabilityFile, startDate, ',')) break;
         if (!getline(availabilityFile, startHourStr, ',')) break;
         if (!getline(availabilityFile, startMinuteStr, ',')) break;
-        int startHour = stringToInteger(startHourStr);
-        int startMinute = stringToInteger(startMinuteStr);
+        int startHour = Converter::stringToInteger(startHourStr);
+        int startMinute = Converter::stringToInteger(startMinuteStr);
         string endDate, endHourStr, endMinuteStr;
         if (!getline(availabilityFile, endDate, ',')) break;
         if (!getline(availabilityFile, endHourStr, ',')) break;
         if (!getline(availabilityFile, endMinuteStr, ',')) break;
-        int endHour = stringToInteger(endHourStr);
-        int endMinute = stringToInteger(endMinuteStr);
+        int endHour = Converter::stringToInteger(endHourStr);
+        int endMinute = Converter::stringToInteger(endMinuteStr);
         Time startTime(startDate, startHour, startMinute), endTime(endDate, endHour, endMinute);
         TimePeriod *desiredTime = new (std::nothrow) TimePeriod(startTime, endTime);
         
@@ -412,14 +410,14 @@ vector<Availability*> loadAvailabilityDatabase() {
         }
         
         // Create new Availability
-        Availability *availability = new (std::nothrow) Availability(desiredTime, performedSkills, stringToInteger(pointPerHour), stringToDouble(minHostRating), memberID);
+        Availability *availability = new (std::nothrow) Availability(desiredTime, performedSkills, Converter::stringToInteger(pointPerHour), Converter::stringToDouble(minHostRating), memberID);
         availabilities.push_back(availability);
     }
     return availabilities;
 }
 
 
-vector<Request*> loadRequestDatabase() {
+vector<Request*> FileManager::loadRequestDatabase() {
     fstream requestFile;
     requestFile.open(REQUEST_DATABASE, std::ios::in);
 
@@ -445,10 +443,10 @@ vector<Request*> loadRequestDatabase() {
         getline(ss, endMinuteStr, ',');
         getline(ss, statusStr, ',');
         
-        int startHour = stringToInteger(startHourStr);
-        int startMinute = stringToInteger(startMinuteStr);
-        int endHour = stringToInteger(endHourStr);
-        int endMinute = stringToInteger(endMinuteStr);
+        int startHour = Converter::stringToInteger(startHourStr);
+        int startMinute = Converter::stringToInteger(startMinuteStr);
+        int endHour = Converter::stringToInteger(endHourStr);
+        int endMinute = Converter::stringToInteger(endMinuteStr);
 
         Time startTime(startDate, startHour, startMinute), endTime(endDate, endHour, endMinute);
         TimePeriod *desiredTime = new (std::nothrow) TimePeriod(startTime, endTime);
@@ -479,7 +477,8 @@ vector<Request*> loadRequestDatabase() {
     return requests;
 }
 
-vector<Review*> loadReviewDatabase() {
+
+vector<Review*> FileManager::loadReviewDatabase() {
     fstream reviewFile;
     reviewFile.open(REVIEW_DATABASE, std::ios::in);
 
@@ -502,7 +501,7 @@ vector<Review*> loadReviewDatabase() {
         getline(ss, comment, ',');
 
         reviewType type = (typeStr == "Supporter") ? reviewType::Supporter : reviewType::Host;
-        int ratingScore = stringToInteger(ratingScoreStr);
+        int ratingScore = Converter::stringToInteger(ratingScoreStr);
 
         Review *review = new (std::nothrow) Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
         reviews.push_back(review);
@@ -511,7 +510,7 @@ vector<Review*> loadReviewDatabase() {
 }
 
 
-vector<Skill*> loadSkillDatabase() {
+vector<Skill*> FileManager::loadSkillDatabase() {
     fstream skillFile;
     skillFile.open(SKILL_DATABASE, std::ios::in);
 
@@ -533,7 +532,7 @@ vector<Skill*> loadSkillDatabase() {
             for (int i = 0; i < 3; ++i) {
                 string ratingStr;
                 if (!getline(ss, ratingStr, ',')) break;
-                int rating = stringToInteger(ratingStr);
+                int rating = Converter::stringToInteger(ratingStr);
                 ratingScore.push_back(rating);
             }
 
@@ -544,6 +543,3 @@ vector<Skill*> loadSkillDatabase() {
 
     return skills;
 }
-
-
-

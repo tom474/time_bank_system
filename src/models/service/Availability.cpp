@@ -6,8 +6,10 @@
 
 using std::cin;
 using std::cout;
-using std::endl;
 using std::string;
+using std::vector;
+
+Availability::Availability() {}
 
 Availability::Availability(
     TimePeriod *availableTimeVal = nullptr,
@@ -23,7 +25,7 @@ Availability::Availability(
 
 Availability::~Availability() {
     delete availableTime;
-    for (auto *skill : performedSkills) {
+    for (auto &skill : performedSkills) {
         delete skill;
     }
 }
