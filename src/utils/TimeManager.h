@@ -6,6 +6,7 @@
 
 using std::string;
 using std::vector;
+
 class Time {
     private:
         string date;
@@ -31,4 +32,4 @@ class TimePeriod {
         bool isOverlapsWith(TimePeriod &timeRequest);
 };
 
-#endif
+#endif  // _TIME_MANAGER_H_

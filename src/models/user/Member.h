@@ -6,6 +6,7 @@
 #include "../service/Availability.h"
 #include "../service/Request.h"
 #include "../service/Review.h"
+#include "../../utils/Converter.h"
 
 #include <iostream>
 #include <vector>
@@ -36,10 +37,11 @@ class Member : public User {
         bool availableStatus;
         vector<Skill*> skills;
         vector<Availability*> availability;
-        vector<User*> blockedUsers;
+        vector<string> blockedUsers;
         vector<Request*> requests;
         vector<Review*> reviews;
     public:
+        Member();
         Member(
             string usernameVal, 
             string passwordVal, 
@@ -47,20 +49,17 @@ class Member : public User {
             string fullnameVal, 
             int creditPointVal, 
             string phoneNumberVal, 
+            string emailVal,
             string homeAddressVal, 
             availableCity cityVal, 
             bool availableStatusVal, 
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
-            vector<User*> blockedUsersVal, 
+            vector<string> blockedUsersVal, 
             vector<Request*> requestsVal, 
             vector<Review*> reviews
         );
 
-        void setAvailableStatus();
-        void login();
-        void logout();
-        void showInfo();
         void blockUser(User &user);
         void unblockUser(User &user);
         void creditsTopUp(int amount);
@@ -72,7 +71,22 @@ class Member : public User {
         void rateSupporter();
         void rateHost();
         void addAvailability(Availability &availability);
+        string getMemberId();
+        string getFullname();
+        int getCreditPoint();
+        string getPhoneNumber();
+        string getEmail();
+        bool getAvailableStatus();
+        void setAvailableStatus();
+        string getAvailableCity();
+        string getHomeAddress();
+        vector<Availability*> getAvailability();
+        vector<Skill*> getSkill();
+        vector<Request*> getRequest();
+        vector<Review*> getReview();
+        vector<string> getBlockedUsers();
+        void showInfo();
         ~Member();
 };
 
-#endif
+#endif  // _MEMBER_H_

@@ -27,14 +27,15 @@ class Request {
         vector<Skill*> requestedSkills;
         requestStatus status;
     public:
+        Request();
         Request(string requestIDVal, string hostIDVal, string supporterIDVal, TimePeriod *desiredTimeVal, vector<Skill*> requestedSkillsVal, requestStatus statusVal);
         string getRequestID();
         TimePeriod* getRequestedTime();
         string getHostID();
         string getSupporterID();
         vector<Skill*> getRequestedSkills();
-        requestStatus getStatus();
+        string getStatus();
         ~Request();
 };
 
-#endif
+#endif  // _REQUEST_H_

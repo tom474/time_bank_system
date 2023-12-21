@@ -17,14 +17,16 @@ class Review {
         string reviewedID;
         reviewType type;
         string comment;
-        int rating;
+        int ratingScore;
     public:
-        Review(string reviewIDVal, string reviewerIDVal, string reviewedIDVal, reviewType typeVal, string commentVal, int ratingVal);
+        Review();
+        Review(string reviewIDVal, string reviewerIDVal, string reviewedIDVal, reviewType typeVal, string commentVal, int ratingScoreVal);
+        string getReviewID();
         string getReviewerID();
         string getReviewedID();
-        reviewType getType();
-        int getRating();
+        string getType();
+        int getRatingScore();
         string getComment();
 };
 
-#endif
+#endif  // _REVIEW_H_

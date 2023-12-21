@@ -9,7 +9,6 @@ using std::string;
 using std::stringstream;
 using std::cout;
 using std::cin;
-using std::endl;
 
 Time::Time(
     string dateVal = "dd/mm/yyyy",
@@ -86,7 +85,6 @@ vector<int> Time::splitDate(string date) {
 };
 
 TimePeriod::TimePeriod(Time startTime, Time endTime) : startTime(startTime), endTime(endTime) {};
-
 
 Time TimePeriod::getStartTime() {
     return startTime;

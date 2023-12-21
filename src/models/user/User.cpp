@@ -3,6 +3,8 @@
 
 using std::string;
 
+User::User() {}
+
 User::User(string usernameVal = "", string passwordVal = "")
 : username(usernameVal), password(passwordVal) {}
 
@@ -18,10 +20,8 @@ void User::setPassword(string passwordVal) {
     password = passwordVal;
 }
 
-void User::signup() {
-
+void User::setUsername(string usernameVal) {
+    username = usernameVal;
 }
 
-void User::viewSupporter() {
-
-}
+User::~User() {}

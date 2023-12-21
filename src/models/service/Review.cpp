@@ -5,35 +5,44 @@
 using std::string;
 using std::cout;
 using std::cin;
-using std::endl;
+
+Review::Review() {}
 
 Review::Review(
     string reviewIDVal = "", 
     string reviewerIDVal = "", 
     string reviewedIDVal = "", 
     reviewType typeVal = reviewType::Supporter, 
-    string commentVal = "", int ratingVal = 0) 
+    string commentVal = "", 
+    int ratingScoreVal = 0) 
     : reviewID(reviewIDVal), 
     reviewerID(reviewerIDVal), 
     reviewedID(reviewedIDVal), 
     type(typeVal), 
     comment(commentVal), 
-    rating(ratingVal) {
+    ratingScore(ratingScoreVal) {
 }
 
-int Review::getRating() {
-    return rating;
+string Review::getReviewID() {
+    return reviewID;
 }
-string Review::getComment() {
-    return comment;
-}
-reviewType Review::getType() {
-    return type;
+
+int Review::getRatingScore() {
+    return ratingScore;
 }
 
 string Review::getReviewedID() {
     return reviewedID;
 }
+
 string Review::getReviewerID() {
     return reviewerID;
+}
+
+string Review::getComment() {
+    return comment;
+}
+
+string Review::getType() {
+    return type == reviewType::Supporter ? "Supporter" : "Host";
 }

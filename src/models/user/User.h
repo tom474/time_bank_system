@@ -10,12 +10,13 @@ class User {
         string username;
         string password;
     public:
+        User();
         User(string usernameVal, string passwordVal);
         string getUsername();
         string getPassword();
         void setPassword(string passwordVal);
-        void signup();
-        void viewSupporter();
+        void setUsername(string usernameVal);
+        ~User();
 };
 
-#endif
+#endif  // _USER_H_
