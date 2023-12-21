@@ -142,9 +142,9 @@ string InputValidator::getDate(const string& prompt) {
 }
 
 
-std::string InputValidator::getPhoneNumber(const std::string& prompt) {
+string InputValidator::getPhoneNumber(const string& prompt) {
     std::regex phonePattern(R"(^\d{10}$)");
-    std::string phoneNumber;
+    string phoneNumber;
 
     while (true) {
         std::cout << prompt;
@@ -159,9 +159,9 @@ std::string InputValidator::getPhoneNumber(const std::string& prompt) {
 }
 
 
-std::string InputValidator::getEmail(const std::string& prompt) {
+string InputValidator::getEmail(const string& prompt) {
     std::regex emailPattern(R"(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$)");
-    std::string email;
+    string email;
 
     while (true) {
         std::cout << prompt;
@@ -176,16 +176,16 @@ std::string InputValidator::getEmail(const std::string& prompt) {
 }
 
 
-availableCity InputValidator::getCity(const std::string& prompt) {
-    std::string input;
+availableCity InputValidator::getCity(const string& prompt) {
+    string input;
     while (true) {
         std::cout << prompt << " (Saigon/Hanoi): ";
         std::getline(std::cin, input);
 
         if (input == "Saigon" || input == "SaiGon") {
-            return SaiGon;
+            return availableCity::SaiGon;
         } else if (input == "Hanoi" || input == "HaNoi") {
-            return HaNoi;
+            return availableCity::HaNoi;
         } else {
             std::cerr << "Invalid input. Please enter 'Saigon' or 'Hanoi'.\n";
         }

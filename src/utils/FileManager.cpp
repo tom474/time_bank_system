@@ -67,6 +67,10 @@ void FileManager::resetDatabase() {
 
 void FileManager::saveMemberDatabase(vector<Member*> members) {
     resetDatabase();
+    vector<Availability*> allAvailabilities = {};
+    vector<Request*> allRequests = {};
+    vector<Review*> allReviews = {};
+    vector<Skill*> allSkills = {};
     fstream memberFile;
     memberFile.open(MEMBER_DATABASE, std::ios::out);
 
@@ -74,7 +78,7 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
         cerr << "Fail to create/open member.csv file!\n";   
     }
 
-    for (auto member : members) {
+    for (auto &member : members) {
         memberFile 
             << member->getMemberId() << "," 
             << member->getUsername() << "," 
@@ -86,22 +90,34 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
             << Converter::boolToString(member->getAvailableStatus());
-        for (auto blockedUser : member->getBlockedUsers()) {
+        for (auto &blockedUser : member->getBlockedUsers()) {
             memberFile << "," << blockedUser;
         }
         memberFile << endl;
-        saveAvailabilityDatabase(member->getAvailability());
-        saveRequestDatabase(member->getRequest());
-        saveReviewDatabase(member->getReview());
-        saveSkillDatabase(member->getSkill());
+        for (auto &availability : member->getAvailability()) {
+            allAvailabilities.push_back(availability);
+        }
+        for (auto &request : member->getRequest()) {
+            allRequests.push_back(request);
+        }
+        for (auto &review : member->getReview()) {
+            allReviews.push_back(review);
+        }
+        for (auto &skill : member->getSkill()) {
+            allSkills.push_back(skill);
+        }
     }
+    saveAvailabilityDatabase(allAvailabilities);
+    saveRequestDatabase(allRequests);
+    saveReviewDatabase(allReviews);
+    saveSkillDatabase(allSkills);
     memberFile.close();
 }
 
 
 void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities) {
     fstream availabilityFile;
-    availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out | std::ios::app);
+    availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out);
 
     if (!availabilityFile.is_open()) {
         cerr << "Fail to create/open availability.csv file!\n";   
@@ -129,7 +145,7 @@ void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities)
 
 void FileManager::saveRequestDatabase(vector<Request*> requests) {
     fstream requestFile;
-    requestFile.open(REQUEST_DATABASE, std::ios::out | std::ios::app);
+    requestFile.open(REQUEST_DATABASE, std::ios::out);
 
     if (!requestFile.is_open()) {
         cerr << "Fail to create/open request.csv file!\n"; 
@@ -161,7 +177,7 @@ void FileManager::saveRequestDatabase(vector<Request*> requests) {
 
 void FileManager::saveReviewDatabase(vector<Review*> reviews) {
     fstream reviewFile;
-    reviewFile.open(REVIEW_DATABASE, std::ios::out | std::ios::app);
+    reviewFile.open(REVIEW_DATABASE, std::ios::out);
 
     if (!reviewFile.is_open()) {
         cerr << "Fail to create/open review.csv file!\n"; 
@@ -184,7 +200,7 @@ void FileManager::saveReviewDatabase(vector<Review*> reviews) {
 
 void FileManager::saveSkillDatabase(vector<Skill*> skills) {
     fstream skillFile;
-    skillFile.open(SKILL_DATABASE, std::ios::out | std::ios::app);
+    skillFile.open(SKILL_DATABASE, std::ios::out);
 
     if (!skillFile.is_open()) {
         cerr << "Fail to create/open skill.csv file!\n"; 
@@ -248,6 +264,11 @@ vector<Member*> FileManager::loadMemberDatabase() {
         string memberID;
         getline(memberFile, memberID, ',');
 
+        // Break the while loop if there is no memberID on the line
+        if (memberID == "") {
+            break;
+        }
+
         // username
         string username;
         getline(memberFile, username, ',');
@@ -286,7 +307,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         
         // availability
         vector<Availability*> memberAvailabilities = {};
-        for (auto availability : allAvailabilities) { 
+        for (auto &availability : allAvailabilities) { 
             if (availability->getMemberID() == memberID) {
                 memberAvailabilities.push_back(availability);
             }
@@ -294,7 +315,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         
         // skills
         vector<Skill*> memberSkills = {};
-        for (auto skill : allSkills)  {
+        for (auto &skill : allSkills)  {
             if (skill->getMemberID() == memberID) {
                 memberSkills.push_back(skill);
             }
@@ -302,7 +323,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         
         // requests 
         vector<Request*> memberRequests = {};
-        for (auto request : allRequests) {
+        for (auto &request : allRequests) {
             if (request->getSupporterID() == memberID) {
                 memberRequests.push_back(request);
             }
@@ -310,7 +331,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         
         // reviews
         vector<Review*> memberReviews = {};
-        for (auto review : allReviews) {
+        for (auto &review : allReviews) {
             if (review->getReviewedID() == memberID) {
                 memberReviews.push_back(review);
             }
@@ -326,10 +347,6 @@ vector<Member*> FileManager::loadMemberDatabase() {
             if (user != "") {
                 blockedUsers.push_back(user);
             }
-        }
-        // Break the while loop if there is no memberID on the line
-        if (memberID == "") {
-            break;
         }
 
         // Create new Member
