@@ -2,6 +2,7 @@
 #define INPUTVALIDATOR_H
 
 #include <string>
+#include "./models/user/Member.h"
 
 class InputValidator {
 private:
@@ -16,6 +17,9 @@ public:
     bool getBool(const std::string& prompt);
     std::string getTime(const std::string& prompt);
     std::string getDate(const std::string& prompt);
+    std::string getPhoneNumber(const std::string& prompt);
+    std::string getEmail(const std::string &prompt);
+    availableCity getCity(const std::string &prompt);
 };
 
 #endif // INPUTVALIDATOR_H
