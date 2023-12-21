@@ -33,5 +33,4 @@ class Converter {
         */
         static string boolToString(bool boolVal);
 };
-
 #endif  // _CONVERTER_H_

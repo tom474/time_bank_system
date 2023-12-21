@@ -125,5 +125,4 @@ class FileManager {
         */
         static vector<Skill*> loadSkillDatabase();
 };
-
 #endif  // _FILE_MANAGER_H_

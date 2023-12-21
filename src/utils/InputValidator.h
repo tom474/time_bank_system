@@ -6,6 +6,8 @@
 
 using std::string;
 
+using std::string;
+
 class InputValidator {
     private:
         static void clearInputStream();
