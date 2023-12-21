@@ -8,7 +8,8 @@ using std::string;
 using std::vector;
 using std::cout;
 using std::cin;
-using std::endl;
+
+Request::Request() {}
 
 Request::Request(
     string requestIDVal = "", 
@@ -26,7 +27,7 @@ Request::Request(
 
 Request::~Request() {
     delete desiredTime;
-    for (auto skill : requestedSkills) {
+    for (auto &skill : requestedSkills) {
         delete skill;
     }
 }
@@ -52,10 +53,10 @@ vector<Skill*> Request::getRequestedSkills() {
 }
 
 string Request::getStatus() {
-    if (status == requestStatus::Rejected) {
-        return "Rejected";
-    } else if (status == requestStatus::Accepted) {
+    if (status == requestStatus::Accepted) {
         return "Accepted";
+    } else if (status == requestStatus::Rejected) {
+        return "Rejected";
     }
     return "Pending";
 }

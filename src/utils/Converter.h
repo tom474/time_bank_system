@@ -5,7 +5,33 @@
 
 using std::string;
 
-int stringToInteger(string str);
-double stringToDouble(string str);
+class Converter {
+    public:
+        /**
+        * Convert string to integer
+        * 
+        * @param stringVal: string value
+        * @return integer value
+        */
+        static int stringToInteger(string stringVal);
 
-#endif
+
+        /**
+        * Convert string to double
+        * 
+        * @param stringVal: string value
+        * @return double value
+        */
+        static double stringToDouble(string stringVal);
+
+
+        /**
+        * Convert boolean to string
+        * 
+        * @param boolVal: boolean value
+        * @return string value
+        */
+        static string boolToString(bool boolVal);
+};
+
+#endif  // _CONVERTER_H_

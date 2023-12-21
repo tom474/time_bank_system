@@ -4,6 +4,8 @@
 
 using std::cout;
 
+Member::Member() {}
+
 Member::Member(
     string usernameVal = "", 
     string passwordVal = "", 
@@ -36,14 +38,6 @@ Member::Member(
     reviews(reviewsVal) {}
 
 void Member::setAvailableStatus() {
-
-}
-
-void Member::login() {
-
-}
-
-void Member::logout() {
 
 }
 
@@ -115,9 +109,6 @@ bool Member::getAvailableStatus() {
     return availableStatus;
 }
 
-string Member::boolToString(bool status) {
-    return status ? "true" : "false";
-}
 string Member::getAvailableCity() { 
     return city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon";
 }
@@ -154,7 +145,7 @@ void Member::showInfo() {
     cout << "Email: " << email << "\n";
     cout << "Home Address: " << homeAddress << "\n";
     cout << "City: " << (city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon") << "\n";
-    cout << "Available Status: " << boolToString(availableStatus) << "\n";
+    cout << "Available Status: " << Converter::boolToString(availableStatus) << "\n";
 
     cout << "Skills:" << "\n";
     for (auto &skill : skills) {

@@ -5,18 +5,22 @@
 
 using std::string;
 
-int stringToInteger(string str) {
+int Converter::stringToInteger(string stringVal) {
     std::stringstream sstr;
     int intNum;
-    sstr << str;
+    sstr << stringVal;
     sstr >> intNum;
     return intNum;
 }
 
-double stringToDouble(string str) {
+double Converter::stringToDouble(string stringVal) {
     std::stringstream sstr;
     double doubleNum;
-    sstr << str;
+    sstr << stringVal;
     sstr >> doubleNum;
     return doubleNum;
+}
+
+string Converter::boolToString(bool boolVal) {
+    return boolVal ? "true" : "false";
 }

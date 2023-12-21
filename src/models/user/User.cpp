@@ -24,10 +24,4 @@ void User::setUsername(string usernameVal) {
     username = usernameVal;
 }
 
-void User::signup() {
-
-}
-
-void User::viewSupporter() {
-
-}
+User::~User() {}

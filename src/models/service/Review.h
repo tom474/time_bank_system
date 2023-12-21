@@ -19,6 +19,7 @@ class Review {
         string comment;
         int ratingScore;
     public:
+        Review();
         Review(string reviewIDVal, string reviewerIDVal, string reviewedIDVal, reviewType typeVal, string commentVal, int ratingScoreVal);
         string getReviewID();
         string getReviewerID();
@@ -28,4 +29,4 @@ class Review {
         string getComment();
 };
 
-#endif
+#endif  // _REVIEW_H_

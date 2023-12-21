@@ -16,11 +16,12 @@ class Availability {
     private:
         string memberID;
         TimePeriod *availableTime;
-        vector<Skill *> performedSkills;
+        vector<Skill*> performedSkills;
         int pointPerHour;
         double minHostRating;
 
     public:
+        Availability();
         Availability(TimePeriod *availableTimeVal, vector<Skill*> performedSkillsVal, int pointPerHourVal, double minHostRatingVal, string memberIDVal);
         string getMemberID();
         TimePeriod *getAvailableTime();
@@ -30,4 +31,4 @@ class Availability {
         ~Availability();
 };
 
-#endif
+#endif  // _AVAILABILITY_H_

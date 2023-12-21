@@ -7,7 +7,8 @@ using std::string;
 using std::vector;
 using std::cout;
 using std::cin;
-using std::endl;
+
+Skill::Skill() {}
 
 Skill::Skill(
     string nameVal = "",
@@ -43,3 +44,5 @@ int Skill::getAverageRatingScore() {
     }
     return sum / ratingScore.size();
 }
+
+Skill::~Skill() {}

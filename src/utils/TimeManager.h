@@ -32,4 +32,4 @@ class TimePeriod {
         bool isOverlapsWith(TimePeriod &timeRequest);
 };
 
-#endif
+#endif  // _TIME_MANAGER_H_

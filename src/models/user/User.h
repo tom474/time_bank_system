@@ -16,8 +16,7 @@ class User {
         string getPassword();
         void setPassword(string passwordVal);
         void setUsername(string usernameVal);
-        void signup();
-        void viewSupporter();
+        ~User();
 };
 
-#endif
+#endif  // _USER_H_

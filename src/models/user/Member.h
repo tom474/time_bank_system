@@ -6,6 +6,7 @@
 #include "../service/Availability.h"
 #include "../service/Request.h"
 #include "../service/Review.h"
+#include "../../utils/Converter.h"
 
 #include <iostream>
 #include <vector>
@@ -40,6 +41,7 @@ class Member : public User {
         vector<Request*> requests;
         vector<Review*> reviews;
     public:
+        Member();
         Member(
             string usernameVal, 
             string passwordVal, 
@@ -58,10 +60,6 @@ class Member : public User {
             vector<Review*> reviews
         );
 
-        void setAvailableStatus();
-        void login();
-        void logout();
-        void showInfo();
         void blockUser(User &user);
         void unblockUser(User &user);
         void creditsTopUp(int amount);
@@ -79,7 +77,7 @@ class Member : public User {
         string getPhoneNumber();
         string getEmail();
         bool getAvailableStatus();
-        string boolToString(bool status);
+        void setAvailableStatus();
         string getAvailableCity();
         string getHomeAddress();
         vector<Availability*> getAvailability();
@@ -87,7 +85,8 @@ class Member : public User {
         vector<Request*> getRequest();
         vector<Review*> getReview();
         vector<string> getBlockedUsers();
+        void showInfo();
         ~Member();
 };
 
-#endif
+#endif  // _MEMBER_H_

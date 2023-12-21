@@ -1,0 +1,4 @@
+M01,test,123456,Test User,20,0123456789,testuser@gmail.com,RMIT University,Sai Gon,true,M03,M04
+M02,anotherUser,654321,Another User,25,9876543210,anotheruser@gmail.com,ABC University,Ha Noi,true,M04,M05
+M03,designerUser,111111,Designer User,27,1234567890,designeruser@gmail.com,XYZ Design School,Sai Gon,true,M04,M05
+M04,dataAnalyst,222222,Data Analyst,30,0987654321,dataanalyst@gmail.com,ABC Data Institute,Ha Noi,true,M05,M06
