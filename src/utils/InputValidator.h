@@ -2,6 +2,9 @@
 #define _INPUT_VALIDATOR_H
 
 #include <string>
+#include "./models/user/Member.h"
+
+using std::string;
 
 using std::string;
 
@@ -64,6 +67,9 @@ class InputValidator {
         * @return The validated date string from the user.
         */
         static string getDate(const string& prompt);
+        string getPhoneNumber(const string& prompt);
+        string getEmail(const string &prompt);
+        availableCity getCity(const string &prompt);
 };
 
 #endif // _INPUT_VALIDATOR_H

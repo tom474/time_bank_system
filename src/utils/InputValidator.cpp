@@ -140,3 +140,72 @@ string InputValidator::getDate(const string& prompt) {
         }
     }
 }
+
+
+/**
+* Prompts the user to enter a phone number and validates it.
+* 
+* @param prompt The message displayed to the user.
+* @return The validated phone number string from the user.
+*/
+std::string InputValidator::getPhoneNumber(const std::string& prompt) {
+    std::regex phonePattern(R"(^\d{10}$)");
+    std::string phoneNumber;
+
+    while (true) {
+        std::cout << prompt;
+        std::getline(std::cin, phoneNumber);
+
+        if (std::regex_match(phoneNumber, phonePattern)) {
+            return phoneNumber;
+        } else {
+            std::cerr << "Invalid phone number. Please enter a 10-digit number.\n";
+        }
+    }
+}
+
+
+/**
+* Prompts the user to enter an email and validates it.
+* 
+* @param prompt The message displayed to the user.
+* @return The validated email string from the user.
+*/
+std::string InputValidator::getEmail(const std::string& prompt) {
+    std::regex emailPattern(R"(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$)");
+    std::string email;
+
+    while (true) {
+        std::cout << prompt;
+        std::getline(std::cin, email);
+
+        if (std::regex_match(email, emailPattern)) {
+            return email;
+        } else {
+            std::cerr << "Invalid email. Please enter a valid email address.\n";
+        }
+    }
+}
+
+
+/**
+* Prompts the user to enter a city and validates it.
+* 
+* @param prompt The message displayed to the user.
+* @return The validated city enum from the user.
+*/
+availableCity InputValidator::getCity(const std::string& prompt) {
+    std::string input;
+    while (true) {
+        std::cout << prompt << " (Saigon/Hanoi): ";
+        std::getline(std::cin, input);
+
+        if (input == "Saigon" || input == "SaiGon") {
+            return SaiGon;
+        } else if (input == "Hanoi" || input == "HaNoi") {
+            return HaNoi;
+        } else {
+            std::cerr << "Invalid input. Please enter 'Saigon' or 'Hanoi'.\n";
+        }
+    }
+}
