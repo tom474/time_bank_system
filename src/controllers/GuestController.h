@@ -7,6 +7,7 @@
 #include "../models/service/Review.h"
 #include "../models/user/Member.h"
 #include "../utils/InputValidator.h"
+#include "../utils/IdGenerator.h"
 
 #include <iostream>
 

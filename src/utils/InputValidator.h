@@ -2,7 +2,7 @@
 #define _INPUT_VALIDATOR_H
 
 #include <string>
-#include "./models/user/Member.h"
+#include "../models/user/Member.h"
 
 using std::string;
 
@@ -75,7 +75,7 @@ class InputValidator {
         * @param prompt The message displayed to the user.
         * @return The validated phone number string from the user.
         */
-        string getPhoneNumber(const string& prompt);
+        static string getPhoneNumber(const string& prompt);
 
 
         /**
@@ -84,7 +84,7 @@ class InputValidator {
         * @param prompt The message displayed to the user.
         * @return The validated email string from the user.
         */
-        string getEmail(const string &prompt);
+        static string getEmail(const string &prompt);
 
 
         /**
@@ -93,7 +93,7 @@ class InputValidator {
         * @param prompt The message displayed to the user.
         * @return The validated city enum from the user.
         */
-        availableCity getCity(const string &prompt);
+        static availableCity getCity(const string &prompt);
 };
 
 #endif // _INPUT_VALIDATOR_H

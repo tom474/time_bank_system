@@ -1,8 +1,8 @@
-RV01,M01,M02,Supporter,5,Very Good
-RV02,M01,M03,Supporter,1,Very Bad
-RV03,M02,M04,Supporter,5,Excellent
-RV04,M02,M05,Supporter,4,Good
-RV05,M03,M04,Supporter,5,Excellent
-RV06,M03,M05,Supporter,4,Good
-RV07,M04,M05,Supporter,4,Good
-RV08,M04,M06,Supporter,5,Excellent
+RV0001,MB0001,MB0002,Supporter,5,Very Good
+RV0002,MB0001,MB0003,Supporter,1,Very Bad
+RV0003,MB0002,MB0004,Supporter,5,Excellent
+RV0004,MB0002,MB0005,Supporter,4,Good
+RV0005,MB0003,MB0004,Supporter,5,Excellent
+RV0006,MB0003,MB0005,Supporter,4,Good
+RV0007,MB0004,MB0005,Supporter,4,Good
+RV0008,MB0004,MB0006,Supporter,5,Excellent

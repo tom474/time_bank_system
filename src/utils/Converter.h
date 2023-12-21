@@ -32,5 +32,7 @@ class Converter {
         * @return string value
         */
         static string boolToString(bool boolVal);
+
+        static string intToString(int intVal);
 };
 #endif  // _CONVERTER_H_

@@ -24,3 +24,11 @@ double Converter::stringToDouble(string stringVal) {
 string Converter::boolToString(bool boolVal) {
     return boolVal ? "true" : "false";
 }
+
+string Converter::intToString(int intVal) {
+    std::stringstream sstr;
+    string strVal;
+    sstr << intVal;
+    sstr >> strVal;
+    return strVal;
+}
