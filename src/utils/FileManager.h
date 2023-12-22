@@ -20,7 +20,7 @@ using std::vector;
 class FileManager {
     private:
         /**
-        * Reset the database
+        * Reset the database files
         * 
         * @param none
         * @return void
@@ -30,7 +30,7 @@ class FileManager {
         /**
         * Save all members to member.csv file
         * 
-        * @param vector<Member*>: a vector of members
+        * @param vector<Member*>: a vector of all members
         * @return void
         */
         static void saveMemberDatabase(vector<Member*> members);
@@ -39,7 +39,7 @@ class FileManager {
         /**
         * Save all availabilities to availability.csv file
         * 
-        * @param vector<Availability*>: a vector of availabilities
+        * @param vector<Availability*>: a vector of all availabilities
         * @return void
         */
         static void saveAvailabilityDatabase(vector<Availability*> availabilities);
@@ -48,7 +48,7 @@ class FileManager {
         /**
         * Save all requests to request.csv file
         * 
-        * @param vector<Request*>: a vector of requests
+        * @param vector<Request*>: a vector of all requests
         * @return void
         */
         static void saveRequestDatabase(vector<Request*> requests);
@@ -57,7 +57,7 @@ class FileManager {
         /**
         * Save all reviews to reviews.csv file
         * 
-        * @param vector<Review*>: a vector of reviews
+        * @param vector<Review*>: a vector of all reviews
         * @return void
         */
         static void saveReviewDatabase(vector<Review*> reviews);
@@ -66,62 +66,62 @@ class FileManager {
         /**
         * Save all skills to skill.csv file
         * 
-        * @param vector<Skill*>: a vector of skills
+        * @param vector<Skill*>: a vector of all skills
         * @return void
         */
         static void saveSkillDatabase(vector<Skill*> skills);
 
 
         /**
-        * Load admin details from the admin.csv file
+        * Load admin's details from the admin.csv file
         * 
         * @param none
-        * @return Admin
+        * @return Admin: an Admin object
         */
         static Admin loadAdminDatabase();
 
 
         /**
-        * Load member database from the member.csv file
+        * Load all members from the member.csv file
         * 
         * @param none
-        * @return vector<Member*>
+        * @return vector<Member*>: a vector of all members in the database
         */
         static vector<Member*> loadMemberDatabase();
 
 
         /**
-        * Load availability database from the availability.csv file
+        * Load all availabilities from the availability.csv file
         * 
         * @param none
-        * @return vector<Availability*>
+        * @return vector<Availability*>: a vector of all availabilities in the database
         */
         static vector<Availability*> loadAvailabilityDatabase();
 
 
         /**
-        * Load request database from the request.csv file
+        * Load all requests from the request.csv file
         * 
         * @param none
-        * @return vector<Request*>
+        * @return vector<Request*>: a vector of all requests in the database
         */
         static vector<Request*> loadRequestDatabase();
 
 
         /**
-        * Load review database from the review.csv file
+        * Load all reviews from the review.csv file
         * 
         * @param none
-        * @return vector<Review*>
+        * @return vector<Review*>: a vector of all reviews in the database
         */
         static vector<Review*> loadReviewDatabase();
 
 
         /**
-        * Load skill database from the skill.csv file
+        * Load all skills from the skill.csv file
         * 
         * @param none
-        * @return vector<Skill*>
+        * @return vector<Skill*> : a vector of all skills in the database
         */
         static vector<Skill*> loadSkillDatabase();
 };

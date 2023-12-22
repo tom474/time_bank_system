@@ -8,7 +8,7 @@ using std::string;
 class Converter {
     public:
         /**
-        * Convert string to integer
+        * Convert a string into an integer
         * 
         * @param stringVal: string value
         * @return integer value
@@ -17,7 +17,7 @@ class Converter {
 
 
         /**
-        * Convert string to double
+        * Convert a string into an double
         * 
         * @param stringVal: string value
         * @return double value
@@ -26,13 +26,20 @@ class Converter {
 
 
         /**
-        * Convert boolean to string
+        * Convert a boolean into a string
         * 
         * @param boolVal: boolean value
         * @return string value
         */
         static string boolToString(bool boolVal);
+        
 
+        /**
+        * Convert an integer into a string
+        * 
+        * @param intVal: integer value
+        * @return string value
+        */
         static string intToString(int intVal);
 };
 #endif  // _CONVERTER_H_
