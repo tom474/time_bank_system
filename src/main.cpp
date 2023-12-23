@@ -22,6 +22,7 @@
 
 using std::vector;
 
-int main() {
+int main()
+{
     GuestController::signUp();
 }

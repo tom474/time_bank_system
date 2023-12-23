@@ -5,41 +5,39 @@
 
 using std::string;
 
-class Converter {
-    public:
+class Converter
+{
+public:
         /**
-        * Convert a string into an integer
-        * 
-        * @param stringVal: string value
-        * @return integer value
-        */
+         * Convert a string into an integer
+         *
+         * @param stringVal: string value
+         * @return integer value
+         */
         static int stringToInteger(string stringVal);
 
-
         /**
-        * Convert a string into an double
-        * 
-        * @param stringVal: string value
-        * @return double value
-        */
+         * Convert a string into an double
+         *
+         * @param stringVal: string value
+         * @return double value
+         */
         static double stringToDouble(string stringVal);
 
-
         /**
-        * Convert a boolean into a string
-        * 
-        * @param boolVal: boolean value
-        * @return string value
-        */
+         * Convert a boolean into a string
+         *
+         * @param boolVal: boolean value
+         * @return string value
+         */
         static string boolToString(bool boolVal);
-        
 
         /**
-        * Convert an integer into a string
-        * 
-        * @param intVal: integer value
-        * @return string value
-        */
+         * Convert an integer into a string
+         *
+         * @param intVal: integer value
+         * @return string value
+         */
         static string intToString(int intVal);
 };
-#endif  // _CONVERTER_H_
+#endif // _CONVERTER_H_

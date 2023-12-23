@@ -10,33 +10,32 @@
 #include <iostream>
 #include <string>
 
-class IdGenerator {
-    public:
-        /**
-        * Generate the memberID
-        * 
-        * @param none
-        * @return string: a unique memberID with the prefix 'MB'
-        */
-        static string generateMemberId();
+class IdGenerator
+{
+public:
+    /**
+     * Generate the memberID
+     *
+     * @param none
+     * @return string: a unique memberID with the prefix 'MB'
+     */
+    static string generateMemberId();
 
+    /**
+     * Generate the requestID
+     *
+     * @param none
+     * @return string: a unique requestID with the prefix 'RQ'
+     */
+    static string generateRequestId();
 
-        /**
-        * Generate the requestID
-        * 
-        * @param none
-        * @return string: a unique requestID with the prefix 'RQ'
-        */
-        static string generateRequestId();
-
-
-        /**
-        * Generate the reviewID
-        * 
-        * @param none
-        * @return string: a unique reviewID with the prefix 'RV'
-        */
-        static string generateReviewId();
+    /**
+     * Generate the reviewID
+     *
+     * @param none
+     * @return string: a unique reviewID with the prefix 'RV'
+     */
+    static string generateReviewId();
 };
 
 #endif
