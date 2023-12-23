@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Menu.h"
 #include "../utils/InputValidator.h"
+#include "../utils/MenuOptionsGenerator.h"
+#include "../controllers/GuestController.h"
+
 #define GUEST = 1
 #define MEMBER = 1
 #define ADMIN = 1
@@ -51,7 +54,19 @@ void Menu::showWelcome()
 
 void Menu::loginAsGuest()
 {
-    cout << "Logging in as Guest";
+    MenuOptionsGenerator::showMenu({"Use the app as Guest", "Signup for member"});
+    int choice = InputValidator::getInt("Please enter the option (1/2): ");
+    switch (choice)
+    {
+    case 1:
+        break;
+    case 2:
+        GuestController::signUp();
+        break;
+
+    default:
+        break;
+    }
 }
 
 void Menu::loginAsMember()

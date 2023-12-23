@@ -2,6 +2,8 @@
 #define _MENU_H_
 
 #include <iostream>
+#include <string>
+#include <array>
 using std::cout;
 using std::endl;
 using std::string;
