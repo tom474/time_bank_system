@@ -12,7 +12,10 @@ public:
     string currentScreen;
 
     Menu();
-    void showWelcome();
+    static void showWelcome();
+    static void loginAsGuest();
+    static void loginAsMember();
+    static void loginAsAdmin();
 };
 
 #endif
