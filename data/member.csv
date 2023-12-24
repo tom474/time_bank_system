@@ -3,5 +3,6 @@ MB0002,anotherUser,654321,Another User,25,9876543210,anotheruser@gmail.com,ABC U
 MB0003,designerUser,111111,Designer User,27,1234567890,designeruser@gmail.com,XYZ Design School,Sai Gon,true,M04,M05
 MB0004,dataAnalyst,222222,Data Analyst,30,0987654321,dataanalyst@gmail.com,ABC Data Institute,Ha Noi,true,M05,M06
 MB0005,loctruong,123456,Truong quang Bao loc,20,0904945489,baoloctruongquang@gmail.com,123 Nguyen Van Loa,Sai Gon,true,M05,M06
-MB0006,manpham,admin@1234,IT Dev,10,0905123123,s3804811@rmit.edu.vn,ABC Everfit CO,Da Nang,true,M05,M06
+MB0006,manpham,admin@1234,IT Dev,10,0905123123,s3804811@rmit.edu.vn,ABC Everfit CO,Sai Gon,true,M05,M06
 MB0007,manpham2,admin@1234,Data Analyst,30,0987654321,dataanalyst@gmail.com,ABC Data Institute,Ha Noi,true,M05,M06
+MB0008,Hoang,admin@1234,pham,20,0905123123,2asdf@gmail.com,jaw 22nd Street,Sai Gon,true

@@ -16,9 +16,9 @@ public:
      * Prompts the guest to sign up to be an member
      *
      * @param none
-     * @return void
+     * @return bool
      */
-    static void login();
+    static bool login();
 };
 
 #endif // _MEMBER_CONTROLLER_H_

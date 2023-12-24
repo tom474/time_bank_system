@@ -9,6 +9,7 @@
 #define MEMBER = 1
 #define ADMIN = 1
 
+// TODO: currentScreen attribute for rendering messages
 Menu::Menu() { this->currentScreen = "Welcome"; }
 
 void Menu::showWelcome()
@@ -43,7 +44,7 @@ void Menu::showWelcome()
 
             // Invalid Option
         default:
-            choice = InputValidator::getInt("Invalid option. Please enter the correct login option (1/2/3): ");
+            choice = InputValidator::getInt("Invalid option. Please enter the correct login option (1-3): ");
             break;
         }
 
@@ -53,14 +54,6 @@ void Menu::showWelcome()
 void Menu::loginAsGuest()
 {
     cout << "---------- Guest Menu ----------\n";
-    //      << "Choose an action: \n";
-    // MenuOptionsGenerator::showMenu({"Exit",
-    //                                 "View your information",
-    //                                 "Manage your requests",
-    //                                 "Set your availability",
-    //                                 "Rate your host/supporter",
-    //                                 "Unblock/Block member"});
-    // int choice = InputValidator::getInt("Enter your choice (0-6): ");
     int choice = MenuOptionsGenerator::showMenuWithSelect(
         "Choose an action: ",
         {"Exit",
@@ -84,8 +77,20 @@ void Menu::loginAsGuest()
 
 void Menu::loginAsMember()
 {
-    cout << "Logging in as Member" << endl;
-    MemberController::login();
+    // cout << "Logging in as Member" << endl;
+    if (MemberController::login())
+    {
+        cout << "---------- Member Menu ----------\n";
+        MenuOptionsGenerator::showMenuWithSelect(
+            "Choose an action: ",
+            {"Exit",
+             "View your information",
+             "Manage your requests",
+             "Set your availability",
+             "Search for supporters",
+             "Rate your host/supporter",
+             "Unblock/Block member"});
+    }
 }
 
 void Menu::loginAsAdmin()

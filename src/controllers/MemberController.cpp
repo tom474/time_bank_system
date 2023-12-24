@@ -8,11 +8,12 @@ using std::endl;
 using std::string;
 using std::vector;
 
-void MemberController::login()
+bool MemberController::login()
 {
     // string password = "123456";
     // string username = "loctruong";
 
+    cout << "---------- Login ----------\n";
     string username = InputValidator::getString("Please enter your username: ");
     string password = InputValidator::getString("Please enter your password: ");
     Member loggedInMember;
@@ -26,17 +27,12 @@ void MemberController::login()
             loggedInMember = *member;
             found = true;
             break;
-            // Member *newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, requests, reviews);
-            // allMembers.push_back(newMember);
         }
     }
     if (!found)
     {
         cout << "ERROR: COULD NOT FIND" << endl;
+        return false;
     }
-    // if (loggedInMember.getMemberId() != )
-    // {
-    //     cout << "FOUND";
-    //     loggedInMember.showInfo();
-    // }
+    return true;
 }
