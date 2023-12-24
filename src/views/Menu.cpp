@@ -3,6 +3,7 @@
 #include "../utils/InputValidator.h"
 #include "../utils/MenuOptionsGenerator.h"
 #include "../controllers/GuestController.h"
+#include "../controllers/MemberController.h"
 
 #define GUEST = 1
 #define MEMBER = 1
@@ -71,8 +72,8 @@ void Menu::loginAsGuest()
 
 void Menu::loginAsMember()
 {
-
-    cout << "Logging in as Member";
+    cout << "Logging in as Member" << endl;
+    MemberController::login();
 }
 
 void Menu::loginAsAdmin()
