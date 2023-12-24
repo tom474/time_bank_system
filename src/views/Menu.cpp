@@ -20,11 +20,8 @@ void Menu::showWelcome()
          << "s3804811, Pham Quang Man \n"
          << "s3804811, Pham Quang Man \n"
          << "s3804811, Pham Quang Man \n"
-         << "s3804811, Pham Quang Man \n"
-         << "Use the app as 1. Guest    2. Member   3. Admin\n\n";
-
-    // Get choice input from user
-    int choice = InputValidator::getInt("Please select a login option (1/2/3): ");
+         << "s3804811, Pham Quang Man \n\n";
+    int choice = MenuOptionsGenerator::showMenuWithSelect("Use the app as:", {"Guest", "Member", "Admin"});
     bool exit = false;
     do
     {
@@ -55,14 +52,29 @@ void Menu::showWelcome()
 
 void Menu::loginAsGuest()
 {
-    MenuOptionsGenerator::showMenu({"Use the app as Guest", "Signup for member"});
-    int choice = InputValidator::getInt("Please enter the option (1/2): ");
+    cout << "---------- Guest Menu ----------\n";
+    //      << "Choose an action: \n";
+    // MenuOptionsGenerator::showMenu({"Exit",
+    //                                 "View your information",
+    //                                 "Manage your requests",
+    //                                 "Set your availability",
+    //                                 "Rate your host/supporter",
+    //                                 "Unblock/Block member"});
+    // int choice = InputValidator::getInt("Enter your choice (0-6): ");
+    int choice = MenuOptionsGenerator::showMenuWithSelect(
+        "Choose an action: ",
+        {"Exit",
+         "Sign up",
+         "View supporter details"});
     switch (choice)
     {
+    case 0:
+        break;
     case 1:
+        GuestController::signUp();
         break;
     case 2:
-        GuestController::signUp();
+        cout << "Viewing supporter details";
         break;
 
     default:
@@ -79,5 +91,6 @@ void Menu::loginAsMember()
 void Menu::loginAsAdmin()
 {
 
-    cout << "Logging in as Admin";
+    cout << "---------- Admin Menu ----------\n";
+    MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
 }
