@@ -3,11 +3,13 @@
 #include "../utils/InputValidator.h"
 #include "../utils/MenuOptionsGenerator.h"
 #include "../controllers/GuestController.h"
+#include "../controllers/MemberController.h"
 
 #define GUEST = 1
 #define MEMBER = 1
 #define ADMIN = 1
 
+// TODO: currentScreen attribute for rendering messages
 Menu::Menu() { this->currentScreen = "Welcome"; }
 
 void Menu::showWelcome()
@@ -19,11 +21,8 @@ void Menu::showWelcome()
          << "s3804811, Pham Quang Man \n"
          << "s3804811, Pham Quang Man \n"
          << "s3804811, Pham Quang Man \n"
-         << "s3804811, Pham Quang Man \n"
-         << "Use the app as 1. Guest    2. Member   3. Admin\n\n";
-
-    // Get choice input from user
-    int choice = InputValidator::getInt("Please select a login option (1/2/3): ");
+         << "s3804811, Pham Quang Man \n\n";
+    int choice = MenuOptionsGenerator::showMenuWithSelect("Use the app as:", {"Guest", "Member", "Admin"});
     bool exit = false;
     do
     {
@@ -45,7 +44,7 @@ void Menu::showWelcome()
 
             // Invalid Option
         default:
-            choice = InputValidator::getInt("Invalid option. Please enter the correct login option (1/2/3): ");
+            choice = InputValidator::getInt("Invalid option. Please enter the correct login option (1-3): ");
             break;
         }
 
@@ -54,14 +53,21 @@ void Menu::showWelcome()
 
 void Menu::loginAsGuest()
 {
-    MenuOptionsGenerator::showMenu({"Use the app as Guest", "Signup for member"});
-    int choice = InputValidator::getInt("Please enter the option (1/2): ");
+    cout << "---------- Guest Menu ----------\n";
+    int choice = MenuOptionsGenerator::showMenuWithSelect(
+        "Choose an action: ",
+        {"Exit",
+         "Sign up",
+         "View supporter details"});
     switch (choice)
     {
+    case 0:
+        break;
     case 1:
+        GuestController::signUp();
         break;
     case 2:
-        GuestController::signUp();
+        cout << "Viewing supporter details";
         break;
 
     default:
@@ -71,12 +77,25 @@ void Menu::loginAsGuest()
 
 void Menu::loginAsMember()
 {
-
-    cout << "Logging in as Member";
+    // cout << "Logging in as Member" << endl;
+    if (MemberController::login())
+    {
+        cout << "---------- Member Menu ----------\n";
+        MenuOptionsGenerator::showMenuWithSelect(
+            "Choose an action: ",
+            {"Exit",
+             "View your information",
+             "Manage your requests",
+             "Set your availability",
+             "Search for supporters",
+             "Rate your host/supporter",
+             "Unblock/Block member"});
+    }
 }
 
 void Menu::loginAsAdmin()
 {
 
-    cout << "Logging in as Admin";
+    cout << "---------- Admin Menu ----------\n";
+    MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
 }
