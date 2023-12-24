@@ -324,7 +324,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         // requests 
         vector<Request*> memberRequests = {};
         for (auto &request : allRequests) {
-            if (request->getSupporterID() == memberID) {
+            if (request->getSupporterID() == memberID || request->getHostID() == memberID) {
                 memberRequests.push_back(request);
             }
         }
