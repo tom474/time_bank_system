@@ -1,10 +1,5 @@
 #include <iostream>
 #include "Menu.h"
-#include "../utils/InputValidator.h"
-#include "../utils/MenuOptionsGenerator.h"
-#include "../controllers/GuestController.h"
-#include "../controllers/MemberController.h"
-#include "../controllers/AdminController.h"
 
 #define GUEST = 1
 #define MEMBER = 1
@@ -12,6 +7,8 @@
 
 // TODO: currentScreen attribute for rendering messages
 Menu::Menu() { this->currentScreen = "Welcome"; }
+
+vector<Member*> Menu::allMembers = FileManager::loadMemberDatabase(); 
 
 void Menu::showWelcome() {
     cout << "EEET2482/COSC2082 ASSIGNMENT \n"
@@ -73,18 +70,21 @@ void Menu::loginAsGuest() {
 
 void Menu::loginAsMember() {
     // cout << "Logging in as Member" << endl;
-    if (MemberController::login()) {
-        cout << "---------- Member Menu ----------\n";
-        MenuOptionsGenerator::showMenuWithSelect(
-            "Choose an action: ",
-            {"Exit",
-             "View your information",
-             "Manage your requests",
-             "Set your availability",
-             "Search for supporters",
-             "Rate your host/supporter",
-             "Unblock/Block member"});
+    Member* currentMember = MemberController::login();
+    if (currentMember == nullptr) {
+        return;
     }
+    cout << "---------- Member Menu ----------\n";
+    MenuOptionsGenerator::showMenuWithSelect(
+        "Choose an action: ",
+        {"Exit",
+            "View your information",
+            "Manage your requests",
+            "Set your availability",
+            "Search for supporters",
+            "Rate your host/supporter",
+            "Unblock/Block member"});
+    
 }
 
 void Menu::loginAsAdmin() {

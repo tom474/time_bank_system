@@ -8,27 +8,22 @@ using std::endl;
 using std::string;
 using std::vector;
 
-bool MemberController::login() {
+Member* MemberController::login() {
     // string password = "123456";
     // string username = "loctruong";
 
     cout << "---------- Login ----------\n";
     string username = InputValidator::getString("Please enter your username: ");
     string password = InputValidator::getString("Please enter your password: ");
-    Member loggedInMember;
-    bool found = false;
-    vector<Member *> allMembers = FileManager::loadMemberDatabase();
-    for (Member *member : allMembers) {
+    Member* loggedInMember;
+    vector<Member* > members = Menu::allMembers;
+    for (Member *member : members) {
         if (password == member->getPassword() && username == member->getUsername()) {
             cout << "LOGGED IN SUCCESS" << endl;
-            loggedInMember = *member;
-            found = true;
-            break;
+            loggedInMember = member;
+            return loggedInMember;
         }
     }
-    if (!found) {
-        cout << "ERROR: COULD NOT FIND" << endl;
-        return false;
-    }
-    return true;
+    cout << "ERROR: COULD NOT FIND" << endl;
+    return nullptr;
 }
