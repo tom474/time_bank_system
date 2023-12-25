@@ -3,8 +3,14 @@
 
 #include "./User.h"
 #include "./Member.h"
+#include "../../utils/InputValidator.h"
+#include "../../utils/FileManager.h"
+#include "../../views/Menu.h"
 
 #include <iostream>
+
+using std::string;
+using std::cout;
 
 class User;
 
@@ -16,6 +22,7 @@ class Admin : public User {
         void setUsername(string usernameVal);
         string getPassword();
         void setPassword(string passwordVal);
+        void resetPassword();
         ~Admin();
 };
 

@@ -116,6 +116,10 @@ bool Member::getIsResetPassword() {
     return isResetPassword;
 }
 
+void Member::setIsResetPassword(bool isResetPassword) {
+    this->isResetPassword = isResetPassword;
+}
+
 string Member::getAvailableCity() { 
     return city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon";
 }

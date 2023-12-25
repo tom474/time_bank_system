@@ -224,18 +224,15 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
 
 Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
-    Admin admin;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
     if (!adminFile.is_open()) {
         cerr << "Fail to create/open admin.csv file!\n";
         return {};
-
     }
     string username, password;
     getline(adminFile, username, ',');
     getline(adminFile, password);
-    admin.setUsername(username);
-    admin.setPassword(password);
+    Admin admin(username, password);
     adminFile.close();
     return admin;
 }
