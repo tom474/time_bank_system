@@ -9,8 +9,7 @@
 #include "../utils/InputValidator.h"
 #include "../utils/IdGenerator.h"
 
-class MemberController
-{
+class MemberController {
 public:
     /**
      * Prompts the guest to sign up to be an member

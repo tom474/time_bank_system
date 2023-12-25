@@ -16,7 +16,8 @@ void GuestController::signUp() {
 	vector<Skill*> skills = {};
 	vector<Availability*> availability = {};
 	vector<string> blockedUsers = {};
-	vector<Request*> requests = {};
+	vector<Request*> sendingRequests = {};
+	vector<Request*> receivingRequests = {};
 	vector<Review*> reviews = {};
 	
 	string username = InputValidator::getString("Enter your username: ");
@@ -38,7 +39,7 @@ void GuestController::signUp() {
 		isAddingSkill = InputValidator::getBool("Do you want to enter another skill? (yes/no): ");
 	}
 
-	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, requests, reviews);
+	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
 	allMembers.push_back(newMember);
 
 	FileManager::saveMemberDatabase(allMembers);

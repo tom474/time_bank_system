@@ -4,6 +4,7 @@
 #include "../utils/MenuOptionsGenerator.h"
 #include "../controllers/GuestController.h"
 #include "../controllers/MemberController.h"
+#include "../controllers/AdminController.h"
 
 #define GUEST = 1
 #define MEMBER = 1
@@ -12,8 +13,7 @@
 // TODO: currentScreen attribute for rendering messages
 Menu::Menu() { this->currentScreen = "Welcome"; }
 
-void Menu::showWelcome()
-{
+void Menu::showWelcome() {
     cout << "EEET2482/COSC2082 ASSIGNMENT \n"
          << "''TIME BANK'' APPLICATION \n\n"
          << "Instructor : Mr.Tran Duc Linh \n"
@@ -24,10 +24,8 @@ void Menu::showWelcome()
          << "s3804811, Pham Quang Man \n\n";
     int choice = MenuOptionsGenerator::showMenuWithSelect("Use the app as:", {"Guest", "Member", "Admin"});
     bool exit = false;
-    do
-    {
-        switch (choice)
-        {
+    do {
+        switch (choice) {
         case 1:
             loginAsGuest();
             exit = true;
@@ -51,16 +49,14 @@ void Menu::showWelcome()
     } while (!exit); // Exit while loop after correct choice is selected
 }
 
-void Menu::loginAsGuest()
-{
+void Menu::loginAsGuest() {
     cout << "---------- Guest Menu ----------\n";
     int choice = MenuOptionsGenerator::showMenuWithSelect(
         "Choose an action: ",
         {"Exit",
          "Sign up",
          "View supporter details"});
-    switch (choice)
-    {
+    switch (choice) {
     case 0:
         break;
     case 1:
@@ -75,11 +71,9 @@ void Menu::loginAsGuest()
     }
 }
 
-void Menu::loginAsMember()
-{
+void Menu::loginAsMember() {
     // cout << "Logging in as Member" << endl;
-    if (MemberController::login())
-    {
+    if (MemberController::login()) {
         cout << "---------- Member Menu ----------\n";
         MenuOptionsGenerator::showMenuWithSelect(
             "Choose an action: ",
@@ -93,9 +87,9 @@ void Menu::loginAsMember()
     }
 }
 
-void Menu::loginAsAdmin()
-{
-
-    cout << "---------- Admin Menu ----------\n";
-    MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
+void Menu::loginAsAdmin() {
+    if (AdminController::login()) {
+        cout << "---------- Admin Menu ----------\n";
+        MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
+    }
 }

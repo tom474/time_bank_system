@@ -20,7 +20,8 @@ Member::Member(
     vector<Skill*> skillsVal = {}, 
     vector<Availability*> availabilityVal = {}, 
     vector<string> blockedUsersVal = {}, 
-    vector<Request*> requestsVal = {}, 
+    vector<Request*> sendingRequestsVal = {}, 
+    vector<Request*> receivingRequestsVal = {}, 
     vector<Review*> reviewsVal = {})
     : User(usernameVal, passwordVal), 
     memberID(memberIDVal), 
@@ -34,7 +35,8 @@ Member::Member(
     skills(skillsVal), 
     availability(availabilityVal), 
     blockedUsers(blockedUsersVal), 
-    requests(requestsVal), 
+    sendingRequests(sendingRequestsVal),
+    receivingRequests(receivingRequestsVal), 
     reviews(reviewsVal) {}
 
 void Member::setAvailableStatus() {
@@ -124,8 +126,12 @@ vector<Skill*> Member::getSkill() {
     return skills;
 }
 
-vector<Request*> Member::getRequest() {
-    return requests;
+vector<Request*> Member::getSendingRequest() {
+    return sendingRequests;
+}
+
+vector<Request*> Member::getReceivingRequest() {
+    return receivingRequests;
 }
 
 vector<Review*> Member::getReview() {
@@ -172,8 +178,13 @@ void Member::showInfo() {
         cout << "- " << user << "\n";
     }
 
-    cout << "Requests:" << "\n";
-    for (auto &req : requests) {
+    cout << "Sending Requests:" << "\n";
+    for (auto &req : sendingRequests) {
+        cout << "- Request ID: " << req->getRequestID() << ", Status: " << req->getStatus() << "\n";
+    }
+
+    cout << "Receiving Requests:" << "\n";
+    for (auto &req : receivingRequests) {
         cout << "- Request ID: " << req->getRequestID() << ", Status: " << req->getStatus() << "\n";
     }
 
@@ -191,7 +202,10 @@ Member::~Member() {
     for (auto &availability : availability) {
         delete availability;
     }
-    for (auto &request : requests) {
+    for (auto &request : sendingRequests) {
+        delete request;
+    }
+    for (auto &request : receivingRequests) {
         delete request;
     }
     for (auto &review : reviews) {

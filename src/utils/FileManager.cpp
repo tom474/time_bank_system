@@ -97,7 +97,7 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
         for (auto &availability : member->getAvailability()) {
             allAvailabilities.push_back(availability);
         }
-        for (auto &request : member->getRequest()) {
+        for (auto &request : member->getSendingRequest()) {
             allRequests.push_back(request);
         }
         for (auto &review : member->getReview()) {
@@ -231,13 +231,8 @@ Admin FileManager::loadAdminDatabase() {
 
     }
     string username, password;
-    while (true) {
-        getline(adminFile, username, ',');
-        getline(adminFile, password, ',');
-        if (username != "" || password != "") {
-            break;
-        }
-    }
+    getline(adminFile, username, ',');
+    getline(adminFile, password);
     admin.setUsername(username);
     admin.setPassword(password);
     adminFile.close();
@@ -321,11 +316,19 @@ vector<Member*> FileManager::loadMemberDatabase() {
             }
         }
         
-        // requests 
-        vector<Request*> memberRequests = {};
+        // sendingRequests 
+        vector<Request*> memberSendingRequests = {};
         for (auto &request : allRequests) {
-            if (request->getSupporterID() == memberID || request->getHostID() == memberID) {
-                memberRequests.push_back(request);
+            if (request->getHostID() == memberID) {
+                memberSendingRequests.push_back(request);
+            }
+        }
+
+        // receivingRequests 
+        vector<Request*> memberReceivingRequest = {};
+        for (auto &request : allRequests) {
+            if (request->getSupporterID() == memberID) {
+                memberReceivingRequest.push_back(request);
             }
         }
         
@@ -364,7 +367,8 @@ vector<Member*> FileManager::loadMemberDatabase() {
             memberSkills, 
             memberAvailabilities, 
             blockedUsers, 
-            memberRequests, 
+            memberSendingRequests, 
+            memberReceivingRequest,
             memberReviews
         );
         members.push_back(member);

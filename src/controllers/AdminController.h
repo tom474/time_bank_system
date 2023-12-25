@@ -9,16 +9,15 @@
 #include "../utils/InputValidator.h"
 #include "../utils/IdGenerator.h"
 
-class AdminController
-{
-public:
-    /**
-     * Prompts the guest to sign up to be an member
-     *
-     * @param none
-     * @return bool
-     */
-    static bool login();
+class AdminController {
+    public:
+        /**
+         * Prompts the guest to sign up to be an member
+         *
+         * @param none
+         * @return bool
+         */
+        static bool login();
 };
 
 #endif // _ADMIN_CONTROLLER_H_

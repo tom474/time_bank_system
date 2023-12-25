@@ -38,7 +38,8 @@ class Member : public User {
         vector<Skill*> skills;
         vector<Availability*> availability;
         vector<string> blockedUsers;
-        vector<Request*> requests;
+        vector<Request*> sendingRequests;
+        vector<Request*> receivingRequests;
         vector<Review*> reviews;
     public:
         Member();
@@ -56,7 +57,8 @@ class Member : public User {
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
             vector<string> blockedUsersVal, 
-            vector<Request*> requestsVal, 
+            vector<Request*> sendingRequestsVal, 
+            vector<Request*> receivingRequestsVal, 
             vector<Review*> reviews
         );
 
@@ -82,7 +84,8 @@ class Member : public User {
         string getHomeAddress();
         vector<Availability*> getAvailability();
         vector<Skill*> getSkill();
-        vector<Request*> getRequest();
+        vector<Request*> getSendingRequest();
+        vector<Request*> getReceivingRequest();
         vector<Review*> getReview();
         vector<string> getBlockedUsers();
         void showInfo();
