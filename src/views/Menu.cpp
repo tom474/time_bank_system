@@ -75,15 +75,42 @@ void Menu::loginAsMember() {
         return;
     }
     cout << "---------- Member Menu ----------\n";
-    MenuOptionsGenerator::showMenuWithSelect(
-        "Choose an action: ",
-        {"Exit",
-            "View your information",
-            "Manage your requests",
-            "Set your availability",
-            "Search for supporters",
-            "Rate your host/supporter",
-            "Unblock/Block member"});
+    
+
+    bool exitLoop = false;
+    while (!exitLoop) {
+        int choice = MenuOptionsGenerator::showMenuWithSelect(
+            "Choose an action: ",
+            {"Exit",
+                "View your information",
+                "Manage your requests",
+                "Set your availability",
+                "Search for supporters",
+                "Rate your host/supporter",
+                "Unblock/Block member"});
+        switch (choice) {
+            case 0:
+                FileManager::saveMemberDatabase(Menu::allMembers);
+                exitLoop = true; 
+                break;
+            case 1:
+                currentMember->showInfo();
+                break;
+            case 2:
+                break;
+            case 3:
+                currentMember->addAvailability();
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+                break;
+            }
+    }
     
 }
 

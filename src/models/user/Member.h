@@ -7,6 +7,7 @@
 #include "../service/Request.h"
 #include "../service/Review.h"
 #include "../../utils/Converter.h"
+#include "../../utils/InputValidator.h"
 
 #include <iostream>
 #include <vector>
@@ -72,7 +73,7 @@ class Member : public User {
         void rejectRequest(Request &request);
         void rateSupporter();
         void rateHost();
-        void addAvailability(Availability &availability);
+        void addAvailability();
         string getMemberId();
         string getFullname();
         int getCreditPoint();

@@ -83,8 +83,57 @@ void Member::rateHost() {
 
 }
 
-void Member::addAvailability(Availability &availability) {
+void Member::addAvailability() {
+    string userID = memberID;
+    vector<Skill*> performedSkills;
+    int pointPerHour;
+    double minHostRating;
+    
+    // create TimePeriod
+    string startDate, startTime;
+    string endDate, endTime;
+    int startHour, endHour;
+    int startMinute, endMinute;
 
+    startDate = InputValidator::getDate("Enter yout start date (dd/mm/yyyy): ");
+    startTime = InputValidator::getTime("Enter your start time (hh:mm): ");
+    endDate = InputValidator::getDate("Enter your end date (dd/mm/yyyy): ");
+    endTime = InputValidator::getTime("Enter your end time (hh:mm): ");
+
+    startHour = Converter::stringToInteger(startTime.substr(0, 2));
+    startMinute = Converter::stringToInteger(startTime.substr(3, 2));
+    endHour = Converter::stringToInteger(endTime.substr(0, 2));
+    endMinute = Converter::stringToInteger(endTime.substr(3, 2));
+
+    Time time1(startDate,startHour, startMinute);
+    Time time2(endDate, endHour, endMinute);
+    TimePeriod* timePeriod = new TimePeriod(time1, time2);
+
+    // create pointPerHour & minHostRating
+    pointPerHour = InputValidator::getInt("Enter your point per hour: ");
+    minHostRating = InputValidator::getDouble("Enter your min host rating: "); 
+
+    // create performedSkills
+    cout << "you have to choose at least 1 skill to perform: \n";
+    for (int i = 0; i < skills.size(); i++) {
+        cout << i + 1 << ". " << skills[i]->getName() << "\n";
+    } 
+    while (true) {
+        int choice = InputValidator::getInt("Enter a choice: ");
+        if (choice < 1 || choice > skills.size()) {
+            cout << "Invalid choice. Please enter again!\n";
+            continue;
+        }
+        performedSkills.push_back(skills[choice - 1]);
+
+        bool isAddSkill = InputValidator::getBool("Do you want to add more skill? (y/n): ");
+        if (!isAddSkill) {
+            break;
+        }
+    }
+    Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
+    this->availability.push_back(availability);
+    cout << "Add availability successfully!\n";
 }
 
 string Member::getMemberId() {
