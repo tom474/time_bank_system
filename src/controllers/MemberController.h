@@ -8,7 +8,7 @@
 #include "../models/user/Member.h"
 #include "../utils/InputValidator.h"
 #include "../utils/IdGenerator.h"
-
+#include "../views/Menu.h"
 class MemberController {
 public:
     /**
@@ -17,7 +17,7 @@ public:
      * @param none
      * @return bool
      */
-    static bool login();
+    static Member* login();
 };
 
 #endif // _MEMBER_CONTROLLER_H_
