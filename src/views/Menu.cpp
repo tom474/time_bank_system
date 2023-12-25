@@ -90,6 +90,6 @@ void Menu::loginAsMember() {
 void Menu::loginAsAdmin() {
     if (AdminController::login()) {
         cout << "---------- Admin Menu ----------\n";
-        MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
+        int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
     }
 }

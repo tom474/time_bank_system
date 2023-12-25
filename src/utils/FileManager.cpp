@@ -89,7 +89,8 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
             << member->getEmail() << "," 
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
-            << Converter::boolToString(member->getAvailableStatus());
+            << Converter::boolToString(member->getAvailableStatus()) << ","
+            << Converter::boolToString(member->getIsResetPassword());
         for (auto &blockedUser : member->getBlockedUsers()) {
             memberFile << "," << blockedUser;
         }
@@ -299,6 +300,10 @@ vector<Member*> FileManager::loadMemberDatabase() {
         // availableStatus
         string availableStatus;
         getline(memberFile, availableStatus, ',');
+
+        // isResetPassword
+        string isResetPassword;
+        getline(memberFile, isResetPassword, ',');
         
         // availability
         vector<Availability*> memberAvailabilities = {};
@@ -364,6 +369,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
             homeAddress, 
             city == "Ha Noi" ? availableCity::HaNoi : availableCity::SaiGon, 
             availableStatus == "true" ? true : false, 
+            isResetPassword == "true" ? true : false,
             memberSkills, 
             memberAvailabilities, 
             blockedUsers, 
