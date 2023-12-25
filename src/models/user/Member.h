@@ -20,7 +20,6 @@ enum availableCity {
 using std::string;
 using std::vector;
 
-
 class User;
 class Skill;
 class Availability;
@@ -37,6 +36,7 @@ class Member : public User {
         string homeAddress;
         availableCity city;
         bool availableStatus;
+        bool isResetPassword;
         vector<Skill*> skills;
         vector<Availability*> availability;
         vector<string> blockedUsers;
@@ -56,6 +56,7 @@ class Member : public User {
             string homeAddressVal, 
             availableCity cityVal, 
             bool availableStatusVal, 
+            bool isResetPasswordVal,
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
             vector<string> blockedUsersVal, 
@@ -81,6 +82,8 @@ class Member : public User {
         string getPhoneNumber();
         string getEmail();
         bool getAvailableStatus();
+        bool getIsResetPassword();
+        void setIsResetPassword(bool isResetPassword);
         void setAvailableStatus();
         string getAvailableCity();
         string getHomeAddress();

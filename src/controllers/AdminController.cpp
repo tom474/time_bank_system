@@ -8,7 +8,7 @@ using std::endl;
 using std::string;
 using std::vector;
 
-bool AdminController::login() {
+Admin AdminController::login() {
     // string password = "123456";
     // string username = "loctruong";
 
@@ -19,15 +19,12 @@ bool AdminController::login() {
     Admin admin = FileManager::loadAdminDatabase();
     if (password == admin.getPassword() && username == admin.getUsername()) {
         cout << "LOGGED IN SUCCESS" << endl;
-        found = true;
+        return admin;
         // Member *newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, requests, reviews);
         // allMembers.push_back(newMember);
     }
-    if (!found) {
-        cout << "ERROR: COULD NOT FIND" << endl;
-        return false;
-    }
-    return true;
+    cout << "ERROR: COULD NOT FIND" << endl;
+    return Admin();
     // if (loggedInMember.getMemberId() != )
     // {
     //     cout << "FOUND";

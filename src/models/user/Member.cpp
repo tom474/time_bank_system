@@ -16,7 +16,8 @@ Member::Member(
     string emailVal = "",
     string homeAddressVal = "", 
     availableCity cityVal = availableCity::SaiGon, 
-    bool availableStatusVal = false, 
+    bool availableStatusVal = false,
+    bool isResetPasswordVal = false, 
     vector<Skill*> skillsVal = {}, 
     vector<Availability*> availabilityVal = {}, 
     vector<string> blockedUsersVal = {}, 
@@ -158,6 +159,14 @@ string Member::getEmail() {
 
 bool Member::getAvailableStatus() {
     return availableStatus;
+}
+
+bool Member::getIsResetPassword() {
+    return isResetPassword;
+}
+
+void Member::setIsResetPassword(bool isResetPassword) {
+    this->isResetPassword = isResetPassword;
 }
 
 string Member::getAvailableCity() { 

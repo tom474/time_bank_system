@@ -115,8 +115,26 @@ void Menu::loginAsMember() {
 }
 
 void Menu::loginAsAdmin() {
-    if (AdminController::login()) {
-        cout << "---------- Admin Menu ----------\n";
-        MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
+    Admin admin = AdminController::login();
+    if (admin.getUsername() == "") { 
+        cout << "Admin login failed ! \n";
+        return;
+    }
+    cout << "---------- Admin Menu ----------\n";
+    bool exitLoop = false;
+    while (!exitLoop) {
+        int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action:", {"Exit", "Reset password for member"});
+        switch (choice) {
+            case 0:
+                FileManager::saveMemberDatabase(Menu::allMembers);
+                exitLoop = true;
+                break;
+            case 1:
+                admin.resetPassword();
+                break;
+            default:
+                cout << "Unknown choice ! \n";
+                break;
+        }
     }
 }

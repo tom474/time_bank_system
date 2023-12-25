@@ -38,8 +38,8 @@ void GuestController::signUp() {
 		skills.push_back(newSkill);
 		isAddingSkill = InputValidator::getBool("Do you want to enter another skill? (yes/no): ");
 	}
-
-	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
+	bool isResetPassword = false;
+	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, isResetPassword, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
 	allMembers.push_back(newMember);
 
 	FileManager::saveMemberDatabase(allMembers);

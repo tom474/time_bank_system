@@ -89,7 +89,8 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
             << member->getEmail() << "," 
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
-            << Converter::boolToString(member->getAvailableStatus());
+            << Converter::boolToString(member->getAvailableStatus()) << ","
+            << Converter::boolToString(member->getIsResetPassword());
         for (auto &blockedUser : member->getBlockedUsers()) {
             memberFile << "," << blockedUser;
         }
@@ -223,18 +224,15 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
 
 Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
-    Admin admin;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
     if (!adminFile.is_open()) {
         cerr << "Fail to create/open admin.csv file!\n";
         return {};
-
     }
     string username, password;
     getline(adminFile, username, ',');
     getline(adminFile, password);
-    admin.setUsername(username);
-    admin.setPassword(password);
+    Admin admin(username, password);
     adminFile.close();
     return admin;
 }
@@ -299,6 +297,10 @@ vector<Member*> FileManager::loadMemberDatabase() {
         // availableStatus
         string availableStatus;
         getline(memberFile, availableStatus, ',');
+
+        // isResetPassword
+        string isResetPassword;
+        getline(memberFile, isResetPassword, ',');
         
         // availability
         vector<Availability*> memberAvailabilities = {};
@@ -364,6 +366,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
             homeAddress, 
             city == "Ha Noi" ? availableCity::HaNoi : availableCity::SaiGon, 
             availableStatus == "true" ? true : false, 
+            isResetPassword == "true" ? true : false,
             memberSkills, 
             memberAvailabilities, 
             blockedUsers, 
