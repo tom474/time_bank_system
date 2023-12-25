@@ -33,6 +33,7 @@ Member::Member(
     homeAddress(homeAddressVal), 
     city(cityVal), 
     availableStatus(availableStatusVal), 
+    isResetPassword(isResetPasswordVal),
     skills(skillsVal), 
     availability(availabilityVal), 
     blockedUsers(blockedUsersVal), 
@@ -210,7 +211,7 @@ void Member::showInfo() {
     cout << "Home Address: " << homeAddress << "\n";
     cout << "City: " << (city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon") << "\n";
     cout << "Available Status: " << Converter::boolToString(availableStatus) << "\n";
-
+    cout << "Reset Password: " << Converter::boolToString(isResetPassword) << "\n";
     cout << "Skills:" << "\n";
     for (auto &skill : skills) {
         cout << "- " << skill->getName() << ": " << skill->getDescription() << "\n";

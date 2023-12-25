@@ -301,7 +301,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
         // isResetPassword
         string isResetPassword;
         getline(memberFile, isResetPassword, ',');
-        
+
         // availability
         vector<Availability*> memberAvailabilities = {};
         for (auto &availability : allAvailabilities) { 
@@ -366,7 +366,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
             homeAddress, 
             city == "Ha Noi" ? availableCity::HaNoi : availableCity::SaiGon, 
             availableStatus == "true" ? true : false, 
-            isResetPassword == "true" ? true : false,
+            isResetPassword == "false" ? false : true, 
             memberSkills, 
             memberAvailabilities, 
             blockedUsers, 
