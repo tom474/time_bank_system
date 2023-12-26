@@ -18,12 +18,12 @@ Admin AdminController::login() {
     bool found = false;
     Admin admin = FileManager::loadAdminDatabase();
     if (password == admin.getPassword() && username == admin.getUsername()) {
-        cout << "LOGGED IN SUCCESS" << endl;
+        cout << "Login Successfully!\n" << endl;
         return admin;
         // Member *newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, skills, availability, blockedUsers, requests, reviews);
         // allMembers.push_back(newMember);
     }
-    cout << "ERROR: COULD NOT FIND" << endl;
+    cout << "Error: User does not exist!" << endl;
     return Admin();
     // if (loggedInMember.getMemberId() != )
     // {

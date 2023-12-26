@@ -2,6 +2,7 @@
 #define _CONVERTER_H_
 
 #include <iostream>
+#include "../models/service/Skill.h"
 
 using std::string;
 
@@ -39,5 +40,13 @@ public:
          * @return string value
          */
         static string intToString(int intVal);
+
+        /**
+         * Convert a skills list into a string
+         *
+         * @param vector<Skill*>: list of skills
+         * @return string value
+         */
+        static string skillsToString(vector<Skill*> skills);
 };
 #endif // _CONVERTER_H_

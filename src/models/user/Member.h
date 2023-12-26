@@ -65,8 +65,8 @@ class Member : public User {
             vector<Review*> reviews
         );
 
-        void blockUser(User &user);
-        void unblockUser(User &user);
+        void blockMember(Member &member);
+        void unblockMember(Member &member);
         void creditsTopUp(int amount);
         void searchSupporter();
         void bookSupporter();

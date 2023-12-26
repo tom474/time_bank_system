@@ -45,12 +45,19 @@ void Member::setAvailableStatus() {
 
 }
 
-void Member::blockUser(User &user) {
-
+void Member::blockMember(Member &member) {
+    blockedUsers.push_back(member.getMemberId());
+    cout << "Block member" << member.getMemberId() << "successfully!\n\n";
 }
 
-void Member::unblockUser(User &user) {
-
+void Member::unblockMember(Member &member) {
+    for (int i = 0; i < blockedUsers.size(); i++) {
+        if (blockedUsers[i] == member.getMemberId()) {
+            blockedUsers.erase(blockedUsers.begin() + i);
+            break;
+        }
+    }
+    cout << "Unblock member" << member.getMemberId() << "successfully!\n\n";
 }
 
 void Member::creditsTopUp(int amount) {
@@ -95,13 +102,13 @@ void Member::addAvailability() {
     int pointPerHour;
     double minHostRating;
     
-    // create TimePeriod
+    // Create TimePeriod
     string startDate, startTime;
     string endDate, endTime;
     int startHour, endHour;
     int startMinute, endMinute;
 
-    startDate = InputValidator::getDate("Enter yout start date (dd/mm/yyyy): ");
+    startDate = InputValidator::getDate("Enter your start date (dd/mm/yyyy): ");
     startTime = InputValidator::getTime("Enter your start time (hh:mm): ");
     endDate = InputValidator::getDate("Enter your end date (dd/mm/yyyy): ");
     endTime = InputValidator::getTime("Enter your end time (hh:mm): ");
@@ -111,16 +118,16 @@ void Member::addAvailability() {
     endHour = Converter::stringToInteger(endTime.substr(0, 2));
     endMinute = Converter::stringToInteger(endTime.substr(3, 2));
 
-    Time time1(startDate,startHour, startMinute);
+    Time time1(startDate, startHour, startMinute);
     Time time2(endDate, endHour, endMinute);
     TimePeriod* timePeriod = new TimePeriod(time1, time2);
 
-    // create pointPerHour & minHostRating
+    // Create pointPerHour & minHostRating
     pointPerHour = InputValidator::getInt("Enter your point per hour: ");
     minHostRating = InputValidator::getDouble("Enter your min host rating: "); 
 
-    // create performedSkills
-    cout << "you have to choose at least 1 skill to perform: \n";
+    // Create performedSkills
+    cout << "You have to choose at least 1 skill to perform: \n";
     for (int i = 0; i < skills.size(); i++) {
         cout << i + 1 << ". " << skills[i]->getName() << "\n";
     } 
