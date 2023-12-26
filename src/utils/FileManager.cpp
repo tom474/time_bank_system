@@ -90,9 +90,11 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
             << Converter::boolToString(member->getAvailableStatus()) << ","
-            << Converter::boolToString(member->getIsResetPassword());
-        for (auto &blockedUser : member->getBlockedUsers()) {
-            memberFile << "," << blockedUser;
+            << Converter::boolToString(member->getIsResetPassword()) << ",";
+        if (member->getBlockedUsers().size() > 0) { 
+            for (auto &blockedUser : member->getBlockedUsers()) {
+                memberFile << blockedUser << ",";
+            }
         }
         memberFile << endl;
         for (auto &availability : member->getAvailability()) {
@@ -134,9 +136,11 @@ void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities)
             << availability->getAvailableTime()->getStartTime().getMinute() << ","
             << availability->getAvailableTime()->getEndTime().getDate() << ","
             << availability->getAvailableTime()->getEndTime().getHour() << ","
-            << availability->getAvailableTime()->getEndTime().getMinute();
-        for (auto skill : availability->getPerformedSkills()) {
-            availabilityFile << "," << skill->getName();
+            << availability->getAvailableTime()->getEndTime().getMinute() << ",";
+        if (availability->getPerformedSkills().size() > 0) {
+            for (auto skill : availability->getPerformedSkills()) {
+                availabilityFile << skill->getName() << ",";
+            }
         }
         availabilityFile << endl;
     }
@@ -165,9 +169,11 @@ void FileManager::saveRequestDatabase(vector<Request*> requests) {
                 << req->getRequestedTime()->getEndTime().getDate() << "," 
                 << req->getRequestedTime()->getEndTime().getHour() << "," 
                 << req->getRequestedTime()->getEndTime().getMinute() << "," 
-                << req->getStatus();
-            for (auto skill : req->getRequestedSkills()) {
-                requestFile << "," << skill->getName();
+                << req->getStatus() << ",";
+            if (req->getRequestedSkills().size() > 0) {
+                for (auto skill : req->getRequestedSkills()) {
+                    requestFile << skill->getName() << ",";
+                }
             }
             requestFile << endl;
         }
@@ -192,7 +198,7 @@ void FileManager::saveReviewDatabase(vector<Review*> reviews) {
             << review->getReviewerID() << ","
             << review->getType() << ","
             << review->getRatingScore() << ","
-            << review->getComment();
+            << review->getComment() << ",";
         reviewFile << endl;
     }
     reviewFile.close();
@@ -212,9 +218,11 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
         skillFile 
             << skill->getName() << ","
             << skill->getDescription() << ","
-            << skill->getMemberID();
-        for (auto ratingScore : skill->getRatingScore()) {
-            skillFile << "," << ratingScore;
+            << skill->getMemberID() << ",";
+        if (skill->getRatingScore().size() > 0) {
+            for (auto ratingScore : skill->getRatingScore()) {
+                skillFile << ratingScore << ",";
+            }
         }
         skillFile << endl;
     }

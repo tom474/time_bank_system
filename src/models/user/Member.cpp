@@ -86,6 +86,10 @@ void Member::rateHost() {
 }
 
 void Member::addAvailability() {
+    if (skills.size() == 0) {
+        cout << "You have to add at least 1 skill to add availability!\n";
+        return;
+    }
     string userID = memberID;
     vector<Skill*> performedSkills;
     int pointPerHour;
