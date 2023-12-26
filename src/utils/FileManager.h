@@ -1,8 +1,8 @@
 #ifndef _FILE_MANAGER_H_
 #define _FILE_MANAGER_H_
 
-#include "../models/user/User.h"
 #include "../models/user/Admin.h"
+#include "../models/user/User.h"
 #include "../models/user/Member.h"
 #include "../models/service/Availability.h"
 #include "../models/service/Request.h"
@@ -16,6 +16,8 @@
 
 using std::cout;
 using std::vector;
+
+class Admin;
 
 class FileManager
 {
