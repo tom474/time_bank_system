@@ -21,9 +21,20 @@ Member* MemberController::login() {
         if (password == member->getPassword() && username == member->getUsername()) {
             cout << "LOGGED IN SUCCESS" << endl;
             loggedInMember = member;
+            MemberController::resetPassword(loggedInMember);
             return loggedInMember;
         }
     }
     cout << "ERROR: COULD NOT FIND" << endl;
     return nullptr;
+}
+
+void MemberController::resetPassword(Member* member) { 
+    if (!member->getIsResetPassword()) {
+        return;
+    }
+    cout << "Your password has been reset \n"; 
+    string newPassword = InputValidator::getString("Enter new password: ");
+    member->setPassword(newPassword);
+    member->setIsResetPassword(false);
 }

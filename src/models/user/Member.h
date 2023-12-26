@@ -1,6 +1,11 @@
 #ifndef _MEMBER_H_
 #define _MEMBER_H_
 
+enum availableCity {
+    HaNoi,
+    SaiGon
+};
+
 #include "./User.h"
 #include "../service/Skill.h"
 #include "../service/Availability.h"
@@ -14,11 +19,6 @@
 
 using std::string;
 using std::vector;
-
-enum availableCity {
-    HaNoi,
-    SaiGon
-};
 
 class User;
 class Skill;
@@ -36,6 +36,7 @@ class Member : public User {
         string homeAddress;
         availableCity city;
         bool availableStatus;
+        bool isResetPassword;
         vector<Skill*> skills;
         vector<Availability*> availability;
         vector<string> blockedUsers;
@@ -55,6 +56,7 @@ class Member : public User {
             string homeAddressVal, 
             availableCity cityVal, 
             bool availableStatusVal, 
+            bool isResetPasswordVal,
             vector<Skill*> skillsVal, 
             vector<Availability*> availabilityVal, 
             vector<string> blockedUsersVal, 
@@ -80,6 +82,8 @@ class Member : public User {
         string getPhoneNumber();
         string getEmail();
         bool getAvailableStatus();
+        bool getIsResetPassword();
+        void setIsResetPassword(bool isResetPassword);
         void setAvailableStatus();
         string getAvailableCity();
         string getHomeAddress();

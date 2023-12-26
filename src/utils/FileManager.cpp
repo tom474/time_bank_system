@@ -89,9 +89,12 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
             << member->getEmail() << "," 
             << member->getHomeAddress() << "," 
             << member->getAvailableCity() << "," 
-            << Converter::boolToString(member->getAvailableStatus());
-        for (auto &blockedUser : member->getBlockedUsers()) {
-            memberFile << "," << blockedUser;
+            << Converter::boolToString(member->getAvailableStatus()) << ","
+            << Converter::boolToString(member->getIsResetPassword()) << ",";
+        if (member->getBlockedUsers().size() > 0) { 
+            for (auto &blockedUser : member->getBlockedUsers()) {
+                memberFile << blockedUser << ",";
+            }
         }
         memberFile << endl;
         for (auto &availability : member->getAvailability()) {
@@ -133,9 +136,11 @@ void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities)
             << availability->getAvailableTime()->getStartTime().getMinute() << ","
             << availability->getAvailableTime()->getEndTime().getDate() << ","
             << availability->getAvailableTime()->getEndTime().getHour() << ","
-            << availability->getAvailableTime()->getEndTime().getMinute();
-        for (auto skill : availability->getPerformedSkills()) {
-            availabilityFile << "," << skill->getName();
+            << availability->getAvailableTime()->getEndTime().getMinute() << ",";
+        if (availability->getPerformedSkills().size() > 0) {
+            for (auto skill : availability->getPerformedSkills()) {
+                availabilityFile << skill->getName() << ",";
+            }
         }
         availabilityFile << endl;
     }
@@ -164,9 +169,11 @@ void FileManager::saveRequestDatabase(vector<Request*> requests) {
                 << req->getRequestedTime()->getEndTime().getDate() << "," 
                 << req->getRequestedTime()->getEndTime().getHour() << "," 
                 << req->getRequestedTime()->getEndTime().getMinute() << "," 
-                << req->getStatus();
-            for (auto skill : req->getRequestedSkills()) {
-                requestFile << "," << skill->getName();
+                << req->getStatus() << ",";
+            if (req->getRequestedSkills().size() > 0) {
+                for (auto skill : req->getRequestedSkills()) {
+                    requestFile << skill->getName() << ",";
+                }
             }
             requestFile << endl;
         }
@@ -191,7 +198,7 @@ void FileManager::saveReviewDatabase(vector<Review*> reviews) {
             << review->getReviewerID() << ","
             << review->getType() << ","
             << review->getRatingScore() << ","
-            << review->getComment();
+            << review->getComment() << ",";
         reviewFile << endl;
     }
     reviewFile.close();
@@ -211,9 +218,11 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
         skillFile 
             << skill->getName() << ","
             << skill->getDescription() << ","
-            << skill->getMemberID();
-        for (auto ratingScore : skill->getRatingScore()) {
-            skillFile << "," << ratingScore;
+            << skill->getMemberID() << ",";
+        if (skill->getRatingScore().size() > 0) {
+            for (auto ratingScore : skill->getRatingScore()) {
+                skillFile << ratingScore << ",";
+            }
         }
         skillFile << endl;
     }
@@ -223,18 +232,15 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
 
 Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
-    Admin admin;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
     if (!adminFile.is_open()) {
         cerr << "Fail to create/open admin.csv file!\n";
         return {};
-
     }
     string username, password;
     getline(adminFile, username, ',');
     getline(adminFile, password);
-    admin.setUsername(username);
-    admin.setPassword(password);
+    Admin admin(username, password);
     adminFile.close();
     return admin;
 }
@@ -299,7 +305,11 @@ vector<Member*> FileManager::loadMemberDatabase() {
         // availableStatus
         string availableStatus;
         getline(memberFile, availableStatus, ',');
-        
+
+        // isResetPassword
+        string isResetPassword;
+        getline(memberFile, isResetPassword, ',');
+
         // availability
         vector<Availability*> memberAvailabilities = {};
         for (auto &availability : allAvailabilities) { 
@@ -364,6 +374,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
             homeAddress, 
             city == "Ha Noi" ? availableCity::HaNoi : availableCity::SaiGon, 
             availableStatus == "true" ? true : false, 
+            isResetPassword == "false" ? false : true, 
             memberSkills, 
             memberAvailabilities, 
             blockedUsers, 

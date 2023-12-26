@@ -15,9 +15,18 @@ public:
      * Prompts the guest to sign up to be an member
      *
      * @param none
-     * @return bool
+     * @return Member*
      */
     static Member* login();
+
+    /**
+     * this function will check if the user have a temporary password or not
+     *  and prompt them to change password
+     *
+     * @param Member*
+     * @return void
+    */
+    static void resetPassword(Member* member);
 };
 
 #endif // _MEMBER_CONTROLLER_H_

@@ -16,7 +16,8 @@ Member::Member(
     string emailVal = "",
     string homeAddressVal = "", 
     availableCity cityVal = availableCity::SaiGon, 
-    bool availableStatusVal = false, 
+    bool availableStatusVal = false,
+    bool isResetPasswordVal = false, 
     vector<Skill*> skillsVal = {}, 
     vector<Availability*> availabilityVal = {}, 
     vector<string> blockedUsersVal = {}, 
@@ -32,6 +33,7 @@ Member::Member(
     homeAddress(homeAddressVal), 
     city(cityVal), 
     availableStatus(availableStatusVal), 
+    isResetPassword(isResetPasswordVal),
     skills(skillsVal), 
     availability(availabilityVal), 
     blockedUsers(blockedUsersVal), 
@@ -84,6 +86,10 @@ void Member::rateHost() {
 }
 
 void Member::addAvailability() {
+    if (skills.size() == 0) {
+        cout << "You have to add at least 1 skill to add availability!\n";
+        return;
+    }
     string userID = memberID;
     vector<Skill*> performedSkills;
     int pointPerHour;
@@ -160,6 +166,14 @@ bool Member::getAvailableStatus() {
     return availableStatus;
 }
 
+bool Member::getIsResetPassword() {
+    return isResetPassword;
+}
+
+void Member::setIsResetPassword(bool isResetPassword) {
+    this->isResetPassword = isResetPassword;
+}
+
 string Member::getAvailableCity() { 
     return city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon";
 }
@@ -201,7 +215,7 @@ void Member::showInfo() {
     cout << "Home Address: " << homeAddress << "\n";
     cout << "City: " << (city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon") << "\n";
     cout << "Available Status: " << Converter::boolToString(availableStatus) << "\n";
-
+    cout << "Reset Password: " << Converter::boolToString(isResetPassword) << "\n";
     cout << "Skills:" << "\n";
     for (auto &skill : skills) {
         cout << "- " << skill->getName() << ": " << skill->getDescription() << "\n";
