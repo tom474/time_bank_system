@@ -79,9 +79,11 @@ void MemberController::viewMemberList(vector<Member*> members) {
 }
 
 void MemberController::resetPassword(Member* member) { 
+    // Check if member has a temporary password 
     if (!member->getIsResetPassword()) {
         return;
     }
+    // Show request to reset password and set IsResetPassword to false
     cout << "Your password has been reset!\n"; 
     string newPassword = InputValidator::getString("Enter new password: ");
     member->setPassword(newPassword);
