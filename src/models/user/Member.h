@@ -65,12 +65,12 @@ class Member : public User {
             vector<Review*> reviews
         );
 
-        void blockUser(User &user);
-        void unblockUser(User &user);
+        void blockMember(Member &member);
+        void unblockMember(Member &member);
         void creditsTopUp(int amount);
-        void searchSupporter();
-        void bookSupporter();
         void viewRequest();
+        void sendRequest(Request &request);
+        void receiveRequest(Request &request);
         void acceptRequest(Request &request);
         void rejectRequest(Request &request);
         void rateSupporter();
@@ -87,6 +87,7 @@ class Member : public User {
         void setAvailableStatus();
         string getAvailableCity();
         string getHomeAddress();
+        double getHostRating();
         vector<Availability*> getAvailability();
         vector<Skill*> getSkill();
         vector<Request*> getSendingRequest();

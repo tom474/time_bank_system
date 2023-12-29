@@ -11,7 +11,7 @@ Menu::Menu() { this->currentScreen = "Welcome"; }
 vector<Member*> Menu::allMembers = FileManager::loadMemberDatabase(); 
 
 void Menu::showWelcome() {
-    cout << "EEET2482/COSC2082 ASSIGNMENT \n"
+    cout << "\nEEET2482/COSC2082 ASSIGNMENT \n"
          << "''TIME BANK'' APPLICATION \n\n"
          << "Instructor : Mr.Tran Duc Linh \n"
          << "Group: Group No.11 \n"
@@ -27,7 +27,6 @@ void Menu::showWelcome() {
             loginAsGuest();
             exit = true;
             break;
-
         case 2:
             loginAsMember();
             exit = true;
@@ -36,47 +35,45 @@ void Menu::showWelcome() {
             loginAsAdmin();
             exit = true;
             break;
-
-            // Invalid Option
+        // Invalid Option
         default:
             choice = InputValidator::getInt("Invalid option. Please enter the correct login option (1-3): ");
             break;
         }
-
     } while (!exit); // Exit while loop after correct choice is selected
 }
 
 void Menu::loginAsGuest() {
     cout << "---------- Guest Menu ----------\n";
-    int choice = MenuOptionsGenerator::showMenuWithSelect(
-        "Choose an action: ",
-        {"Exit",
-         "Sign up",
-         "View supporter details"});
-    switch (choice) {
-    case 0:
-        break;
-    case 1:
-        GuestController::signUp();
-        break;
-    case 2:
-        cout << "Viewing supporter details";
-        break;
-
-    default:
-        break;
+    bool exitLoop = false;
+    while (!exitLoop) {
+        int choice = MenuOptionsGenerator::showMenuWithSelect(
+            "Choose an action: ",
+            {"Exit",
+             "Sign up",
+             "View supporter details"});
+        switch (choice) {
+            case 0:
+                exitLoop = true;
+                break;
+            case 1:
+                GuestController::signUp();
+                break;
+            case 2:
+                MemberController::viewMemberList(Menu::allMembers);
+                break;
+            default:
+                break;
+        }
     }
 }
 
 void Menu::loginAsMember() {
-    // cout << "Logging in as Member" << endl;
     Member* currentMember = MemberController::login();
     if (currentMember == nullptr) {
         return;
     }
     cout << "---------- Member Menu ----------\n";
-    
-
     bool exitLoop = false;
     while (!exitLoop) {
         int choice = MenuOptionsGenerator::showMenuWithSelect(
@@ -86,8 +83,9 @@ void Menu::loginAsMember() {
                 "Manage your requests",
                 "Set your availability",
                 "Search for supporters",
+                "Create new request",
                 "Rate your host/supporter",
-                "Unblock/Block member"});
+                "Block/Unblock member"});
         switch (choice) {
             case 0:
                 FileManager::saveMemberDatabase(Menu::allMembers);
@@ -102,16 +100,20 @@ void Menu::loginAsMember() {
                 currentMember->addAvailability();
                 break;
             case 4:
+                MemberController::searchForSupporters(currentMember);
                 break;
             case 5:
+                MemberController::createRequest(currentMember);
                 break;
             case 6:
                 break;
+            case 7:
+                MemberController::adjustBlockedMembersList(currentMember);
+                break;
             default:
                 break;
-            }
-    }
-    
+        }
+    } 
 }
 
 void Menu::loginAsAdmin() {

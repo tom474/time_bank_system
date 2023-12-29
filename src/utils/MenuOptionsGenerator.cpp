@@ -30,5 +30,6 @@ int MenuOptionsGenerator::showMenuWithSelect(const string &message, vector<strin
         prompt << "Enter your choice (1-" << options.size() << "): ";
     }
     int choice = InputValidator::getInt(prompt.str());
+    cout << "\n";
     return choice;
 }

@@ -2,8 +2,10 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 using std::string;
+using std::vector;
 
 int Converter::stringToInteger(string stringVal) {
     std::stringstream sstr;
@@ -30,5 +32,24 @@ string Converter::intToString(int intVal) {
     string strVal;
     sstr << intVal;
     sstr >> strVal;
+    return strVal;
+}
+
+string Converter::skillsToString(vector<Skill*> skills) {
+    string strVal = "";
+    for (int i = 0; i < skills.size(); i++) {
+        strVal += skills[i]->getName();
+        if (i != skills.size() - 1) {
+            strVal += ", ";
+        }
+    }
+    return strVal;
+}
+
+vector<string> Converter::skillsToStringVector(vector<Skill*> skills) {
+    vector<string> strVal;
+    for (int i = 0; i < skills.size(); i++) {
+        strVal.push_back(skills[i]->getName());
+    }
     return strVal;
 }

@@ -84,6 +84,23 @@ vector<int> Time::splitDate(string date) {
     return dateVector;
 };
 
+string Time::toString() {
+    // Format start time and end time
+    string hourStr, minuteStr;
+    if (hour < 10) {
+        hourStr = "0" + std::to_string(hour);
+    } else {
+        hourStr = std::to_string(hour);
+    }
+    if (minute < 10) {
+        minuteStr = "0" + std::to_string(minute);
+    } else {
+        minuteStr = std::to_string(minute);
+    }
+    string timeString = hourStr + ":" + minuteStr + " " + date;
+    return timeString;
+}
+
 TimePeriod::TimePeriod(Time startTime, Time endTime) : startTime(startTime), endTime(endTime) {};
 
 Time TimePeriod::getStartTime() {
@@ -105,4 +122,41 @@ bool TimePeriod::isOverlapsWith(TimePeriod &timeRequest) {
     } else {
         return false; 
     }
+}
+
+int TimePeriod::getHourDuration() {
+    int hourDuration = 0;
+
+    // Calculate the duration in hours if start date and end date are the same
+    if (startTime.getDate() == endTime.getDate()) {
+        hourDuration = endTime.getHour() - startTime.getHour();
+        if (endTime.getMinute() > startTime.getMinute()) {
+            hourDuration += 1;
+        }
+    } else {
+        // Calculate the duration in hours for different dates
+        vector<int> startDate = startTime.splitDate(startTime.getDate());
+        vector<int> endDate = endTime.splitDate(endTime.getDate());
+
+        // Calculate the duration in years
+        int yearDuration = endDate[2] - startDate[2];
+
+        // Calculate the duration in months
+        int monthDuration = endDate[1] - startDate[1];
+
+        // Calculate the duration in days
+        int dayDuration = endDate[0] - startDate[0];
+
+        // Calculate the duration in hours
+        hourDuration = yearDuration * 365 * 24 + monthDuration * 30 * 24 + dayDuration * 24;
+
+        // Adjust the duration based on the time of the start and end dates
+        hourDuration -= startTime.getHour();
+        hourDuration += endTime.getHour();
+        if (endTime.getMinute() > startTime.getMinute()) {
+            hourDuration += 1;
+        }
+    }
+
+    return hourDuration;
 }
