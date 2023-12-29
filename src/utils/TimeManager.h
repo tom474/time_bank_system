@@ -19,6 +19,7 @@ class Time {
         int getMinute();
         vector<int> splitDate(string date);
         int compareTime(Time &time);
+        string toString();
 };
 
 class TimePeriod {
@@ -30,6 +31,7 @@ class TimePeriod {
         Time getStartTime();
         Time getEndTime();
         bool isOverlapsWith(TimePeriod &timeRequest);
+        int getHourDuration();
 };
 
 #endif  // _TIME_MANAGER_H_

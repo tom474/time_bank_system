@@ -48,5 +48,13 @@ public:
          * @return string value
          */
         static string skillsToString(vector<Skill*> skills);
+
+        /**
+         * Convert a skills list into a string vector
+         * 
+         * @param vector<Skill*>: list of skills
+         * @return vector<string>: string vector
+        */
+        static vector<string> skillsToStringVector(vector<Skill*> skills);
 };
 #endif // _CONVERTER_H_

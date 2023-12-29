@@ -37,12 +37,29 @@ public:
      * and prompt them to change password
      *
      * @param Member*
-     * @return void
+     * @return none
     */
     static void resetPassword(Member* member);
 
     /**
-     * Member and block or unblock another member
+     * Member can search for suitable supporter
+     * 
+     * @param Member*: current member
+     * @return vector<Member*>: list of suitable supporters
+    */
+    static vector<Member*> searchForSupporters(Member* currentMember);
+
+    /**
+     * Member can create a request for any supporter in the list
+     *
+     * @param Member*: current member
+     * @param vector<Member*>: list of supporters
+     * @return none
+    */
+    static void createRequest(Member* currentMember);
+
+    /**
+     * Member can block or unblock another member
      *
      * @param Member*: current member
      * @return none

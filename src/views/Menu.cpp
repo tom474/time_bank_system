@@ -83,6 +83,7 @@ void Menu::loginAsMember() {
                 "Manage your requests",
                 "Set your availability",
                 "Search for supporters",
+                "Create new request",
                 "Rate your host/supporter",
                 "Block/Unblock member"});
         switch (choice) {
@@ -99,10 +100,14 @@ void Menu::loginAsMember() {
                 currentMember->addAvailability();
                 break;
             case 4:
+                MemberController::searchForSupporters(currentMember);
                 break;
             case 5:
+                MemberController::createRequest(currentMember);
                 break;
             case 6:
+                break;
+            case 7:
                 MemberController::adjustBlockedMembersList(currentMember);
                 break;
             default:

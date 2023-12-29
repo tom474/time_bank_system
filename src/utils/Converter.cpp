@@ -45,3 +45,11 @@ string Converter::skillsToString(vector<Skill*> skills) {
     }
     return strVal;
 }
+
+vector<string> Converter::skillsToStringVector(vector<Skill*> skills) {
+    vector<string> strVal;
+    for (int i = 0; i < skills.size(); i++) {
+        strVal.push_back(skills[i]->getName());
+    }
+    return strVal;
+}

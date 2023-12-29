@@ -64,16 +64,16 @@ void Member::creditsTopUp(int amount) {
 
 }
 
-void Member::searchSupporter() {
-
-}
-
-void Member::bookSupporter() {
-
-}
-
 void Member::viewRequest() {
 
+}
+
+void Member::sendRequest(Request &request) {
+    sendingRequests.push_back(&request);
+}
+
+void Member::receiveRequest(Request &request) {
+    receivingRequests.push_back(&request);
 }
 
 void Member::acceptRequest(Request &request) {
@@ -139,7 +139,7 @@ void Member::addAvailability() {
         }
         performedSkills.push_back(skills[choice - 1]);
 
-        bool isAddSkill = InputValidator::getBool("Do you want to add more skill? (y/n): ");
+        bool isAddSkill = InputValidator::getBool("Do you want to add more skill? (yes/no): ");
         if (!isAddSkill) {
             break;
         }
@@ -188,6 +188,27 @@ string Member::getAvailableCity() {
 string Member::getHomeAddress() {
     return homeAddress;
 }
+
+double Member::getHostRating() {
+    vector<Review*> hostReviews = {};
+    for (auto &review : reviews) {
+        if (review->getType() == "Host") {
+            hostReviews.push_back(review);
+        }
+    }
+
+    // If member have no host review yet, the default rating is 5
+    if (hostReviews.size() == 0) {
+        return 5;
+    }
+
+    double totalRating = 0;
+    for (auto &review : hostReviews) {
+        totalRating += review->getRatingScore();
+    }
+    return totalRating / hostReviews.size();
+}
+
 vector<Availability*> Member::getAvailability() {
     return availability;
 }
