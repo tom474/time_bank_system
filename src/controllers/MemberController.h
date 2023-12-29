@@ -25,6 +25,15 @@ public:
     static Member* login();
 
     /**
+     * this function will check if the user have a temporary password or not
+     *  and prompt them to change password
+     *
+     * @param Member*
+     * @return void
+    */
+    static void resetPassword(Member* member);
+  
+    /**
      * Print out the list of members as a table
      *
      * @param vector<Member*>: list of members
