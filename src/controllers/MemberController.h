@@ -74,6 +74,10 @@ public:
      * @return none
     */
     static void adjustBlockedMembersList(Member* currentMember);
+
+    void viewRequests(Member* currentMember);
+
+    void displayRequestInfo(Request* request);
 };
 
 #endif // _MEMBER_CONTROLLER_H_

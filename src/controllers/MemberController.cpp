@@ -381,3 +381,46 @@ void MemberController::adjustBlockedMembersList(Member* currentMember) {
             break;
     }
 }
+
+void MemberController::viewRequests(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase(); // Use FileManager to load requests
+
+    bool hasRequests = false;
+    for (auto &request : allRequests) {
+        if (request->getSupporterID() == currentMember->getMemberId()) {
+            hasRequests = true;
+            displayRequestInfo(request);
+        }
+    }
+
+    if (!hasRequests) {
+        cout << "No requests have been made to you." << endl;
+    }
+
+    // Clean up if necessary (depends on how you manage memory)
+    for (auto &request : allRequests) {
+        delete request;
+    }
+}
+
+void MemberController::displayRequestInfo(Request* request) {
+    if (request == nullptr) {
+        return;
+    }
+
+    cout << "Request ID: " << request->getRequestID() << endl;
+    cout << "Host ID: " << request->getHostID() << endl;
+    cout << "Supporter ID: " << request->getSupporterID() << endl;
+    cout << "Requested Time: " << request->getRequestedTime()->toString() << endl; // Assuming TimePeriod has a toString() method
+    cout << "Status: " << request->getStatus() << endl;
+    cout << "Requested Skills: ";
+    for (auto &skill : request->getRequestedSkills()) {
+        cout << skill->getName() << " (" << skill->getDescription() << "), ";
+    }
+    cout << endl << "---------------------------------------" << endl;
+}
