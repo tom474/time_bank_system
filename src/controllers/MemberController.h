@@ -78,6 +78,10 @@ public:
     void viewRequests(Member* currentMember);
 
     void displayRequestInfo(Request* request);
+
+    void acceptRequest(Member* currentMember, const string& requestId);
+
+    void denyRequest(Member* currentMember, const string& requestId);
 };
 
 #endif // _MEMBER_CONTROLLER_H_

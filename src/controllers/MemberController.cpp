@@ -424,3 +424,61 @@ void MemberController::displayRequestInfo(Request* request) {
     }
     cout << endl << "---------------------------------------" << endl;
 }
+
+void MemberController::acceptRequest(Member* currentMember, const string& requestId) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << endl;
+        return;
+    }
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &req : allRequests) {
+        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
+            req->setStatus(requestStatus::Accepted);
+            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
+            cout << "Request accepted successfully." << endl;
+            requestFound = true;
+            break;
+        }
+    }
+
+    if (!requestFound) {
+        cout << "Request not found or you do not have permission to accept it." << endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
+    }
+}
+
+void MemberController::denyRequest(Member* currentMember, const string& requestId) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << endl;
+        return;
+    }
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &req : allRequests) {
+        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
+            req->setStatus(requestStatus::Rejected);
+            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
+            cout << "Request denied successfully." << endl;
+            requestFound = true;
+            break;
+        }
+    }
+
+    if (!requestFound) {
+        cout << "Request not found or you do not have permission to deny it." << endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
+    }
+}
