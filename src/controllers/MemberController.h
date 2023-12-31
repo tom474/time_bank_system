@@ -74,6 +74,14 @@ public:
      * @return none
     */
     static void adjustBlockedMembersList(Member* currentMember);
+
+    /**
+     * Member can top up their credit points
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void topUpCredits(Member* currentMember);
 };
 
 #endif // _MEMBER_CONTROLLER_H_
