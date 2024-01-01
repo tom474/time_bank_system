@@ -388,64 +388,92 @@ void MemberController::viewRequests(Member* currentMember) {
         return;
     }
 
-    vector<Request*> allRequests = FileManager::loadRequestDatabase(); // Use FileManager to load requests
-
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
     bool hasRequests = false;
+
+    cout << "---------------------------------------" << endl;
+    cout << std::left << std::setw(12) << "Request ID" 
+         << std::setw(12) << "Host ID" 
+         << std::setw(15) << "Supporter ID" 
+         << std::setw(20) << "Requested Time" 
+         << std::setw(10) << "Status" 
+         << "Requested Skills" << endl;
+    cout << "---------------------------------------" << endl;
+
     for (auto &request : allRequests) {
         if (request->getSupporterID() == currentMember->getMemberId()) {
             hasRequests = true;
-            displayRequestInfo(request);
+            cout << std::left << std::setw(12) << request->getRequestID()
+                 << std::setw(12) << request->getHostID()
+                 << std::setw(15) << request->getSupporterID()
+                 << std::setw(20) << request->getRequestedTime()->toString()
+                 << std::setw(10) << request->getStatus();
+
+            const auto& skills = request->getRequestedSkills();
+            for (size_t i = 0; i < skills.size(); ++i) {
+                cout << skills[i]->getName();
+                if (i < skills.size() - 1) {
+                    cout << ", ";
+                }
+            }
+            cout << endl;
         }
     }
 
     if (!hasRequests) {
         cout << "No requests have been made to you." << endl;
+    } else {
+        cout << "---------------------------------------" << endl;
     }
 
-    // Clean up if necessary (depends on how you manage memory)
+    // Clean up if necessary
     for (auto &request : allRequests) {
         delete request;
     }
 }
 
-void MemberController::displayRequestInfo(Request* request) {
-    if (request == nullptr) {
-        return;
-    }
 
-    cout << "Request ID: " << request->getRequestID() << endl;
-    cout << "Host ID: " << request->getHostID() << endl;
-    cout << "Supporter ID: " << request->getSupporterID() << endl;
-    cout << "Requested Time: " << request->getRequestedTime()->toString() << endl; // Assuming TimePeriod has a toString() method
-    cout << "Status: " << request->getStatus() << endl;
-    cout << "Requested Skills: ";
-    for (auto &skill : request->getRequestedSkills()) {
-        cout << skill->getName() << " (" << skill->getDescription() << "), ";
-    }
-    cout << endl << "---------------------------------------" << endl;
-}
-
-void MemberController::acceptRequest(Member* currentMember, const string& requestId) {
+void MemberController::displayRequestInfo(Member* currentMember) {
     if (currentMember == nullptr) {
-        std::cerr << "Error: Member is not logged in." << endl;
+        std::cerr << "Error: Member is not logged in." << std::endl;
         return;
     }
 
+    string requestId = InputValidator::getString("Enter the request ID you want to view: ");
     vector<Request*> allRequests = FileManager::loadRequestDatabase();
     bool requestFound = false;
 
-    for (auto &req : allRequests) {
-        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
-            req->setStatus(requestStatus::Accepted);
-            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
-            cout << "Request accepted successfully." << endl;
+    for (auto &request : allRequests) {
+        if (request->getRequestID() == requestId) {
+            std::cout << "---------------------------------------" << std::endl;
+            std::cout << "Request ID: " << request->getRequestID() << std::endl;
+            std::cout << "Host ID: " << request->getHostID() << std::endl;
+            std::cout << "Supporter ID: " << request->getSupporterID() << std::endl;
+            std::cout << "Requested Time: " << request->getRequestedTime()->toString() << std::endl;
+            std::cout << "Status: " << request->getStatus() << std::endl;
+            
+            const auto& skills = request->getRequestedSkills();
+            if (!skills.empty()) {
+                std::cout << "Requested Skills: ";
+                for (size_t i = 0; i < skills.size(); ++i) {
+                    std::cout << skills[i]->getName() << " (" << skills[i]->getDescription() << ")";
+                    if (i < skills.size() - 1) {
+                        std::cout << ", ";
+                    }
+                }
+                std::cout << std::endl;
+            } else {
+                std::cout << "Requested Skills: None" << std::endl;
+            }
+            
+            std::cout << "---------------------------------------" << std::endl;
             requestFound = true;
             break;
         }
     }
 
     if (!requestFound) {
-        cout << "Request not found or you do not have permission to accept it." << endl;
+        std::cout << "Request ID '" << requestId << "' not found." << std::endl;
     }
 
     // Clean up
@@ -454,27 +482,80 @@ void MemberController::acceptRequest(Member* currentMember, const string& reques
     }
 }
 
-void MemberController::denyRequest(Member* currentMember, const string& requestId) {
+
+void MemberController::acceptRequest(Member* currentMember) {
     if (currentMember == nullptr) {
-        std::cerr << "Error: Member is not logged in." << endl;
+        std::cerr << "Error: Member is not logged in." << std::endl;
         return;
     }
+
+    // Prompt the user for the request ID
+    string requestId = InputValidator::getString("Enter the ID of the request you want to accept: ");
 
     vector<Request*> allRequests = FileManager::loadRequestDatabase();
     bool requestFound = false;
 
     for (auto &req : allRequests) {
         if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
-            req->setStatus(requestStatus::Rejected);
-            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
-            cout << "Request denied successfully." << endl;
+            // Confirmation step
+            std::cout << "Are you sure you want to accept the request " << requestId << "? (yes/no): ";
+            string confirmation;
+            std::cin >> confirmation;
+            if (confirmation != "yes") {
+                std::cout << "Request acceptance canceled." << std::endl;
+                break;
+            }
+
+            req->setStatus(requestStatus::Accepted);
+            FileManager::saveRequestDatabase(allRequests); // Save updated requests
+            std::cout << "Request accepted successfully." << std::endl;
             requestFound = true;
             break;
         }
     }
 
     if (!requestFound) {
-        cout << "Request not found or you do not have permission to deny it." << endl;
+        std::cout << "Request not found or you do not have permission to accept it." << std::endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
+    }
+}
+
+void MemberController::denyRequest(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    string requestId = InputValidator::getString("Enter the ID of the request you want to deny: ");
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &req : allRequests) {
+        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
+            // Confirmation step
+            std::cout << "Are you sure you want to deny the request " << requestId << "? (yes/no): ";
+            string confirmation;
+            std::cin >> confirmation;
+            if (confirmation != "yes") {
+                std::cout << "Request denial canceled." << std::endl;
+                break;
+            }
+
+            req->setStatus(requestStatus::Rejected);
+            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
+            std::cout << "Request denied successfully." << std::endl;
+            requestFound = true;
+            break;
+        }
+    }
+
+    if (!requestFound) {
+        std::cout << "Request not found or you do not have permission to deny it." << std::endl;
     }
 
     // Clean up

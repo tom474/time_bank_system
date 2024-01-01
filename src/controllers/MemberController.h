@@ -77,11 +77,29 @@ public:
 
     void viewRequests(Member* currentMember);
 
-    void displayRequestInfo(Request* request);
+    /**
+     * User can display information of a specific request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void displayRequestInfo(Member* currentMember);
 
-    void acceptRequest(Member* currentMember, const string& requestId);
+    /**
+     * Member can accept the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void acceptRequest(Member* currentMember);
 
-    void denyRequest(Member* currentMember, const string& requestId);
+    /**
+     * Member can deny the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void denyRequest(Member* currentMember);
 };
 
 #endif // _MEMBER_CONTROLLER_H_
