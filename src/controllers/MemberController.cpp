@@ -93,13 +93,13 @@ void MemberController::viewMemberList(vector<Member *> members)
     std::cout << std::string(idWidth + fullnameWidth + skillWidth + phoneNumberWidth + emailWidth + homeAddressWidth + cityWidth + statusWidth + 25, '-') << "\n\n";
 }
 
-void MemberController::resetPassword(Member *member)
-{
-    if (!member->getIsResetPassword())
-    {
+void MemberController::resetPassword(Member* member) { 
+    // Check if member has a temporary password 
+    if (!member->getIsResetPassword()) {
         return;
     }
-    cout << "Your password has been reset!\n";
+    // Show request to reset password and set IsResetPassword to false
+    cout << "Your password has been reset!\n"; 
     string newPassword = InputValidator::getString("Enter new password: ");
     member->setPassword(newPassword);
     member->setIsResetPassword(false);

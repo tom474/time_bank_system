@@ -26,10 +26,11 @@ void Admin::setPassword(string passwordVal) {
 void Admin::resetPassword() {
     bool isGetMemberId = false;
     Member* targetMember = nullptr;
-    // get the target user
+    // Get the target user
     while(!isGetMemberId) {
         string memberUsername = InputValidator::getString("Enter member username: ");
         vector<Member*> members = Menu::allMembers;
+        // Find the target user
         for (Member* member : members) {
             if (member->getUsername() == memberUsername) {
                 targetMember = member;
@@ -40,7 +41,7 @@ void Admin::resetPassword() {
             cout << "Unknow member \n";
         }
     }
-    // reset password
+    // Reset password and set IsResetPassword to true
     string newPassword = InputValidator::getString("Enter new password: ");
     targetMember->setPassword(newPassword);
     targetMember->setIsResetPassword(true);

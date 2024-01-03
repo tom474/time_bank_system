@@ -93,6 +93,7 @@ void Member::rateHost() {
 }
 
 void Member::addAvailability() {
+    // Unavailable for member that not have any skills
     if (skills.size() == 0) {
         cout << "You have to add at least 1 skill to add availability!\n";
         return;
@@ -137,13 +138,19 @@ void Member::addAvailability() {
             cout << "Invalid choice. Please enter again!\n";
             continue;
         }
+        // Stop if member has 1 skill 
         performedSkills.push_back(skills[choice - 1]);
-
+        if (skills.size() < 2) {
+            cout << "You only have 1 skill. Cannot add more skills.\n";
+            break;
+        }
+        // ask member if they want to add more skill if there skills are more than 1
         bool isAddSkill = InputValidator::getBool("Do you want to add more skill? (yes/no): ");
         if (!isAddSkill) {
             break;
         }
     }
+    // Create availability
     Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
     this->availability.push_back(availability);
     cout << "Add availability successfully!\n";
