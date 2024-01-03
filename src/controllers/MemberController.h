@@ -32,7 +32,7 @@ public:
     * @param Member*
     * @return void
     */
-    static void resetPassword(Member* member);
+    // static void resetPassword(Member* member);
 
     /**
      * Print out the list of members as a table
@@ -78,17 +78,17 @@ public:
 
     /**
      * Member can top up their credit points
-     * 
+     *
      * @param Member*: current member
      * @return none
     */
     void topUpCredits(Member* currentMember);
-  
+
     void viewRequests(Member* currentMember);
 
     /**
      * User can display information of a specific request
-     * 
+     *
      * @param Member*: current member
      * @return none
     */
@@ -96,7 +96,7 @@ public:
 
     /**
      * Member can accept the request
-     * 
+     *
      * @param Member*: current member
      * @return none
     */
@@ -104,7 +104,7 @@ public:
 
     /**
      * Member can deny the request
-     * 
+     *
      * @param Member*: current member
      * @return none
     */
