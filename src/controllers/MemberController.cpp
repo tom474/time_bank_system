@@ -569,6 +569,22 @@ void MemberController::denyRequest(Member* currentMember) {
     }
 }
 
+void MemberController::topUpCredits(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    std::cout << "------ Credit Top-Up ------\n";
+    int amount = InputValidator::getInt("Enter the amount to top up: ");
+    if (amount > 0) {
+        currentMember->creditsTopUp(amount);
+        std::cout << "Credit points successfully added. New balance: " 
+                  << currentMember->getCreditPoint() << std::endl;
+    } else {
+        std::cout << "Invalid amount. Top-up failed." << std::endl;
+    }
+
 vector<Member*> MemberController::searchForMemberToRate(Member* currentMember) {
     // currentMember.
     // Show the list of suitable supporters
