@@ -160,3 +160,7 @@ int TimePeriod::getHourDuration() {
 
     return hourDuration;
 }
+
+string TimePeriod::toString() {
+    return "Start: " + startTime.toString() + ", End: " + endTime.toString();
+}

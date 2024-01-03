@@ -76,6 +76,32 @@ public:
     */
     static void adjustBlockedMembersList(Member* currentMember);
 
+    void viewRequests(Member* currentMember);
+
+    /**
+     * User can display information of a specific request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void displayRequestInfo(Member* currentMember);
+
+    /**
+     * Member can accept the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void acceptRequest(Member* currentMember);
+
+    /**
+     * Member can deny the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void denyRequest(Member* currentMember);
+
     /**
      * Member can rate hosts/supporters
      *
