@@ -32,6 +32,7 @@ class TimePeriod {
         Time getEndTime();
         bool isOverlapsWith(TimePeriod &timeRequest);
         int getHourDuration();
+        string toString();
 };
 
 #endif  // _TIME_MANAGER_H_

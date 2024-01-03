@@ -25,14 +25,14 @@ public:
      */
     static Member* login();
 
-    // /**
-    //  * this function will check if the user have a temporary password or not
-    //  *  and prompt them to change password
-    //  *
-    //  * @param Member*
-    //  * @return void
-    // */
-    // static void resetPassword(Member* member);
+    /**
+    * this function will check if the user have a temporary password or not
+    *  and prompt them to change password
+    *
+    * @param Member*
+    * @return void
+    */
+    static void resetPassword(Member* member);
 
     /**
      * Print out the list of members as a table
@@ -75,6 +75,40 @@ public:
      * @return none
     */
     static void adjustBlockedMembersList(Member* currentMember);
+
+    /**
+     * Member can top up their credit points
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void topUpCredits(Member* currentMember);
+  
+    void viewRequests(Member* currentMember);
+
+    /**
+     * User can display information of a specific request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void displayRequestInfo(Member* currentMember);
+
+    /**
+     * Member can accept the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void acceptRequest(Member* currentMember);
+
+    /**
+     * Member can deny the request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    void denyRequest(Member* currentMember);
 
     /**
      * Member can rate hosts/supporters

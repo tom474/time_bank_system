@@ -60,3 +60,7 @@ string Request::getStatus() {
     }
     return "Pending";
 }
+
+void Request::setStatus(requestStatus newStatus) {
+    status = newStatus;
+}
