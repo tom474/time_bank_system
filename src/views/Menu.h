@@ -22,6 +22,7 @@ class Menu {
 public:
     string currentScreen;
     static vector<Member*> allMembers;
+    static Member loggedInMember;
     Menu();
     static void showWelcome();
     static void loginAsGuest();
