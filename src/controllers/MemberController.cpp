@@ -16,7 +16,7 @@ Member* MemberController::login() {
     string password = InputValidator::getString("Please enter your password: ");
     Member* loggedInMember;
     vector<Member* > members = Menu::allMembers;
-    for (Member *member : members) {
+    for (Member* member : members) {
         if (password == member->getPassword() && username == member->getUsername()) {
             cout << "Login Successfully!\n" << endl;
             loggedInMember = member;
@@ -51,13 +51,13 @@ void MemberController::viewMemberList(vector<Member*> members) {
 
     // Print the header
     std::cout << "| " << std::left << std::setw(idWidth) << "ID" << " | "
-              << std::setw(fullnameWidth) << "Fullname" << " | "
-              << std::setw(skillWidth) << "Skills" << " | "
-              << std::setw(phoneNumberWidth) << "Phone Number" << " | "
-              << std::setw(emailWidth) << "Email" << " | "
-              << std::setw(homeAddressWidth) << "Home Address" << " | "
-              << std::setw(cityWidth) << "City" << " | "
-              << std::setw(statusWidth) << "Status" << " |\n";
+        << std::setw(fullnameWidth) << "Fullname" << " | "
+        << std::setw(skillWidth) << "Skills" << " | "
+        << std::setw(phoneNumberWidth) << "Phone Number" << " | "
+        << std::setw(emailWidth) << "Email" << " | "
+        << std::setw(homeAddressWidth) << "Home Address" << " | "
+        << std::setw(cityWidth) << "City" << " | "
+        << std::setw(statusWidth) << "Status" << " |\n";
 
     // Print a line separator
     std::cout << std::string(idWidth + fullnameWidth + skillWidth + phoneNumberWidth + emailWidth + homeAddressWidth + cityWidth + statusWidth + 25, '-') << "\n";
@@ -65,24 +65,24 @@ void MemberController::viewMemberList(vector<Member*> members) {
     // Print the member information
     for (Member* member : members) {
         std::cout << "| " << std::left << std::setw(idWidth) << member->getMemberId() << " | "
-                  << std::setw(fullnameWidth) << member->getFullname() << " | "
-                  << std::setw(skillWidth) << Converter::skillsToString(member->getSkill()) << " | "
-                  << std::setw(phoneNumberWidth) << member->getPhoneNumber() << " | "
-                  << std::setw(emailWidth) << member->getEmail() << " | "
-                  << std::setw(homeAddressWidth) << member->getHomeAddress() << " | "
-                  << std::setw(cityWidth) << member->getAvailableCity() << " | "
-                  << std::setw(statusWidth) << Converter::boolToString(member->getAvailableStatus()) << " |"
-                  << "\n";
+            << std::setw(fullnameWidth) << member->getFullname() << " | "
+            << std::setw(skillWidth) << Converter::skillsToString(member->getSkill()) << " | "
+            << std::setw(phoneNumberWidth) << member->getPhoneNumber() << " | "
+            << std::setw(emailWidth) << member->getEmail() << " | "
+            << std::setw(homeAddressWidth) << member->getHomeAddress() << " | "
+            << std::setw(cityWidth) << member->getAvailableCity() << " | "
+            << std::setw(statusWidth) << Converter::boolToString(member->getAvailableStatus()) << " |"
+            << "\n";
     }
     // Print a line separator
     std::cout << std::string(idWidth + fullnameWidth + skillWidth + phoneNumberWidth + emailWidth + homeAddressWidth + cityWidth + statusWidth + 25, '-') << "\n\n";
 }
 
-void MemberController::resetPassword(Member* member) { 
+void MemberController::resetPassword(Member* member) {
     if (!member->getIsResetPassword()) {
         return;
     }
-    cout << "Your password has been reset!\n"; 
+    cout << "Your password has been reset!\n";
     string newPassword = InputValidator::getString("Enter new password: ");
     member->setPassword(newPassword);
     member->setIsResetPassword(false);
@@ -134,7 +134,7 @@ vector<Member*> MemberController::searchForSupporters(Member* currentMember) {
                 break;
             }
         }
-        
+
         // If the supporter is suitable, add to the list
         if (isSuitable) {
             supporters.push_back(supporter);
@@ -143,7 +143,8 @@ vector<Member*> MemberController::searchForSupporters(Member* currentMember) {
 
     if (supporters.size() == 0) {
         cout << "There is no suitable supporter for you!\n";
-    } else {
+    }
+    else {
         // Show the list of suitable supporters
         cout << "------------------------------------------------------ List of suitable supporters ------------------------------------------------------\n";
         MemberController::viewMemberList(supporters);
@@ -197,15 +198,15 @@ void MemberController::createRequest(Member* currentMember) {
         skillWidth = std::max(skillWidth, Converter::skillsToString(availability->getPerformedSkills()).length());
     }
 
-    cout << std::string((skillWidth + 70)/2 - 11, '-') << " Suitable Availability " << std::string((skillWidth + 70)/2 - 11, '-') << "\n";
+    cout << std::string((skillWidth + 70) / 2 - 11, '-') << " Suitable Availability " << std::string((skillWidth + 70) / 2 - 11, '-') << "\n";
     // Print a line separator
     std::cout << std::string(8 + 16 + 16 + skillWidth + 14 + 16, '-') << "\n";
 
     std::cout << "| " << std::left << std::setw(8) << "Session" << " | "
-            << std::setw(16) << "Start Time" << " | "
-            << std::setw(16) << "End Time" << " | "
-            << std::setw(skillWidth) << "Skills" << " | "
-            << std::setw(14) << "Point Per Hour" << " |\n";
+        << std::setw(16) << "Start Time" << " | "
+        << std::setw(16) << "End Time" << " | "
+        << std::setw(skillWidth) << "Skills" << " | "
+        << std::setw(14) << "Point Per Hour" << " |\n";
 
     // Print a line separator
     std::cout << std::string(8 + 16 + 16 + skillWidth + 14 + 16, '-') << "\n";
@@ -214,10 +215,10 @@ void MemberController::createRequest(Member* currentMember) {
     int session = 1;
     for (Availability* availability : supporter->getAvailability()) {
         std::cout << "| " << std::left << std::setw(8) << session << " | "
-                << std::setw(16) << availability->getAvailableTime()->getStartTime().toString() << " | "
-                << std::setw(16) << availability->getAvailableTime()->getEndTime().toString() << " | "
-                << std::setw(skillWidth) << Converter::skillsToString(availability->getPerformedSkills()) << " | "
-                << std::right << std::setw(14) << availability->getPointPerHour() << " |\n";
+            << std::setw(16) << availability->getAvailableTime()->getStartTime().toString() << " | "
+            << std::setw(16) << availability->getAvailableTime()->getEndTime().toString() << " | "
+            << std::setw(skillWidth) << Converter::skillsToString(availability->getPerformedSkills()) << " | "
+            << std::right << std::setw(14) << availability->getPointPerHour() << " |\n";
         session++;
     }
 
@@ -273,10 +274,12 @@ void MemberController::createRequest(Member* currentMember) {
         if (selectedAvailability->getAvailableTime()->isOverlapsWith(*timePeriod)) {
             if (timePeriod->getHourDuration() <= maxHours) {
                 isValidTime = true;
-            } else {
+            }
+            else {
                 cout << "You can only request for " << maxHours << " hours!\n";
             }
-        } else {
+        }
+        else {
             cout << "Invalid time. Please enter again!\n";
         }
     }
@@ -314,7 +317,8 @@ void MemberController::createRequest(Member* currentMember) {
         // Ask if the member wants to add another skill
         if (selectedAvailability->getPerformedSkills().size() > 1) {
             isAddSkill = InputValidator::getBool("Do you want to add another skill? (yes/no): ");
-        } else {
+        }
+        else {
             isAddSkill = false;
         }
     }
@@ -335,50 +339,233 @@ void MemberController::adjustBlockedMembersList(Member* currentMember) {
     for (Member* member : Menu::allMembers) {
         if (std::find(blockedMembersStr.begin(), blockedMembersStr.end(), member->getMemberId()) != blockedMembersStr.end()) {
             blockedMembers.push_back(member);
-        } else if (member->getMemberId() != currentMember->getMemberId()){
+        }
+        else if (member->getMemberId() != currentMember->getMemberId()) {
             notBlockedMembers.push_back(member);
         }
     }
 
     cout << "---------- Block/Unblock Member ----------\n";
-    int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action: ", {"Block member", "Unblock member"});
+    int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action: ", { "Block member", "Unblock member" });
     switch (choice) {
-        case 1: {
-            viewMemberList(notBlockedMembers);
-            bool isValidID = false;
-            while (!isValidID) {
-                string blockedMemberID = InputValidator::getString("Enter the member's ID that you want to block: ");
-                for (Member* member : notBlockedMembers) {
-                    if (member->getMemberId() == blockedMemberID) {
-                        currentMember->blockMember(*member);
-                        isValidID = true;
-                        break;
-                    }
-                }
-                if (!isValidID) {
-                    cout << "Invalid ID. Please enter again!\n";
+    case 1: {
+        viewMemberList(notBlockedMembers);
+        bool isValidID = false;
+        while (!isValidID) {
+            string blockedMemberID = InputValidator::getString("Enter the member's ID that you want to block: ");
+            for (Member* member : notBlockedMembers) {
+                if (member->getMemberId() == blockedMemberID) {
+                    currentMember->blockMember(*member);
+                    isValidID = true;
+                    break;
                 }
             }
-            break;
-        } case 2: {
-            viewMemberList(blockedMembers);
-            bool isValidID = false;
-            while (!isValidID) {
-                string unblockedMemberID = InputValidator::getString("Enter the member's ID that you want to unblock: ");
-                for (Member* member : blockedMembers) {
-                    if (member->getMemberId() == unblockedMemberID) {
-                        currentMember->unblockMember(*member);
-                        isValidID = true;
-                        break;
-                    }
-                }
-                if (!isValidID) {
-                    cout << "Invalid ID. Please enter again!\n";
+            if (!isValidID) {
+                cout << "Invalid ID. Please enter again!\n";
+            }
+        }
+        break;
+    } case 2: {
+        viewMemberList(blockedMembers);
+        bool isValidID = false;
+        while (!isValidID) {
+            string unblockedMemberID = InputValidator::getString("Enter the member's ID that you want to unblock: ");
+            for (Member* member : blockedMembers) {
+                if (member->getMemberId() == unblockedMemberID) {
+                    currentMember->unblockMember(*member);
+                    isValidID = true;
+                    break;
                 }
             }
+            if (!isValidID) {
+                cout << "Invalid ID. Please enter again!\n";
+            }
+        }
+        break;
+    } default:
+        break;
+    }
+}
+
+void MemberController::viewRequests(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool hasRequests = false;
+
+    cout << "---------------------------------------" << endl;
+    cout << std::left << std::setw(12) << "Request ID" 
+         << std::setw(12) << "Host ID" 
+         << std::setw(15) << "Supporter ID" 
+         << std::setw(20) << "Requested Time" 
+         << std::setw(10) << "Status" 
+         << "Requested Skills" << endl;
+    cout << "---------------------------------------" << endl;
+
+    for (auto &request : allRequests) {
+        if (request->getSupporterID() == currentMember->getMemberId()) {
+            hasRequests = true;
+            cout << std::left << std::setw(12) << request->getRequestID()
+                 << std::setw(12) << request->getHostID()
+                 << std::setw(15) << request->getSupporterID()
+                 << std::setw(20) << request->getRequestedTime()->toString()
+                 << std::setw(10) << request->getStatus();
+
+            const auto& skills = request->getRequestedSkills();
+            for (size_t i = 0; i < skills.size(); ++i) {
+                cout << skills[i]->getName();
+                if (i < skills.size() - 1) {
+                    cout << ", ";
+                }
+            }
+            cout << endl;
+        }
+    }
+
+    if (!hasRequests) {
+        cout << "No requests have been made to you." << endl;
+    } else {
+        cout << "---------------------------------------" << endl;
+    }
+
+    // Clean up if necessary
+    for (auto &request : allRequests) {
+        delete request;
+    }
+}
+
+
+void MemberController::displayRequestInfo(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    string requestId = InputValidator::getString("Enter the request ID you want to view: ");
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &request : allRequests) {
+        if (request->getRequestID() == requestId) {
+            std::cout << "---------------------------------------" << std::endl;
+            std::cout << "Request ID: " << request->getRequestID() << std::endl;
+            std::cout << "Host ID: " << request->getHostID() << std::endl;
+            std::cout << "Supporter ID: " << request->getSupporterID() << std::endl;
+            std::cout << "Requested Time: " << request->getRequestedTime()->toString() << std::endl;
+            std::cout << "Status: " << request->getStatus() << std::endl;
+            
+            const auto& skills = request->getRequestedSkills();
+            if (!skills.empty()) {
+                std::cout << "Requested Skills: ";
+                for (size_t i = 0; i < skills.size(); ++i) {
+                    std::cout << skills[i]->getName() << " (" << skills[i]->getDescription() << ")";
+                    if (i < skills.size() - 1) {
+                        std::cout << ", ";
+                    }
+                }
+                std::cout << std::endl;
+            } else {
+                std::cout << "Requested Skills: None" << std::endl;
+            }
+            
+            std::cout << "---------------------------------------" << std::endl;
+            requestFound = true;
             break;
-        } default:
+        }
+    }
+
+    if (!requestFound) {
+        std::cout << "Request ID '" << requestId << "' not found." << std::endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
+    }
+}
+
+
+void MemberController::acceptRequest(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    // Prompt the user for the request ID
+    string requestId = InputValidator::getString("Enter the ID of the request you want to accept: ");
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &req : allRequests) {
+        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
+            // Confirmation step
+            std::cout << "Are you sure you want to accept the request " << requestId << "? (yes/no): ";
+            string confirmation;
+            std::cin >> confirmation;
+            if (confirmation != "yes") {
+                std::cout << "Request acceptance canceled." << std::endl;
+                break;
+            }
+
+            req->setStatus(requestStatus::Accepted);
+            FileManager::saveRequestDatabase(allRequests); // Save updated requests
+            std::cout << "Request accepted successfully." << std::endl;
+            requestFound = true;
             break;
+        }
+    }
+
+    if (!requestFound) {
+        std::cout << "Request not found or you do not have permission to accept it." << std::endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
+    }
+}
+
+void MemberController::denyRequest(Member* currentMember) {
+    if (currentMember == nullptr) {
+        std::cerr << "Error: Member is not logged in." << std::endl;
+        return;
+    }
+
+    string requestId = InputValidator::getString("Enter the ID of the request you want to deny: ");
+
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    bool requestFound = false;
+
+    for (auto &req : allRequests) {
+        if (req->getRequestID() == requestId && req->getSupporterID() == currentMember->getMemberId()) {
+            // Confirmation step
+            std::cout << "Are you sure you want to deny the request " << requestId << "? (yes/no): ";
+            string confirmation;
+            std::cin >> confirmation;
+            if (confirmation != "yes") {
+                std::cout << "Request denial canceled." << std::endl;
+                break;
+            }
+
+            req->setStatus(requestStatus::Rejected);
+            FileManager::saveRequestDatabase(allRequests); // Assuming this method exists to save all requests
+            std::cout << "Request denied successfully." << std::endl;
+            requestFound = true;
+            break;
+        }
+    }
+
+    if (!requestFound) {
+        std::cout << "Request not found or you do not have permission to deny it." << std::endl;
+    }
+
+    // Clean up
+    for (auto &req : allRequests) {
+        delete req;
     }
 }
 
@@ -397,4 +584,43 @@ void MemberController::topUpCredits(Member* currentMember) {
     } else {
         std::cout << "Invalid amount. Top-up failed." << std::endl;
     }
+
+vector<Member*> MemberController::searchForMemberToRate(Member* currentMember) {
+    // currentMember.
+    // Show the list of suitable supporters
+    vector<Member*> members = {};
+    vector<string> memberIds = {};
+    vector<Request*> allRequests = FileManager::loadRequestDatabase();
+    vector<Member*> allMembers = FileManager::loadMemberDatabase();
+    vector<Request*> currentUserRequests = {};
+
+    cout << "current member id: " << currentMember->getMemberId() << "\n";
+    for (Request* request : allRequests) {
+        if ((request->getHostID() == currentMember->getMemberId() ||
+            request->getSupporterID() == currentMember->getMemberId())
+            // request->getStatus() == "Accepted"
+            ) {
+            currentUserRequests.push_back(request);
+        }
+
+        if (request->getHostID() == currentMember->getMemberId()) {
+            currentUserRequests.push_back(request);
+            memberIds.push_back(request->getSupporterID());
+        }
+
+        if (request->getSupporterID() == currentMember->getMemberId()) {
+            currentUserRequests.push_back(request);
+            memberIds.push_back(request->getHostID());
+        }
+    }
+
+    if (currentUserRequests.size() == 0) {
+        cout << "There is no suitable host/support for you to rate!\n";
+    }
+
+    return members;
+}
+
+void MemberController::rateMember(Member* currentMember) {
+    MemberController::searchForMemberToRate(currentMember);
 }
