@@ -663,6 +663,7 @@ void MemberController::topUpCredits(Member* currentMember) {
     } else {
         std::cout << "Invalid amount. Top-up failed." << std::endl;
     }
+}
 
 vector<Member *> MemberController::searchForMemberToRate(Member *currentMember)
 {
