@@ -396,7 +396,6 @@ vector<Member*> MemberController::searchForMemberToRate(Member* currentMember) {
     vector<Member*> allMembers = FileManager::loadMemberDatabase();
     vector<Request*> currentUserRequests = {};
 
-    cout << "current member id: " << currentMember->getMemberId() << "\n";
     for (Request* request : allRequests) {
         if ((request->getHostID() == currentMember->getMemberId() ||
             request->getSupporterID() == currentMember->getMemberId())
@@ -420,9 +419,29 @@ vector<Member*> MemberController::searchForMemberToRate(Member* currentMember) {
         cout << "There is no suitable host/support for you to rate!\n";
     }
 
+    for (string memberId : memberIds) {
+        for (Member* member : allMembers) {
+            if (member->getMemberId() == memberId) {
+                members.push_back(member);
+                continue;
+            }
+        }
+    }
+
+
+    for (Member* mem : members) {
+        cout << mem->getFullname() << "\n";
+    }
+
+
     return members;
 }
 
 void MemberController::rateMember(Member* currentMember) {
-    MemberController::searchForMemberToRate(currentMember);
+    vector<Member*> members = MemberController::searchForMemberToRate(currentMember);
+    vector<string> memberNames = {};
+    for (Member* mem : members) {
+        memberNames.push_back(mem->getFullname());
+    }
+    MenuOptionsGenerator::showMenuWithSelect("Choose a user to rate: ", memberNames);
 }

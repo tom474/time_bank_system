@@ -106,7 +106,7 @@ void Menu::loginAsMember() {
             MemberController::createRequest(currentMember);
             break;
         case 6:
-            cout << "Your previous hosts: ";
+            // cout << "Your previous hosts: ";
             MemberController::rateMember(currentMember);
             break;
         case 7:
