@@ -204,9 +204,9 @@ double Member::getHostRating() {
         }
     }
 
-    // If member have no host review yet, the default rating is 5
+    // If member have no host review yet, the default rating is 0
     if (hostReviews.size() == 0) {
-        return 5;
+        return 0;
     }
 
     double totalRating = 0;

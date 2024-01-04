@@ -10,19 +10,15 @@ using std::endl;
 using std::string;
 using std::vector;
 
-Member *MemberController::login()
-{
-    cout << "---------- Login ----------\n";
+Member *MemberController::login() {
+    cout << "\n---------- Login ----------\n";
     string username = InputValidator::getString("Please enter your username: ");
     string password = InputValidator::getString("Please enter your password: ");
     Member *loggedInMember;
     vector<Member *> members = Menu::allMembers;
-    for (Member *member : members)
-    {
-        if (password == member->getPassword() && username == member->getUsername())
-        {
-            cout << "Login Successfully!\n"
-                 << endl;
+    for (Member *member : members) {
+        if (password == member->getPassword() && username == member->getUsername()) {
+            cout << "Login Successfully!\n";
             loggedInMember = member;
             MemberController::resetPassword(loggedInMember);
             return loggedInMember;
@@ -32,8 +28,7 @@ Member *MemberController::login()
     return nullptr;
 }
 
-void MemberController::viewMemberList(vector<Member *> members)
-{
+void MemberController::viewMemberList(vector<Member*> members) {
     // Calculate the maximum length for each column
     size_t idWidth = 8;
     size_t fullnameWidth = 0;
@@ -44,8 +39,7 @@ void MemberController::viewMemberList(vector<Member *> members)
     size_t cityWidth = 8;
     size_t statusWidth = 6;
 
-    for (Member *member : members)
-    {
+    for (Member *member : members) {
         fullnameWidth = std::max(fullnameWidth, member->getFullname().length());
         skillWidth = std::max(skillWidth, Converter::skillsToString(member->getSkill()).length());
         emailWidth = std::max(emailWidth, member->getEmail().length());
@@ -56,29 +50,20 @@ void MemberController::viewMemberList(vector<Member *> members)
     std::cout << std::string(idWidth + fullnameWidth + skillWidth + phoneNumberWidth + emailWidth + homeAddressWidth + cityWidth + statusWidth + 25, '-') << "\n";
 
     // Print the header
-    std::cout << "| " << std::left << std::setw(idWidth) << "ID"
-              << " | "
-              << std::setw(fullnameWidth) << "Fullname"
-              << " | "
-              << std::setw(skillWidth) << "Skills"
-              << " | "
-              << std::setw(phoneNumberWidth) << "Phone Number"
-              << " | "
-              << std::setw(emailWidth) << "Email"
-              << " | "
-              << std::setw(homeAddressWidth) << "Home Address"
-              << " | "
-              << std::setw(cityWidth) << "City"
-              << " | "
-              << std::setw(statusWidth) << "Status"
-              << " |\n";
+    std::cout << "| " << std::left << std::setw(idWidth) << "ID" << " | "
+              << std::setw(fullnameWidth) << "Fullname" << " | "
+              << std::setw(skillWidth) << "Skills" << " | "
+              << std::setw(phoneNumberWidth) << "Phone Number" << " | "
+              << std::setw(emailWidth) << "Email" << " | "
+              << std::setw(homeAddressWidth) << "Home Address" << " | "
+              << std::setw(cityWidth) << "City" << " | "
+              << std::setw(statusWidth) << "Status" << " |\n";
 
     // Print a line separator
     std::cout << std::string(idWidth + fullnameWidth + skillWidth + phoneNumberWidth + emailWidth + homeAddressWidth + cityWidth + statusWidth + 25, '-') << "\n";
 
     // Print the member information
-    for (Member *member : members)
-    {
+    for (Member *member : members) {
         std::cout << "| " << std::left << std::setw(idWidth) << member->getMemberId() << " | "
                   << std::setw(fullnameWidth) << member->getFullname() << " | "
                   << std::setw(skillWidth) << Converter::skillsToString(member->getSkill()) << " | "
@@ -103,6 +88,7 @@ void MemberController::resetPassword(Member* member) {
     string newPassword = InputValidator::getString("Enter new password: ");
     member->setPassword(newPassword);
     member->setIsResetPassword(false);
+    cout << "Change password successfully!\n";
 }
 
 vector<Member *> MemberController::searchForSupporters(Member *currentMember)

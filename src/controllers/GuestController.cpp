@@ -9,8 +9,6 @@ using std::string;
 using std::vector;
 
 void GuestController::signUp() {
-	vector<Member*> allMembers = FileManager::loadMemberDatabase();
-
 	string memberID = IdGenerator::generateMemberId();
 	int creditPoint = 20;
 	vector<Skill*> skills = {};
@@ -20,7 +18,24 @@ void GuestController::signUp() {
 	vector<Request*> receivingRequests = {};
 	vector<Review*> reviews = {};
 	
-	string username = InputValidator::getString("Enter your username: ");
+	// Get unique username
+	string username;
+	bool isUniqueUsername = false;
+	while (!isUniqueUsername) {
+		bool isExistingUsername = false;
+		username = InputValidator::getString("Enter your username: ");
+		for (Member* member : Menu::allMembers) {
+			if (member->getUsername() == username) {
+				cout << "This username is already taken. Please enter another username!\n";
+				isExistingUsername = true;
+				break;
+			}
+		}
+
+		if (!isExistingUsername) {
+			isUniqueUsername = true;
+		}
+	}
 	string password = InputValidator::getString("Enter your password: ");
 	string fullname = InputValidator::getString("Enter your fullname: ");
 	string phoneNumber = InputValidator::getPhoneNumber("Enter your phone number: ");
@@ -29,7 +44,7 @@ void GuestController::signUp() {
 	string homeAddress = InputValidator::getString("Enter your home address: ");
 	bool availableStatus = InputValidator::getBool("Are you available to support other members now? (yes/no): ");
 
-	cout << "Now you will have to enter atleast 1 skill\n";
+	cout << "Now you will have to enter at least 1 skill\n";
 	bool isAddingSkill = true;
 	while (isAddingSkill) {
 		string skillName = InputValidator::getString("Enter your skill name: ");
@@ -40,9 +55,8 @@ void GuestController::signUp() {
 	}
 	bool isResetPassword = false;
 	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, isResetPassword, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
-	allMembers.push_back(newMember);
-
-	FileManager::saveMemberDatabase(allMembers);
-	
-	cout << "Register Successfully!\n";
+	Menu::allMembers.push_back(newMember);
+	FileManager::saveMemberDatabase(Menu::allMembers);
+	cout << "Register Successfully! Now you can login as Member!\n";
+	Menu::loginAsMember();
 };

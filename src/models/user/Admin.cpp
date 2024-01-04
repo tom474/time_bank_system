@@ -24,27 +24,31 @@ void Admin::setPassword(string passwordVal) {
 }
 
 void Admin::resetPassword() {
+    // Show all members
+    TableGenerator::generateMemberTable("All members", Menu::allMembers);
+
     bool isGetMemberId = false;
     Member* targetMember = nullptr;
     // Get the target user
     while(!isGetMemberId) {
-        string memberUsername = InputValidator::getString("Enter member username: ");
+        string memberUsername = InputValidator::getString("Enter member's ID that you want to reset password: ");
         vector<Member*> members = Menu::allMembers;
         // Find the target user
         for (Member* member : members) {
-            if (member->getUsername() == memberUsername) {
+            if (member->getMemberId() == memberUsername) {
                 targetMember = member;
                 isGetMemberId = true;
             }
         }
         if (targetMember == nullptr) {
-            cout << "Unknow member \n";
+            cout << "Error: Member does not exist!\n";
         }
     }
     // Reset password and set IsResetPassword to true
     string newPassword = InputValidator::getString("Enter new password: ");
     targetMember->setPassword(newPassword);
     targetMember->setIsResetPassword(true);
+    cout << "Reset password successfully!\n";
 }
 
 Admin::~Admin() {}

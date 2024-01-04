@@ -8,17 +8,16 @@
 #include "../models/service/Review.h"
 #include "../models/user/Member.h"
 #include "../utils/InputValidator.h"
-#include "../utils/IdGenerator.h"
 
 class Admin;
 
 class AdminController {
     public:
         /**
-         * Prompts the guest to sign up to be an member
+         * The log in function for the admin
          *
          * @param none
-         * @return bool
+         * @return Admin
          */
         static Admin login();
 };
