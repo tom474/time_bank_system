@@ -309,6 +309,47 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
     }
 }
 
+void MemberController::manageAvailability(Member* currentMember) {
+    bool exitChoice = false;
+    while (!exitChoice) {
+        int choice = MenuOptionsGenerator::showMenuWithSelect(
+            "Choose an action: ",
+            {"Exit",
+                "Set your availability",
+                "Add availability",
+                "Remove availability"
+            }
+        );
+        string statusStr = currentMember->getAvailableStatus() ? "Available" : "Not available";
+        switch (choice) {
+            case 0:
+                exitChoice = true;
+                break;
+            case 1: {
+                cout << "Current status: " << statusStr << "\n";
+                bool isAvailable = InputValidator::getBool("Do you want to change your status? (yes/no): ");
+                if (isAvailable) {
+                    currentMember->setAvailableStatus(!currentMember->getAvailableStatus());
+                }
+                break;
+            }
+            case 2: {
+                TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                currentMember->addAvailability();
+                break;
+            }
+            case 3: {
+                TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                currentMember->removeAvailability();
+                break;
+            }
+            default:
+                exitChoice = true;
+                break;
+        }
+    }
+}
+
 void MemberController::manageRequests(Member* currentMember) {
     bool exitLoop = false;
     while (!exitLoop) {

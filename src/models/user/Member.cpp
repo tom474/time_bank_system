@@ -41,8 +41,8 @@ Member::Member(
     receivingRequests(receivingRequestsVal), 
     reviews(reviewsVal) {}
 
-void Member::setAvailableStatus() {
-
+void Member::setAvailableStatus(bool status) {
+    availableStatus = status;
 }
 
 void Member::blockMember(Member &member) {
@@ -121,7 +121,9 @@ void Member::addAvailability() {
         // Stop if member has 1 skill 
         performedSkills.push_back(skills[choice - 1]);
         if (skills.size() < 2) {
-            cout << "You only have 1 skill. Cannot add more skills.\n";
+            break;
+        }
+        if (performedSkills.size() == skills.size()) {
             break;
         }
         // ask member if they want to add more skill if there skills are more than 1
@@ -134,6 +136,35 @@ void Member::addAvailability() {
     Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
     this->availability.push_back(availability);
     cout << "Add availability successfully!\n";
+}
+
+void Member::removeAvailability() {
+    if (availability.size() == 0) {
+        cout << "You have no availability to remove!\n";
+        return;
+    }
+    // prompt user input and find the selected availability
+    Availability *selectedAvailability;
+    bool isValidSession = false;
+    while (!isValidSession) {
+        int session = InputValidator::getInt("Enter the session that you want to delete the availability: ");
+        if (session < 1 || session > availability.size()) {
+            cout << "Invalid session. Please enter again!\n";
+            continue;
+        }
+        selectedAvailability = availability[session - 1];
+        isValidSession = true;
+    }
+    
+    // delete the selected availability
+    for (int i = 0; i < availability.size(); i++) {
+        if (availability[i] == selectedAvailability) {
+            availability.erase(availability.begin() + i);
+            break;
+        }
+    }
+    cout << "Remove availability successfully!\n";
+
 }
 
 string Member::getMemberId() {

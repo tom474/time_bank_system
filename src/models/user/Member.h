@@ -13,6 +13,7 @@ enum availableCity {
 #include "../service/Review.h"
 #include "../../utils/Converter.h"
 #include "../../utils/InputValidator.h"
+#include "../../views/Menu.h"
 
 #include <iostream>
 #include <vector>
@@ -71,6 +72,7 @@ class Member : public User {
         void sendRequest(Request &request);
         void receiveRequest(Request &request);
         void addAvailability();
+        void removeAvailability();
         string getMemberId();
         string getFullname();
         int getCreditPoint();
@@ -79,7 +81,7 @@ class Member : public User {
         bool getAvailableStatus();
         bool getIsResetPassword();
         void setIsResetPassword(bool isResetPassword);
-        void setAvailableStatus();
+        void setAvailableStatus(bool status);
         string getAvailableCity();
         string getHomeAddress();
         double getHostRating();
