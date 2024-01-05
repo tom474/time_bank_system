@@ -135,7 +135,9 @@ void Member::addAvailability() {
     // Create availability
     Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
     this->availability.push_back(availability);
+    cout << "------------------------------\n";
     cout << "Add availability successfully!\n";
+    cout << "------------------------------\n";
 }
 
 void Member::removeAvailability() {
@@ -163,8 +165,9 @@ void Member::removeAvailability() {
             break;
         }
     }
+    cout << "---------------------------------\n";
     cout << "Remove availability successfully!\n";
-
+    cout << "---------------------------------\n";
 }
 
 void Member::updateAvailability(Request &request, Availability &prevAvailability) {

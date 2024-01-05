@@ -330,18 +330,30 @@ void MemberController::manageAvailability(Member* currentMember) {
                 bool isAvailable = InputValidator::getBool("Do you want to change your status? (yes/no): ");
                 if (isAvailable) {
                     currentMember->setAvailableStatus(!currentMember->getAvailableStatus());
+                    cout << "----------------------------------\n";
+                    cout << "Available status has been updated!\n";
+                    cout << "----------------------------------\n";
                 }
                 break;
             }
             case 2: {
-                TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                if (currentMember->getAvailability().size() > 0) {
+                    TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                }
                 currentMember->addAvailability();
                 break;
             }
             case 3: {
-                TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
-                currentMember->removeAvailability();
-                break;
+                if (currentMember->getAvailability().size() > 0) {
+                    TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                    currentMember->removeAvailability();
+                    break;
+                } else {
+                    cout << "--------------------------------------------------------------\n";
+                    cout << "There are no availability to remove! Please add a availability\n";
+                    cout << "--------------------------------------------------------------\n";
+                    break;
+                }
             }
             default:
                 exitChoice = true;
