@@ -68,13 +68,8 @@ class Member : public User {
         void blockMember(Member &member);
         void unblockMember(Member &member);
         void creditsTopUp(int amount);
-        void viewRequest();
         void sendRequest(Request &request);
         void receiveRequest(Request &request);
-        void acceptRequest(Request &request);
-        void rejectRequest(Request &request);
-        void rateSupporter();
-        void rateHost();
         void addAvailability();
         string getMemberId();
         string getFullname();

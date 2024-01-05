@@ -26,14 +26,6 @@ public:
     static Member* login();
 
     /**
-     * Print out the list of members as a table
-     *
-     * @param vector<Member*>: list of members
-     * @return none
-     */
-    static void viewMemberList(vector<Member*> members);
-
-    /**
      * This function will check if the user have a temporary password or not
      * and prompt them to change password
      *
@@ -73,33 +65,31 @@ public:
      * @param Member*: current member
      * @return none
     */
-    void topUpCredits(Member* currentMember);
-
-    void viewRequests(Member* currentMember);
+    static void topUpCredits(Member* currentMember);
 
     /**
-     * User can display information of a specific request
+     * Member can manage their request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    static void manageRequests(Member* currentMember);
+    
+    /**
+     * Member can accept a specific request
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    static void acceptRequest(Member* currentMember);
+
+    /**
+     * Member can reject a specific request
      *
      * @param Member*: current member
      * @return none
     */
-    void displayRequestInfo(Member* currentMember);
-
-    /**
-     * Member can accept the request
-     *
-     * @param Member*: current member
-     * @return none
-    */
-    void acceptRequest(Member* currentMember);
-
-    /**
-     * Member can deny the request
-     *
-     * @param Member*: current member
-     * @return none
-    */
-    void denyRequest(Member* currentMember);
+    static void rejectRequest(Member* currentMember);
 
     /**
      * Member can rate hosts/supporters
@@ -110,12 +100,28 @@ public:
     static void rateMember(Member* currentMember);
 
     /**
-     * Member can see list of members to rate
-     *
+     * Member can view their request history
+     * 
      * @param Member*: current member
      * @return none
     */
-    static vector<Member*> searchForMemberToRate(Member* currentMember);
+    static void viewRequestHistory(Member* currentMember);
+
+    /**
+     * Member can rate a specific host in their request history
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    static void rateHost(Member* currentMember);
+
+    /**
+     * Member can rate a specific supporter in their request history
+     * 
+     * @param Member*: current member
+     * @return none
+    */
+    static void rateSupporter(Member* currentMember);
 };
 
 #endif // _MEMBER_CONTROLLER_H_

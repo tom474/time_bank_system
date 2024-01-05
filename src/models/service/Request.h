@@ -35,9 +35,8 @@ class Request {
         string getSupporterID();
         vector<Skill*> getRequestedSkills();
         string getStatus();
-        ~Request();
-
         void setStatus(requestStatus newStatus);
+        ~Request();
 };
 
 #endif  // _REQUEST_H_

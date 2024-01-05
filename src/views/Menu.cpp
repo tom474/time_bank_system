@@ -87,8 +87,8 @@ void Menu::loginAsMember() {
             "Manage your availability",
             "Search for supporters",
             "Create new request",
-            "Rate your host/supporter",
-            "Block/Unblock member"});
+            "Rate and review host/supporter",
+            "Block/unblock member"});
         switch (choice) {
             case 0:
                 FileManager::saveMemberDatabase(Menu::allMembers);
@@ -98,8 +98,10 @@ void Menu::loginAsMember() {
                 currentMember->showInfo();
                 break;
             case 2:
+                MemberController::topUpCredits(currentMember);
                 break;
             case 3:
+                MemberController::manageRequests(currentMember);
                 break;
             case 4:
                 currentMember->addAvailability();

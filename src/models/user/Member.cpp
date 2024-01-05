@@ -61,11 +61,7 @@ void Member::unblockMember(Member &member) {
 }
 
 void Member::creditsTopUp(int amount) {
-
-}
-
-void Member::viewRequest() {
-
+    creditPoint += amount;
 }
 
 void Member::sendRequest(Request &request) {
@@ -74,22 +70,6 @@ void Member::sendRequest(Request &request) {
 
 void Member::receiveRequest(Request &request) {
     receivingRequests.push_back(&request);
-}
-
-void Member::acceptRequest(Request &request) {
-
-}
-
-void Member::rejectRequest(Request &request) {
-
-}
-
-void Member::rateSupporter() {
-
-}
-
-void Member::rateHost() {
-
 }
 
 void Member::addAvailability() {
