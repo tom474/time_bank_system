@@ -30,6 +30,25 @@ int Time::getMinute() {
     return minute;
 }
 
+int Time::getMinutesBetween(Time time) {
+    int totalMinutes = 0;
+    // Convert date to vector format
+    vector<int> date1 = splitDate(date);
+    vector<int> date2 = splitDate(time.getDate());
+
+    // get the hour between year
+    totalMinutes += (date1[2] - date2[2]) * 365 * 24 * 60;
+    // get the hour between months
+    totalMinutes += (date1[1] - date2[1]) * 30 * 24 * 60;
+    // get total hour between days
+    totalMinutes += (date1[0] - date2[0]) * 24 * 60;
+    // get total hour between hours
+    totalMinutes += (hour - time.getHour()) * 60;
+    // get total hour between minutes
+    totalMinutes += minute - time.getMinute();
+    return totalMinutes;
+}
+
 int Time::compareTime(Time &time) {
     // Convert date to vector for comparison
     vector<int> date1 = splitDate(date);

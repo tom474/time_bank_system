@@ -73,6 +73,7 @@ class Member : public User {
         void receiveRequest(Request &request);
         void addAvailability();
         void removeAvailability();
+        void updateAvailability(Request &request, Availability &availability);
         string getMemberId();
         string getFullname();
         int getCreditPoint();

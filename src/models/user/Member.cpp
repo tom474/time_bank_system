@@ -167,6 +167,54 @@ void Member::removeAvailability() {
 
 }
 
+void Member::updateAvailability(Request &request, Availability &prevAvailability) {
+    TimePeriod* requestPeriod = request.getRequestedTime();
+    TimePeriod* availabilityPeriod = prevAvailability.getAvailableTime();
+    // calculate the minutes between 2 time periods
+    int minutesBetweenStartTime = requestPeriod->getStartTime().getMinutesBetween(availabilityPeriod->getStartTime());
+    int minutesBetweenEndTime = availabilityPeriod->getEndTime().getMinutesBetween(requestPeriod->getEndTime());
+    
+    // check if the minutes between 2 time periods is greater than 60 minutes
+    if (minutesBetweenStartTime >= 60) {
+        // create new Availability
+        TimePeriod* newTimePeriod = new TimePeriod(
+            availabilityPeriod->getStartTime(), 
+            requestPeriod->getStartTime()
+        );
+        Availability* newAvailability = new Availability(
+            newTimePeriod, 
+            prevAvailability.getPerformedSkills(), 
+            prevAvailability.getPointPerHour(), 
+            prevAvailability.getMinHostRating(), 
+            prevAvailability.getMemberID()
+        );
+        availability.push_back(newAvailability);
+    } 
+    if (minutesBetweenEndTime >= 60) {
+        // create new Availability
+        TimePeriod* newTimePeriod = new TimePeriod(
+            requestPeriod->getEndTime(), 
+            availabilityPeriod->getEndTime()
+        );
+        Availability* newAvailability = new Availability(
+            newTimePeriod, 
+            prevAvailability.getPerformedSkills(), 
+            prevAvailability.getPointPerHour(), 
+            prevAvailability.getMinHostRating(), 
+            prevAvailability.getMemberID()
+        );
+        availability.push_back(newAvailability);
+    }
+
+    // find and delete the previous Availability 
+    for (int i = 0; i < availability.size(); i++) {
+        if (availability[i] == &prevAvailability) {
+            availability.erase(availability.begin() + i);
+            break;
+        }
+    }
+}
+
 string Member::getMemberId() {
     return memberID;
 }
