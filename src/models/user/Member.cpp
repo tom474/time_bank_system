@@ -218,6 +218,10 @@ void Member::updateAvailability(Request &request, Availability &prevAvailability
     }
 }
 
+void Member::addReview(Review &review) {
+    reviews.push_back(&review);
+}
+
 string Member::getMemberId() {
     return memberID;
 }

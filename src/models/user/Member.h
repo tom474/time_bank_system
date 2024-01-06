@@ -72,6 +72,7 @@ class Member : public User {
         void sendRequest(Request &request);
         void receiveRequest(Request &request);
         void addAvailability();
+        void addReview(Review &review);
         void removeAvailability();
         void updateAvailability(Request &request, Availability &availability);
         string getMemberId();

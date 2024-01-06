@@ -45,4 +45,8 @@ int Skill::getAverageRatingScore() {
     return sum / ratingScore.size();
 }
 
+void Skill::addRatingScore(int ratingScoreVal) {
+    ratingScore.push_back(ratingScoreVal);
+}
+
 Skill::~Skill() {}

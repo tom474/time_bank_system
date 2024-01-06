@@ -50,6 +50,9 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
     cout << "| " << std::left << std::setw(16) << "City" << " | " << std::setw(12) << currentMember->getAvailableCity() << " |\n";
     cout << "-----------------------------------\n\n";
 
+    // Prompt the current member to enter their desired time
+    
+
     // Show the list of suitable supporters
     vector<Member *> supporters = {};
     for (Member *supporter : Menu::allMembers) {
@@ -580,9 +583,160 @@ void MemberController::viewRequestHistory(Member* currentMember) {
 }
 
 void MemberController::rateHost(Member* currentMember) {
+    // Get the accepted receiving request
+    vector<Request*> acceptedReceivingRequests = {};
+    for (Request* request : currentMember->getSendingRequest()) {
+        if (request->getStatus() == "Accepted") {
+            acceptedReceivingRequests.push_back(request);
+        }
+    }
 
+    // Check if the current member has any accepted sending request
+    if (acceptedReceivingRequests.size() == 0) {
+        cout << "You have no accepted receiving request!\n";
+        return;
+    }
+
+    // Show the list of accepted sending requests
+    TableGenerator::generateRequestTable("Accepted Receiving Requests", acceptedReceivingRequests);
+
+    // Choose a request to rate
+    cout << "\n---------- Rate Host ----------\n";
+    bool isValidID = false;
+    Request* selectedRequest;
+    while (!isValidID) {
+        string requestID = InputValidator::getString("Enter the request's ID that you want to rate the host: ");
+        for (Request* request : acceptedReceivingRequests) {
+            if (request->getRequestID() == requestID) {
+                selectedRequest = request;
+                isValidID = true;
+                break;
+            }
+        }
+        if (!isValidID) {
+            cout << "Invalid ID. Please enter again!\n";
+        }
+    }
+
+    // Get the host
+    string hostID = selectedRequest->getHostID();
+    Member* host;
+    for (Member* member : Menu::allMembers) {
+        if (member->getMemberId() == hostID) {
+            host = member;
+            break;
+        }
+    }
+
+    // Create review for the host
+    string reviewID = IdGenerator::generateReviewId();
+    string reviewerID = currentMember->getMemberId();
+    string reviewedID = host->getMemberId();
+    reviewType type = reviewType::Host;
+
+    bool isValidRatingScore = false;
+    int ratingScore;
+    while (!isValidRatingScore) {
+        ratingScore = InputValidator::getInt("Enter the rating score for the host (1-5): ");
+        if (ratingScore < 1 || ratingScore > 5) {
+            cout << "Invalid rating score. Please enter again!\n";
+        } else {
+            isValidRatingScore = true;
+        }
+    }
+
+    string comment = InputValidator::getString("Enter the comment for the host: ");
+
+    Review* review = new Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
+    host->addReview(*review);
+
+    cout << "Rate & review host successfully!\n";
 }
 
 void MemberController::rateSupporter(Member* currentMember) {
+    // Get the accepted sending request
+    vector<Request*> acceptedSendingRequests = {};
+    for (Request* request : currentMember->getSendingRequest()) {
+        if (request->getStatus() == "Accepted") {
+            acceptedSendingRequests.push_back(request);
+        }
+    }
 
+    // Check if the current member has any accepted sending request
+    if (acceptedSendingRequests.size() == 0) {
+        cout << "You have no accepted sending request!\n";
+        return;
+    }
+
+    // Show the list of accepted sending requests
+    TableGenerator::generateRequestTable("Accepted Sending Requests", acceptedSendingRequests);
+
+    // Choose a request to rate
+    cout << "\n---------- Rate Supporter ----------\n";
+    bool isValidID = false;
+    Request* selectedRequest;
+    while (!isValidID) {
+        string requestID = InputValidator::getString("Enter the request's ID that you want to rate the supporter: ");
+        for (Request* request : acceptedSendingRequests) {
+            if (request->getRequestID() == requestID) {
+                selectedRequest = request;
+                isValidID = true;
+                break;
+            }
+        }
+        if (!isValidID) {
+            cout << "Invalid ID. Please enter again!\n";
+        }
+    }
+
+    // Get the supporter
+    string supporterID = selectedRequest->getSupporterID();
+    Member* supporter;
+    for (Member* member : Menu::allMembers) {
+        if (member->getMemberId() == supporterID) {
+            supporter = member;
+            break;
+        }
+    }
+
+    // Create review for the supporter
+    string reviewID = IdGenerator::generateReviewId();
+    string reviewerID = currentMember->getMemberId();
+    string reviewedID = supporter->getMemberId();
+    reviewType type = reviewType::Supporter;
+
+    bool isValidRatingScore = false;
+    int ratingScore;
+    while (!isValidRatingScore) {
+        ratingScore = InputValidator::getInt("Enter the rating score for the supporter (1-5): ");
+        if (ratingScore < 1 || ratingScore > 5) {
+            cout << "Invalid rating score. Please enter again!\n";
+        } else {
+            isValidRatingScore = true;
+        }
+    }
+
+    string comment = InputValidator::getString("Enter the comment for the supporter: ");
+
+    Review* review = new Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
+    supporter->addReview(*review);
+
+    // Rate supporter's skills
+    for (int i = 0; i < selectedRequest->getRequestedSkills().size(); i++) {
+        Skill* skill = selectedRequest->getRequestedSkills()[i];
+        bool isValidRatingScore = false;
+        cout << "\nSkill 1: " << skill->getName() << "\n";
+        int ratingScore;
+        while (!isValidRatingScore) {
+            ratingScore = InputValidator::getInt("Enter the rating score for the supporter's '" + skill->getName() + "' skill (1-5): ");
+            if (ratingScore < 1 || ratingScore > 5) {
+                cout << "Invalid rating score. Please enter again!\n";
+            } else {
+                isValidRatingScore = true;
+            }
+        }
+        skill->addRatingScore(ratingScore);
+    }
+
+    cout << "Rate & review supporter successfully!\n";
 }
