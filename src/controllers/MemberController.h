@@ -15,6 +15,8 @@
 
 using std::vector;
 
+class Member;
+
 class MemberController {
 public:
     /**
@@ -59,6 +61,14 @@ public:
     */
     static void adjustBlockedMembersList(Member* currentMember);
 
+    /**
+     * Member can set their available status and update their availability
+     *
+     * @param Member*: current member
+     * @return none
+    */
+    static void manageAvailability(Member* currentMember);
+    
     /**
      * Member can top up their credit points
      *

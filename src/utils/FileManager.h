@@ -18,7 +18,7 @@ using std::cout;
 using std::vector;
 
 class Admin;
-
+class Member;
 class FileManager
 {
 private:

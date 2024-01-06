@@ -104,7 +104,7 @@ void Menu::loginAsMember() {
                 MemberController::manageRequests(currentMember);
                 break;
             case 4:
-                currentMember->addAvailability();
+                MemberController::manageAvailability(currentMember);
                 break;
             case 5:
                 MemberController::searchForSupporters(currentMember);

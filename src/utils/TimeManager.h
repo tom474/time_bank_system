@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include "math.h"
 
 using std::string;
 using std::vector;
@@ -19,6 +20,7 @@ class Time {
         int getMinute();
         vector<int> splitDate(string date);
         int compareTime(Time &time);
+        int getMinutesBetween(Time time);
         string toString();
 };
 
@@ -33,6 +35,7 @@ class TimePeriod {
         bool isOverlapsWith(TimePeriod &timeRequest);
         int getHourDuration();
         string toString();
+        
 };
 
 #endif  // _TIME_MANAGER_H_
