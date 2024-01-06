@@ -21,6 +21,7 @@ class Skill {
         vector<int> getRatingScore();
         int getAverageRatingScore();
         string getMemberID();
+        void addRatingScore(int ratingScoreVal);
         ~Skill();
 };
 

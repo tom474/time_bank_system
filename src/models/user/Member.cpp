@@ -136,6 +136,10 @@ void Member::addAvailability() {
     cout << "Add availability successfully!\n";
 }
 
+void Member::addReview(Review &review) {
+    reviews.push_back(&review);
+}
+
 string Member::getMemberId() {
     return memberID;
 }
