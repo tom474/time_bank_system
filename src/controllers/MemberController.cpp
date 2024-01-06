@@ -51,7 +51,24 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
     cout << "-----------------------------------\n\n";
 
     // Prompt the current member to enter their desired time
-    
+    string startDate, startTime;
+    string endDate, endTime;
+    int startHour, endHour;
+    int startMinute, endMinute;
+
+    startDate = InputValidator::getDate("Enter your desired start date (dd/mm/yyyy): ");
+    startTime = InputValidator::getTime("Enter your desired start time (hh:mm): ");
+    endDate = InputValidator::getDate("Enter your desired end date (dd/mm/yyyy): ");
+    endTime = InputValidator::getTime("Enter your desired end time (hh:mm): ");
+
+    startHour = Converter::stringToInteger(startTime.substr(0, 2));
+    startMinute = Converter::stringToInteger(startTime.substr(3, 2));
+    endHour = Converter::stringToInteger(endTime.substr(0, 2));
+    endMinute = Converter::stringToInteger(endTime.substr(3, 2));
+
+    Time time1(startDate, startHour, startMinute);
+    Time time2(endDate, endHour, endMinute);
+    TimePeriod *timePeriod = new (std::nothrow) TimePeriod(time1, time2);
 
     // Show the list of suitable supporters
     vector<Member *> supporters = {};
@@ -85,8 +102,9 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
 
         // Check if the current member has the host rating greater than the supporter's min host rating
         // And check if current member has enough credit point to book the supporter
+        // And check if the supporter's availability is suitable for the current member's desired time
         for (Availability *availability : supporter->getAvailability()) {
-            if (availability->getMinHostRating() <= currentMember->getHostRating() && availability->getPointPerHour() <= currentMember->getCreditPoint()) {
+            if (availability->getMinHostRating() <= currentMember->getHostRating() && availability->getPointPerHour() <= currentMember->getCreditPoint() && availability->getAvailableTime()->isOverlapsWith(*timePeriod)) {
                 isSuitable = true;
                 break;
             }
@@ -102,7 +120,7 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
         cout << "There is no suitable supporter for you!\n";
     } else {
         // Show the list of suitable supporters
-        TableGenerator::generateMemberTable("Suitable Supporters", supporters);
+        TableGenerator::generateSupporterTable("Suitable Supporters", supporters);
     }
 
     return supporters;
@@ -174,7 +192,6 @@ void MemberController::createRequest(Member *currentMember) {
     bool isValidTime = false;
     TimePeriod *timePeriod;
     while (!isValidTime) {
-        // Get desired time
         string startDate, startTime;
         string endDate, endTime;
         int startHour, endHour;
@@ -333,9 +350,7 @@ void MemberController::manageAvailability(Member* currentMember) {
                 bool isAvailable = InputValidator::getBool("Do you want to change your status? (yes/no): ");
                 if (isAvailable) {
                     currentMember->setAvailableStatus(!currentMember->getAvailableStatus());
-                    cout << "----------------------------------\n";
                     cout << "Available status has been updated!\n";
-                    cout << "----------------------------------\n";
                 }
                 break;
             }
@@ -352,9 +367,7 @@ void MemberController::manageAvailability(Member* currentMember) {
                     currentMember->removeAvailability();
                     break;
                 } else {
-                    cout << "--------------------------------------------------------------\n";
-                    cout << "There are no availability to remove! Please add a availability\n";
-                    cout << "--------------------------------------------------------------\n";
+                    cout << "There are no availability to remove!\n";
                     break;
                 }
             }
@@ -453,6 +466,49 @@ void MemberController::acceptRequest(Member* currentMember) {
             }
         } else {
             cout << "Invalid ID. Please enter again!\n";
+        }
+    }
+
+    // Get the current member's availability whose time overlaps with the request's time
+    Availability* selectedAvailability;
+    for (Availability* availability : currentMember->getAvailability()) {
+        if (availability->getAvailableTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
+            selectedAvailability = availability;
+            break;
+        }
+    }
+
+    // Update the current member's availability
+    currentMember->updateAvailability(*selectedRequest, *selectedAvailability);
+
+    // Update the credit point of the current member and requesting member
+    int pointPerHour = selectedAvailability->getPointPerHour();
+    int hourDuration = selectedRequest->getRequestedTime()->getHourDuration();
+    int consumingCreditPoint = pointPerHour * hourDuration;
+    currentMember->setCreditPoint(currentMember->getCreditPoint() + consumingCreditPoint);
+
+    Member* requestingMember;
+    for (Member* member : Menu::allMembers) {
+        if (member->getMemberId() == selectedRequest->getHostID()) {
+            requestingMember = member;
+            break;
+        }
+    }
+    requestingMember->setCreditPoint(requestingMember->getCreditPoint() - consumingCreditPoint);
+
+    // Update the request list of the current member and requesting member (automatically reject non-accepted requests with overlapped time)
+    for (Request* request : currentMember->getReceivingRequest()) {
+        if (request->getRequestID() != selectedRequest->getRequestID()) {
+            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
+                request->setStatus(requestStatus::Rejected);
+            }
+        }
+    }
+    for (Request* request : requestingMember->getSendingRequest()) {
+        if (request->getRequestID() != selectedRequest->getRequestID()) {
+            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
+                request->setStatus(requestStatus::Rejected);
+            }
         }
     }
 }

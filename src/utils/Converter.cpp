@@ -35,6 +35,22 @@ string Converter::intToString(int intVal) {
     return strVal;
 }
 
+string Converter::blockedUsersToString(vector<string> blockedUsers) {
+    string strVal = "";
+    for (int i = 0; i < blockedUsers.size(); i++) {
+        strVal += blockedUsers[i];
+        if (i != blockedUsers.size() - 1) {
+            strVal += ", ";
+        }
+    }
+
+    if (strVal == "") {
+        strVal = "None";
+    }
+
+    return strVal;
+}
+
 string Converter::skillsToString(vector<Skill*> skills) {
     string strVal = "";
     for (int i = 0; i < skills.size(); i++) {
@@ -43,6 +59,11 @@ string Converter::skillsToString(vector<Skill*> skills) {
             strVal += ", ";
         }
     }
+
+    if (strVal == "") {
+        strVal = "None";
+    }
+    
     return strVal;
 }
 

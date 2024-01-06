@@ -165,9 +165,7 @@ void Member::removeAvailability() {
             break;
         }
     }
-    cout << "---------------------------------\n";
     cout << "Remove availability successfully!\n";
-    cout << "---------------------------------\n";
 }
 
 void Member::updateAvailability(Request &request, Availability &prevAvailability) {
@@ -234,6 +232,10 @@ int Member::getCreditPoint() {
     return creditPoint;
 }
 
+void Member::setCreditPoint(int creditPoint) {
+    this->creditPoint = creditPoint;
+}
+
 string Member::getPhoneNumber() {
     return phoneNumber;
 }
@@ -282,6 +284,26 @@ double Member::getHostRating() {
     return totalRating / hostReviews.size();
 }
 
+double Member::getSupporterRating() {
+    vector<Review*> supporterReviews = {};
+    for (auto &review : reviews) {
+        if (review->getType() == "Supporter") {
+            supporterReviews.push_back(review);
+        }
+    }
+
+    // If member have no supporter review yet, the default rating is 0
+    if (supporterReviews.size() == 0) {
+        return 0;
+    }
+
+    double totalRating = 0;
+    for (auto &review : supporterReviews) {
+        totalRating += review->getRatingScore();
+    }
+    return totalRating / supporterReviews.size();
+}
+
 vector<Availability*> Member::getAvailability() {
     return availability;
 }
@@ -306,56 +328,86 @@ vector<string> Member::getBlockedUsers() {
     return blockedUsers;
 }
 
-// TESTING PURPOSE
 void Member::showInfo() {
-    cout << "Member ID: " << memberID << "\n";
-    cout << "Fullname: " << fullname << "\n";
-    cout << "Credit Point: " << creditPoint << "\n";
-    cout << "Phone Number: " << phoneNumber << "\n";
-    cout << "Email: " << email << "\n";
-    cout << "Home Address: " << homeAddress << "\n";
-    cout << "City: " << (city == availableCity::HaNoi ? "Ha Noi" : "Sai Gon") << "\n";
-    cout << "Available Status: " << Converter::boolToString(availableStatus) << "\n";
-    cout << "Reset Password: " << Converter::boolToString(isResetPassword) << "\n";
-    cout << "Skills:" << "\n";
-    for (auto &skill : skills) {
-        cout << "- " << skill->getName() << ": " << skill->getDescription() << "\n";
-    }
+    // Show member basic information
+    size_t longestFieldLength = 10;
+    vector<string> fields = {
+        fullname,
+        email,
+        homeAddress,
+        Converter::blockedUsersToString(blockedUsers),
+    };
 
-    cout << "Availability:" << "\n";
-    for (auto &avail : availability) {
-        cout << "- Available Time: " << avail->getAvailableTime()->getStartTime().getDate() << " "
-                  << avail->getAvailableTime()->getStartTime().getHour() << ":"
-                  << avail->getAvailableTime()->getStartTime().getMinute() << " - "
-                  << avail->getAvailableTime()->getEndTime().getDate() << " "
-                  << avail->getAvailableTime()->getEndTime().getHour() << ":"
-                  << avail->getAvailableTime()->getEndTime().getMinute() << "\n";
-
-        cout << "- Performed Skills:" << "\n";
-        for (auto &skill : avail->getPerformedSkills()) {
-            cout << "- " << skill->getName() << "\n";
+    for (auto &field : fields) {
+        if (field.length() > longestFieldLength) {
+            longestFieldLength = field.length();
         }
     }
 
-    cout << "Blocked Users:" << "\n";
-    for (auto &user : blockedUsers) {
-        cout << "- " << user << "\n";
+    // Print the title
+    string title = "Your Information";
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = longestFieldLength + 23;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    cout << "\n";
+    cout << string(leftPadding, '-') << " " << title << " " << string(rightPadding, '-') << "\n";
+
+    // Print a line separator
+    cout << string(tableWidth, '-') << "\n";
+
+    // Print the member information
+    cout << "| " << std::setw(16) << "Member ID" << " | " << std::left << std::setw(longestFieldLength) << memberID << " |\n";
+    cout << "| " << std::setw(16) << "Fullname" << " | " << std::left << std::setw(longestFieldLength) << fullname << " |\n";
+    cout << "| " << std::setw(16) << "Username" << " | " << std::left << std::setw(longestFieldLength) << User::getUsername() << " |\n";
+    cout << "| " << std::setw(16) << "Password" << " | " << std::left << std::setw(longestFieldLength) << User::getPassword() << " |\n";
+    cout << "| " << std::setw(16) << "Email" << " | " << std::left << std::setw(longestFieldLength) << email << " |\n";
+    cout << "| " << std::setw(16) << "Phone Number" << " | " << std::left << std::setw(longestFieldLength) << phoneNumber << " |\n";
+    cout << "| " << std::setw(16) << "Home Address" << " | " << std::left << std::setw(longestFieldLength) << homeAddress << " |\n";
+    cout << "| " << std::setw(16) << "City" << " | " << std::left << std::setw(longestFieldLength) << getAvailableCity() << " |\n";
+    cout << "| " << std::setw(16) << "Available Status" << " | " << std::left << std::setw(longestFieldLength) << Converter::boolToString(availableStatus) << " |\n";
+    cout << "| " << std::setw(16) << "Credit Point" << " | " << std::left << std::setw(longestFieldLength) << creditPoint << " |\n";
+    cout << "| " << std::setw(16) << "Host Rating" << " | " << std::left << std::setw(longestFieldLength) << getHostRating() << " |\n";
+    cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::left << std::setw(longestFieldLength) << getSupporterRating() << " |\n";
+    cout << "| " << std::setw(16) << "Blocked Users" << " | " << std::left << std::setw(longestFieldLength) << Converter::blockedUsersToString(blockedUsers) << " |\n";
+
+    // Print a line separator
+    cout << string(tableWidth, '-') << "\n";
+
+    // Print the skills information
+    if (skills.size() == 0) {
+        cout << "\nYou have no skill to display!\n";
+    } else {
+        TableGenerator::generateSkillTable("Your Skills", skills);
     }
 
-    cout << "Sending Requests:" << "\n";
-    for (auto &req : sendingRequests) {
-        cout << "- Request ID: " << req->getRequestID() << ", Status: " << req->getStatus() << "\n";
+    // Print the availability information
+    if (availability.size() == 0) {
+        cout << "\nYou have no availability to display!\n";
+    } else {
+        TableGenerator::generateAvailabilityTable("Your Availabilities", availability);
     }
 
-    cout << "Receiving Requests:" << "\n";
-    for (auto &req : receivingRequests) {
-        cout << "- Request ID: " << req->getRequestID() << ", Status: " << req->getStatus() << "\n";
+    // Print the sending request information
+    if (sendingRequests.size() == 0) {
+        cout << "\nYou have no sending request to display!\n";
+    } else {
+        TableGenerator::generateRequestTable("Your Sending Requests", sendingRequests);
     }
 
-    cout << "Reviews:" << "\n";
-    for (auto &review : reviews) {
-        cout << "- Review ID: " << review->getReviewID() << ", Rating: " << review->getRatingScore()
-                  << ", Comment: " << review->getComment() << "\n";
+    // Print the receiving request information
+    if (receivingRequests.size() == 0) {
+        cout << "\nYou have no receiving request to display!\n";
+    } else {
+        TableGenerator::generateRequestTable("Your Receiving Requests", receivingRequests);
+    }
+
+    // Print the review information
+    if (reviews.size() == 0) {
+        cout << "\nYou have no review to display!\n";
+    } else {
+        TableGenerator::generateReviewTable("Your Reviews", reviews);
     }
 }
 

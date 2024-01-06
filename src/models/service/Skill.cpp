@@ -37,8 +37,13 @@ vector<int> Skill::getRatingScore() {
     return ratingScore;
 }
 
-int Skill::getAverageRatingScore() {
-    int sum = 0;
+double Skill::getAverageRatingScore() {
+    double sum = 0;
+
+    if (ratingScore.size() == 0) {
+        return 0;
+    }
+
     for (auto rating : ratingScore) {
         sum += rating;
     }

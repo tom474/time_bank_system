@@ -43,6 +43,14 @@ public:
         static string intToString(int intVal);
 
         /**
+         * Convert a vector of blocked user id into a string
+         * 
+         * @param vector<string>: list of blocked user id
+         * @return string value
+        */
+        static string blockedUsersToString(vector<string> blockedUsers);
+
+        /**
          * Convert a skills list into a string
          *
          * @param vector<Skill*>: list of skills

@@ -13,19 +13,32 @@ using std::max;
 void TableGenerator::generateMemberTable(string title, vector<Member *> members) {
     // Calculate the maximum length for each column
     size_t idWidth = 8;
-    size_t fullnameWidth = 0;
-    size_t skillWidth = 0;
+    size_t fullnameWidth = 8;
+    size_t skillWidth = 6;
     size_t phoneNumberWidth = 12;
-    size_t emailWidth = 0;
-    size_t homeAddressWidth = 0;
+    size_t emailWidth = 5;
+    size_t homeAddressWidth = 12;
     size_t cityWidth = 8;
     size_t statusWidth = 6;
 
     for (Member *member : members) {
-        fullnameWidth = max(fullnameWidth, member->getFullname().length());
-        skillWidth = max(skillWidth, Converter::skillsToString(member->getSkill()).length());
-        emailWidth = max(emailWidth, member->getEmail().length());
-        homeAddressWidth = max(homeAddressWidth, member->getHomeAddress().length());
+        size_t width;
+        width = std::max(fullnameWidth, member->getFullname().length());
+        if (width > fullnameWidth) {
+            fullnameWidth = width;
+        }
+        width = std::max(skillWidth, Converter::skillsToString(member->getSkill()).length());
+        if (width > skillWidth) {
+            skillWidth = width;
+        }
+        width = std::max(emailWidth, member->getEmail().length());
+        if (width > emailWidth) {
+            emailWidth = width;
+        }
+        width = std::max(homeAddressWidth, member->getHomeAddress().length());
+        if (width > homeAddressWidth) {
+            homeAddressWidth = width;
+        }
     }
 
     // Print the title
@@ -72,10 +85,13 @@ void TableGenerator::generateMemberTable(string title, vector<Member *> members)
 
 void TableGenerator::generateAvailabilityTable(string title, vector<Availability *> availabilities) {
     // Calculate the maximum length for each column
-    size_t skillWidth = 0;
+    size_t skillWidth = 6;
 
     for (Availability *availability : availabilities) {
-        skillWidth = std::max(skillWidth, Converter::skillsToString(availability->getPerformedSkills()).length());
+        size_t width = std::max(skillWidth, Converter::skillsToString(availability->getPerformedSkills()).length());
+        if (width > skillWidth) {
+            skillWidth = width;
+        }
     }
 
     // Print the title
@@ -121,11 +137,14 @@ void TableGenerator::generateRequestTable(string title, vector<Request *> reques
     size_t supporterIDWidth = 12;
     size_t startTimeWidth = 16;
     size_t endTimeWidth = 16;
-    size_t requestedSkillsWidth = 0;
+    size_t requestedSkillsWidth = 16;
     size_t statusWidth = 8;
 
     for (Request *request : requests) {
-        requestedSkillsWidth = std::max(requestedSkillsWidth, Converter::skillsToString(request->getRequestedSkills()).length());
+        size_t skillWidth = std::max(requestedSkillsWidth, Converter::skillsToString(request->getRequestedSkills()).length());
+        if (skillWidth > requestedSkillsWidth) {
+            requestedSkillsWidth = skillWidth;
+        }
     }
 
     // Print the title
@@ -161,6 +180,229 @@ void TableGenerator::generateRequestTable(string title, vector<Request *> reques
                   << std::setw(endTimeWidth) << request->getRequestedTime()->getEndTime().toString() << " | "
                   << std::setw(requestedSkillsWidth) << Converter::skillsToString(request->getRequestedSkills()) << " | "
                   << std::setw(statusWidth) << request->getStatus() << " |\n";
+    }
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+}
+
+void TableGenerator::generateReviewTable(string title, vector<Review *> reviews) {
+    // Calculate the maximum length for each column
+    size_t reviewIDWidth = 10;
+    size_t reviewerIDWidth = 12;
+    size_t reviewedIDWidth = 12;
+    size_t ratingWidth = 6;
+    size_t commentWidth = 8;
+
+    for (Review *review : reviews) {
+        size_t width;
+        width = std::max(reviewerIDWidth, review->getReviewerID().length());
+        if (width > reviewerIDWidth) {
+            reviewerIDWidth = width;
+        }
+    }
+
+    // Print the title
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = reviewIDWidth + reviewerIDWidth + reviewedIDWidth + ratingWidth + commentWidth + 16;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    std::cout << "\n";
+    std::cout << std::string(leftPadding, '-') << " " << title << " " << std::string(rightPadding, '-') << "\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the header
+    std::cout << "| " << std::left << std::setw(reviewIDWidth) << "Review ID" << " | "
+              << std::setw(reviewerIDWidth) << "Reviewer ID" << " | "
+              << std::setw(reviewedIDWidth) << "Reviewee ID" << " | "
+              << std::setw(ratingWidth) << "Rating" << " | "
+              << std::setw(commentWidth) << "Comment" << " |\n";
+    
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the review information
+    for (Review *review : reviews) {
+        std::cout << "| " << std::left << std::setw(reviewIDWidth) << review->getReviewID() << " | "
+                  << std::setw(reviewerIDWidth) << review->getReviewerID() << " | "
+                  << std::setw(reviewedIDWidth) << review->getReviewedID() << " | "
+                  << std::setw(ratingWidth) << review->getRatingScore() << " | "
+                  << std::setw(commentWidth) << review->getComment() << " |\n";
+    }
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+}
+
+void TableGenerator::generateSkillTable(string title, vector<Skill *> skills) {
+    // Calculate the maximum length for each column
+    size_t nameWidth = 4;
+    size_t descriptionWidth = 11;
+    size_t ratingWidth = 6;
+
+    for (Skill *skill : skills) {
+        size_t width;
+        width = std::max(nameWidth, skill->getName().length());
+        if (width > nameWidth) {
+            nameWidth = width;
+        }
+        width = std::max(descriptionWidth, skill->getDescription().length());
+        if (width > descriptionWidth) {
+            descriptionWidth = width;
+        }
+    }
+
+    // Print the title
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = nameWidth + descriptionWidth + ratingWidth + 10;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    std::cout << "\n";
+    std::cout << std::string(leftPadding, '-') << " " << title << " " << std::string(rightPadding, '-') << "\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the header
+    std::cout << "| " << std::left << std::setw(nameWidth) << "Name" << " | "
+              << std::setw(descriptionWidth) << "Description" << " | "
+              << std::setw(ratingWidth) << "Rating" << " |\n";
+    
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the skill information
+    for (Skill *skill : skills) {
+        std::cout << "| " << std::left << std::setw(nameWidth) << skill->getName() << " | "
+                  << std::setw(descriptionWidth) << skill->getDescription() << " | "
+                  << std::setw(ratingWidth) << skill->getAverageRatingScore() << " |\n";
+    }
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+}
+
+void TableGenerator::generateHostTable(string title, vector<Member *> hosts) {
+    // Calculate the maximum length for each column
+    size_t idWidth = 8;
+    size_t fullnameWidth = 8;
+    size_t phoneNumberWidth = 12;
+    size_t emailWidth = 5;
+    size_t cityWidth = 8;
+    size_t hostRatingWidth = 11;
+
+    for (Member *host : hosts) {
+        size_t width;
+        width = std::max(fullnameWidth, host->getFullname().length());
+        if (width > fullnameWidth) {
+            fullnameWidth = width;
+        }
+        width = std::max(emailWidth, host->getEmail().length());
+        if (width > emailWidth) {
+            emailWidth = width;
+        }
+    }
+
+    // Print the title
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = idWidth + fullnameWidth + phoneNumberWidth + emailWidth + cityWidth + hostRatingWidth + 19;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    std::cout << "\n";
+    std::cout << std::string(leftPadding, '-') << " " << title << " " << std::string(rightPadding, '-') << "\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the header
+    std::cout << "| " << std::left << std::setw(idWidth) << "ID" << " | "
+              << std::setw(fullnameWidth) << "Fullname" << " | "
+              << std::setw(phoneNumberWidth) << "Phone Number" << " | "
+              << std::setw(emailWidth) << "Email" << " | "
+              << std::setw(cityWidth) << "City" << " | "
+              << std::setw(hostRatingWidth) << "Host Rating" << " |\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the host information
+    for (Member *host : hosts) {
+        std::cout << "| " << std::left << std::setw(idWidth) << host->getMemberId() << " | "
+                  << std::setw(fullnameWidth) << host->getFullname() << " | "
+                  << std::setw(phoneNumberWidth) << host->getPhoneNumber() << " | "
+                  << std::setw(emailWidth) << host->getEmail() << " | "
+                  << std::setw(cityWidth) << host->getAvailableCity() << " | "
+                  << std::setw(hostRatingWidth) << host->getHostRating() << " |\n";
+    }
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+}
+
+void TableGenerator::generateSupporterTable(string title, vector<Member *> supporters) {
+    // Calculate the maximum length for each column
+    size_t idWidth = 8;
+    size_t fullnameWidth = 8;
+    size_t phoneNumberWidth = 12;
+    size_t emailWidth = 5;
+    size_t cityWidth = 8;
+    size_t skillWidth = 6;
+    size_t supporterRatingWidth = 16;
+
+    for (Member *supporter : supporters) {
+        size_t width;
+        width = std::max(fullnameWidth, supporter->getFullname().length());
+        if (width > fullnameWidth) {
+            fullnameWidth = width;
+        }
+        width = std::max(emailWidth, supporter->getEmail().length());
+        if (width > emailWidth) {
+            emailWidth = width;
+        }
+        width = std::max(skillWidth, Converter::skillsToString(supporter->getSkill()).length());
+        if (width > skillWidth) {
+            skillWidth = width;
+        }
+    }
+
+    // Print the title
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = idWidth + fullnameWidth + phoneNumberWidth + emailWidth + cityWidth + skillWidth + supporterRatingWidth + 25;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    std::cout << "\n";
+    std::cout << std::string(leftPadding, '-') << " " << title << " " << std::string(rightPadding, '-') << "\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the header
+    std::cout << "| " << std::left << std::setw(idWidth) << "ID" << " | "
+              << std::setw(fullnameWidth) << "Fullname" << " | "
+              << std::setw(phoneNumberWidth) << "Phone Number" << " | "
+              << std::setw(emailWidth) << "Email" << " | "
+              << std::setw(cityWidth) << "City" << " | "
+              << std::setw(skillWidth) << "Skills" << " | "
+              << std::setw(supporterRatingWidth) << "Supporter Rating" << " |\n";
+
+    // Print a line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the supporter information
+    for (Member *supporter : supporters) {
+        std::cout << "| " << std::left << std::setw(idWidth) << supporter->getMemberId() << " | "
+                  << std::setw(fullnameWidth) << supporter->getFullname() << " | "
+                  << std::setw(phoneNumberWidth) << supporter->getPhoneNumber() << " | "
+                  << std::setw(emailWidth) << supporter->getEmail() << " | "
+                  << std::setw(cityWidth) << supporter->getAvailableCity() << " | "
+                  << std::setw(skillWidth) << Converter::skillsToString(supporter->getSkill()) << " | "
+                  << std::setw(supporterRatingWidth) << supporter->getSupporterRating() << " |\n";
     }
 
     // Print a line separator

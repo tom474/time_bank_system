@@ -19,7 +19,7 @@ class Skill {
         string getName();
         string getDescription();
         vector<int> getRatingScore();
-        int getAverageRatingScore();
+        double getAverageRatingScore();
         string getMemberID();
         void addRatingScore(int ratingScoreVal);
         ~Skill();

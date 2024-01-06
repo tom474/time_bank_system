@@ -17,6 +17,7 @@ enum availableCity {
 
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 using std::string;
 using std::vector;
@@ -78,6 +79,7 @@ class Member : public User {
         string getMemberId();
         string getFullname();
         int getCreditPoint();
+        void setCreditPoint(int creditPoint);
         string getPhoneNumber();
         string getEmail();
         bool getAvailableStatus();
@@ -87,6 +89,7 @@ class Member : public User {
         string getAvailableCity();
         string getHomeAddress();
         double getHostRating();
+        double getSupporterRating();
         vector<Availability*> getAvailability();
         vector<Skill*> getSkill();
         vector<Request*> getSendingRequest();
