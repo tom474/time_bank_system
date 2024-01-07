@@ -443,6 +443,7 @@ void MemberController::acceptRequest(Member* currentMember) {
     TableGenerator::generateRequestTable("Pending Requests", pendingRequests);
 
     // Choose a request to accept
+    cout << "\n---------- Accept Request ----------\n";
     bool isValidID = false;
     Request* selectedRequest;
     while (!isValidID) {
@@ -470,7 +471,7 @@ void MemberController::acceptRequest(Member* currentMember) {
     }
 
     // Get the current member's availability whose time overlaps with the request's time
-    Availability* selectedAvailability;
+    Availability *selectedAvailability;
     for (Availability* availability : currentMember->getAvailability()) {
         if (availability->getAvailableTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
             selectedAvailability = availability;
@@ -497,16 +498,17 @@ void MemberController::acceptRequest(Member* currentMember) {
     requestingMember->setCreditPoint(requestingMember->getCreditPoint() - consumingCreditPoint);
 
     // Update the request list of the current member and requesting member (automatically reject non-accepted requests with overlapped time)
+    // Check if the requests in the pending request list of the current member overlaps with any availabilities of the current member
     for (Request* request : currentMember->getReceivingRequest()) {
-        if (request->getRequestID() != selectedRequest->getRequestID()) {
-            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
-                request->setStatus(requestStatus::Rejected);
+        if (request->getStatus() == "Pending") {
+            bool isOverLaps = false;
+            for (Availability* availability : currentMember->getAvailability()) {
+                if (availability->getAvailableTime()->isOverlapsWith(*request->getRequestedTime())) {
+                    isOverLaps = true;
+                    break;
+                }
             }
-        }
-    }
-    for (Request* request : requestingMember->getSendingRequest()) {
-        if (request->getRequestID() != selectedRequest->getRequestID()) {
-            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
+            if (!isOverLaps) {
                 request->setStatus(requestStatus::Rejected);
             }
         }
@@ -533,6 +535,7 @@ void MemberController::rejectRequest(Member* currentMember) {
     }
     TableGenerator::generateRequestTable("Pending Requests", pendingRequests);
 
+    cout << "\n---------- Reject Request ----------\n";
     // Choose a request to reject
     bool isValidID = false;
     Request* selectedRequest;
@@ -567,12 +570,12 @@ void MemberController::topUpCredits(Member* currentMember) {
         return;
     }
 
-    std::cout << "\n---------- Credit Top-Up ----------\n";
+    cout << "\n---------- Top Up Credit Point ----------\n";
     // Show current credit point
     std::cout << "Your current credit point: " << currentMember->getCreditPoint() << std::endl;
 
     // Get the amount to top up
-    int amount = InputValidator::getInt("Enter the amount to top up: ");
+    int amount = InputValidator::getInt("Enter the amount that you want to top up: ");
 
     // Verify password
     string password = InputValidator::getString("Enter your password to confirm: ");
