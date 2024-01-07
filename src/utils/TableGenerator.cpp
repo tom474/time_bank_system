@@ -196,9 +196,9 @@ void TableGenerator::generateReviewTable(string title, vector<Review *> reviews)
 
     for (Review *review : reviews) {
         size_t width;
-        width = std::max(reviewerIDWidth, review->getReviewerID().length());
-        if (width > reviewerIDWidth) {
-            reviewerIDWidth = width;
+        width = std::max(commentWidth, review->getComment().length());
+        if (width > commentWidth) {
+            commentWidth = width;
         }
     }
 

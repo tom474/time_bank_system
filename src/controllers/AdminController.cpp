@@ -15,9 +15,9 @@ Admin AdminController::login() {
     bool found = false;
     Admin admin = FileManager::loadAdminDatabase();
     if (password == admin.getPassword() && username == admin.getUsername()) {
-        cout << "Login Successfully!\n" << endl;
+        cout << "Login Successfully!\n";
         return admin;
     }
-    cout << "Error: User does not exist!" << endl;
+    cout << "Error: User does not exist!\n";
     return Admin();
 }

@@ -27,12 +27,12 @@ int InputValidator::getInt(const string& prompt) {
             std::cout << prompt;
             std::cin >> value;
             if (std::cin.fail()) { // Check for failbit
-                throw std::runtime_error("Invalid input.");
+                throw std::runtime_error("Invalid input!");
             }
             clearInputStream();
             return value;
         } catch (const std::runtime_error& e) {
-            std::cerr << e.what() << " Please enter an integer.\n";
+            std::cerr << e.what() << " Please enter an integer!\n";
             std::cin.clear(); // Clear the failbit
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -47,12 +47,12 @@ double InputValidator::getDouble(const string& prompt) {
             std::cout << prompt;
             std::cin >> value;
             if (std::cin.fail()) {
-                throw std::runtime_error("Invalid input.");
+                throw std::runtime_error("Invalid input!");
             }
             clearInputStream();
             return value;
         } catch (const std::runtime_error& e) {
-            std::cerr << e.what() << " Please enter a double.\n";
+            std::cerr << e.what() << " Please enter a double!\n";
             clearInputStream();
         }
     }
@@ -66,7 +66,7 @@ string InputValidator::getString(const string& prompt) {
 
     if (std::cin.fail()) {
         std::cin.clear();
-        std::cerr << "Input error. Please enter a valid string.\n";
+        std::cerr << "Input error! Please enter a valid string!\n";
         return getString(prompt); // Recursive call for retry
     }
     return value;
@@ -88,10 +88,10 @@ bool InputValidator::getBool(const string& prompt) {
                 clearInputStream();
                 return false;
             } else {
-                throw std::runtime_error("Invalid input.");
+                throw std::runtime_error("Invalid input!");
             }
         } catch (const std::runtime_error& e) {
-            std::cerr << e.what() << " Please enter 'yes' or 'no'.\n";
+            std::cerr << e.what() << " Please enter 'yes' or 'no'!\n";
             clearInputStream();
         }
     }
@@ -108,12 +108,12 @@ string InputValidator::getTime(const string& prompt) {
             std::cin >> time;
 
             if (!std::regex_match(time, timePattern)) {
-                throw std::runtime_error("Invalid time format.");
+                throw std::runtime_error("Invalid time format!");
             }
             clearInputStream();
             return time;
         } catch (const std::runtime_error& e) {
-            std::cerr << e.what() << " Please use hh:mm format.\n";
+            std::cerr << e.what() << " Please use hh:mm format!\n";
             clearInputStream();
         }
     }
@@ -130,12 +130,12 @@ string InputValidator::getDate(const string& prompt) {
             std::cin >> date;
 
             if (!std::regex_match(date, datePattern)) {
-                throw std::runtime_error("Invalid date format.");
+                throw std::runtime_error("Invalid date format!");
             }
             clearInputStream();
             return date;
         } catch (const std::runtime_error& e) {
-            std::cerr << e.what() << " Please use dd/mm/yyyy format.\n";
+            std::cerr << e.what() << " Please use dd/mm/yyyy format!\n";
             clearInputStream();
         }
     }
@@ -153,7 +153,7 @@ string InputValidator::getPhoneNumber(const string& prompt) {
         if (std::regex_match(phoneNumber, phonePattern)) {
             return phoneNumber;
         } else {
-            std::cerr << "Invalid phone number. Please enter a 10-digit number.\n";
+            std::cerr << "Invalid phone number! Please enter a 10-digit number!\n";
         }
     }
 }
@@ -170,7 +170,7 @@ string InputValidator::getEmail(const string& prompt) {
         if (std::regex_match(email, emailPattern)) {
             return email;
         } else {
-            std::cerr << "Invalid email. Please enter a valid email address.\n";
+            std::cerr << "Invalid email! Please enter a valid email address!\n";
         }
     }
 }
@@ -179,15 +179,15 @@ string InputValidator::getEmail(const string& prompt) {
 availableCity InputValidator::getCity(const string& prompt) {
     string input;
     while (true) {
-        std::cout << prompt << " (Saigon/Hanoi): ";
+        std::cout << prompt << " (Sai Gon/Ha Noi): ";
         std::getline(std::cin, input);
 
-        if (input == "Saigon" || input == "SaiGon") {
+        if (input == "Saigon" || input == "Sai Gon") {
             return availableCity::SaiGon;
-        } else if (input == "Hanoi" || input == "HaNoi") {
+        } else if (input == "Hanoi" || input == "Ha Noi") {
             return availableCity::HaNoi;
         } else {
-            std::cerr << "Invalid input. Please enter 'Saigon' or 'Hanoi'.\n";
+            std::cerr << "Invalid input. Please enter 'Sai Gon' or 'Ha Noi'.\n";
         }
     }
 }

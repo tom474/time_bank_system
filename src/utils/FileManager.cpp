@@ -158,25 +158,23 @@ void FileManager::saveRequestDatabase(vector<Request*> requests) {
     }
 
     for (auto req : requests) {
-        if (req->getStatus() != "Rejected") {
-            requestFile
-                << req->getRequestID() << ","
-                << req->getSupporterID() << ","
-                << req->getHostID() << ","
-                << req->getRequestedTime()->getStartTime().getDate() << ","
-                << req->getRequestedTime()->getStartTime().getHour() << "," 
-                << req->getRequestedTime()->getStartTime().getMinute() << "," 
-                << req->getRequestedTime()->getEndTime().getDate() << "," 
-                << req->getRequestedTime()->getEndTime().getHour() << "," 
-                << req->getRequestedTime()->getEndTime().getMinute() << "," 
-                << req->getStatus() << ",";
-            if (req->getRequestedSkills().size() > 0) {
-                for (auto skill : req->getRequestedSkills()) {
-                    requestFile << skill->getName() << ",";
-                }
+        requestFile
+            << req->getRequestID() << ","
+            << req->getSupporterID() << ","
+            << req->getHostID() << ","
+            << req->getRequestedTime()->getStartTime().getDate() << ","
+            << req->getRequestedTime()->getStartTime().getHour() << "," 
+            << req->getRequestedTime()->getStartTime().getMinute() << "," 
+            << req->getRequestedTime()->getEndTime().getDate() << "," 
+            << req->getRequestedTime()->getEndTime().getHour() << "," 
+            << req->getRequestedTime()->getEndTime().getMinute() << "," 
+            << req->getStatus() << ",";
+        if (req->getRequestedSkills().size() > 0) {
+            for (auto skill : req->getRequestedSkills()) {
+                requestFile << skill->getName() << ",";
             }
-            requestFile << endl;
         }
+        requestFile << endl;
     }
     requestFile.close();
 }

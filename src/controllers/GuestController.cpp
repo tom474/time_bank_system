@@ -9,6 +9,7 @@ using std::string;
 using std::vector;
 
 void GuestController::signUp() {
+	cout << "\n---------- Sign Up ----------\n";
 	string memberID = IdGenerator::generateMemberId();
 	int creditPoint = 20;
 	vector<Skill*> skills = {};
@@ -57,6 +58,5 @@ void GuestController::signUp() {
 	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, isResetPassword, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
 	Menu::allMembers.push_back(newMember);
 	FileManager::saveMemberDatabase(Menu::allMembers);
-	cout << "Register Successfully! Now you can login as Member!\n";
-	Menu::loginAsMember();
+	cout << "Register Successfully!\n";
 };
