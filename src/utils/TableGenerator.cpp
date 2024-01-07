@@ -372,7 +372,7 @@ void TableGenerator::generateSupporterTable(string title, vector<Member *> suppo
 
     // Print the title
     size_t titleLength = title.length() + 2;
-    size_t tableWidth = idWidth + fullnameWidth + phoneNumberWidth + emailWidth + cityWidth + skillWidth + supporterRatingWidth + 25;
+    size_t tableWidth = idWidth + fullnameWidth + phoneNumberWidth + emailWidth + cityWidth + skillWidth + supporterRatingWidth + 22;
     size_t leftPadding = (tableWidth - titleLength) / 2;
     size_t rightPadding = tableWidth - titleLength - leftPadding;
 
