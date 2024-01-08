@@ -48,6 +48,7 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
     if (Converter::blockedUsersToString(currentMember->getBlockedUsers()).length() > width) {
         width = Converter::blockedUsersToString(currentMember->getBlockedUsers()).length();
     }
+
     // Print the title
     string title = "Your Information";
     size_t titleLength = title.length() + 2;
@@ -316,7 +317,6 @@ void MemberController::createRequest(Member *currentMember) {
 
 void MemberController::adjustBlockedMembersList(Member *currentMember) {
     vector<string> blockedMembersStr = currentMember->getBlockedUsers();
-
     vector<Member *> blockedMembers = {};
     vector<Member *> notBlockedMembers = {};
     for (Member *member : Menu::allMembers) {
@@ -755,7 +755,6 @@ void MemberController::rateHost(Member* currentMember) {
 
     Review* review = new Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
     host->addReview(*review);
-
     cout << "Rate & review host successfully!\n";
 }
 
@@ -861,6 +860,5 @@ void MemberController::rateSupporter(Member* currentMember) {
             }
         }        
     }
-
     cout << "Rate & review supporter successfully!\n";
 }

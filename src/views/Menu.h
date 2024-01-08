@@ -20,47 +20,47 @@ using std::string;
 using std::vector;
 
 class Menu {
-public:
-    string currentScreen;
-    static vector<Member*> allMembers;
-    static Member loggedInMember;
+    public:
+        string currentScreen;
+        static vector<Member*> allMembers;
+        static Member loggedInMember;
 
-    /**
-     * The constructor for the Menu class
-    */
-    Menu();
+        /**
+         * The constructor for the Menu class
+        */
+        Menu();
 
-    /**
-     * The function to show the welcome screen
-     *
-     * @param none
-     * @return none
-    */
-    static void showWelcome();
+        /**
+         * The function to show the welcome screen
+         *
+         * @param none
+         * @return none
+        */
+        static void showWelcome();
 
-    /**
-     * The function to show the guest menu
-     *
-     * @param none
-     * @return none
-    */
-    static void loginAsGuest();
+        /**
+         * The function to show the guest menu
+         *
+         * @param none
+         * @return none
+        */
+        static void loginAsGuest();
 
-    /**
-     * The function to show the member menu after member login successfully
-     *
-     * @param none
-     * @return none
-    */
-    static void loginAsMember();
+        /**
+         * The function to show the member menu after member login successfully
+         *
+         * @param none
+         * @return none
+        */
+        static void loginAsMember();
 
-    /**
-     * The function to show the admin menu after admin login successfully
-     *
-     * @param none
-     * @return none
-    */
-    static void loginAsAdmin();
+        /**
+         * The function to show the admin menu after admin login successfully
+         *
+         * @param none
+         * @return none
+        */
+        static void loginAsAdmin();
 };
 
-#endif
+#endif // _MENU_H_
