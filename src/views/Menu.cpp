@@ -57,7 +57,7 @@ void Menu::loginAsGuest() {
                 FileManager::saveMemberDatabase(Menu::allMembers);
                 cout << "Database saved successfully!\n";
                 cout << "Exit the program...\n";
-                cout << "Thank you for using our app! Have a nice day!\n";
+                cout << "Thank you for using our app! Have a nice day!\n\n";
                 exitLoop = true;
                 break;
             case 1:
@@ -97,7 +97,7 @@ void Menu::loginAsMember() {
                 FileManager::saveMemberDatabase(Menu::allMembers);
                 cout << "Database saved successfully!\n";
                 cout << "Exit the program...\n";
-                cout << "Thank you for using our app! Have a nice day!\n";
+                cout << "Thank you for using our app! Have a nice day!\n\n";
                 exitLoop = true;
                 break;
             case 1:
@@ -145,7 +145,7 @@ void Menu::loginAsAdmin() {
                 FileManager::saveMemberDatabase(Menu::allMembers);
                 cout << "Database saved successfully!\n";
                 cout << "Exit the program...\n";
-                cout << "Thank you for using our app! Have a nice day!\n";
+                cout << "Thank you for using our app! Have a nice day!\n\n";
                 exitLoop = true;
                 break;
             case 1:

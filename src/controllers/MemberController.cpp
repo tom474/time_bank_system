@@ -832,17 +832,34 @@ void MemberController::rateSupporter(Member* currentMember) {
     for (int i = 0; i < selectedRequest->getRequestedSkills().size(); i++) {
         Skill* skill = selectedRequest->getRequestedSkills()[i];
         bool isValidRatingScore = false;
-        cout << "\nSkill "<< i << ": " << skill->getName() << "\n";
+        cout << "Skill "<< (i + 1) << ": " << skill->getName() << "\n";
         int ratingScore;
         while (!isValidRatingScore) {
             ratingScore = InputValidator::getInt("Enter the rating score for the supporter's '" + skill->getName() + "' skill (1-5): ");
             if (ratingScore < 1 || ratingScore > 5) {
-                cout << "Invalid rating score. Please enter again!\n";
+                cout << "Invalid rating score! Please enter again!\n";
             } else {
                 isValidRatingScore = true;
             }
         }
-        skill->addRatingScore(ratingScore);
+        
+        // Get the supporter whose skill is rated
+        string supporterID = selectedRequest->getSupporterID();
+        Member* supporter;
+        for (Member* member : Menu::allMembers) {
+            if (member->getMemberId() == supporterID) {
+                supporter = member;
+                break;
+            }
+        }
+
+        // Find the skill in the supporter's skills
+        for (Skill* supporterSkill : supporter->getSkill()) {
+            if (supporterSkill->getName() == skill->getName()) {
+                supporterSkill->addRatingScore(ratingScore);
+                break;
+            }
+        }        
     }
 
     cout << "Rate & review supporter successfully!\n";
