@@ -8,7 +8,7 @@ using std::string;
 using std::vector;
 
 string IdGenerator::generateMemberId() {
-    vector<Member*> allMembers = FileManager::loadMemberDatabase();
+    vector<Member*> allMembers = Menu::allMembers;
     if (allMembers.size() == 0) {
         return "MB0001";
     }
@@ -33,6 +33,7 @@ string IdGenerator::generateMemberId() {
 }
 
 string IdGenerator::generateRequestId() {
+    FileManager::saveMemberDatabase(Menu::allMembers);
     vector<Request*> allRequests = FileManager::loadRequestDatabase();
     if (allRequests.size() == 0) {
         return "RQ0001";
@@ -58,6 +59,7 @@ string IdGenerator::generateRequestId() {
 }
 
 string IdGenerator::generateReviewId() {
+    FileManager::saveMemberDatabase(Menu::allMembers);
     vector<Review*> allReviews = FileManager::loadReviewDatabase();
     if (allReviews.size() == 0) {
         return "RV0001";

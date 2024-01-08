@@ -47,7 +47,7 @@ void Member::setAvailableStatus(bool status) {
 
 void Member::blockMember(Member &member) {
     blockedUsers.push_back(member.getMemberId());
-    cout << "Block member" << member.getMemberId() << "successfully!\n\n";
+    cout << "Block member " << member.getMemberId() << " successfully!\n";
 }
 
 void Member::unblockMember(Member &member) {
@@ -57,7 +57,7 @@ void Member::unblockMember(Member &member) {
             break;
         }
     }
-    cout << "Unblock member" << member.getMemberId() << "successfully!\n\n";
+    cout << "Unblock member " << member.getMemberId() << " successfully!\n";
 }
 
 void Member::creditsTopUp(int amount) {
@@ -73,6 +73,7 @@ void Member::receiveRequest(Request &request) {
 }
 
 void Member::addAvailability() {
+    cout << "\n---------- Add Availability ----------\n";
     // Unavailable for member that not have any skills
     if (skills.size() == 0) {
         cout << "You have to add at least 1 skill to add availability!\n";
@@ -135,12 +136,11 @@ void Member::addAvailability() {
     // Create availability
     Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
     this->availability.push_back(availability);
-    cout << "------------------------------\n";
     cout << "Add availability successfully!\n";
-    cout << "------------------------------\n";
 }
 
 void Member::removeAvailability() {
+    cout << "\n---------- Remove Availability ----------\n";
     if (availability.size() == 0) {
         cout << "You have no availability to remove!\n";
         return;
@@ -331,7 +331,7 @@ vector<string> Member::getBlockedUsers() {
 
 void Member::showInfo() {
     // Show member basic information
-    size_t longestFieldLength = 10;
+    size_t longestFieldLength = 12;
     vector<string> fields = {
         fullname,
         email,
@@ -359,6 +359,7 @@ void Member::showInfo() {
     cout << string(tableWidth, '-') << "\n";
 
     // Print the member information
+    string statusString = availableStatus ? "Available" : "Unavailable";
     cout << std::left << "| " << std::setw(16) << "Member ID" << " | " << std::setw(longestFieldLength) << memberID << " |\n";
     cout << "| " << std::setw(16) << "Fullname" << " | " << std::setw(longestFieldLength) << fullname << " |\n";
     cout << "| " << std::setw(16) << "Username" << " | " << std::setw(longestFieldLength) << User::getUsername() << " |\n";
@@ -367,7 +368,7 @@ void Member::showInfo() {
     cout << "| " << std::setw(16) << "Phone Number" << " | " << std::setw(longestFieldLength) << phoneNumber << " |\n";
     cout << "| " << std::setw(16) << "Home Address" << " | " << std::setw(longestFieldLength) << homeAddress << " |\n";
     cout << "| " << std::setw(16) << "City" << " | " << std::setw(longestFieldLength) << getAvailableCity() << " |\n";
-    cout << "| " << std::setw(16) << "Available Status" << " | " << std::setw(longestFieldLength) << Converter::boolToString(availableStatus) << " |\n";
+    cout << "| " << std::setw(16) << "Available Status" << " | " << std::setw(longestFieldLength) << statusString << " |\n";
     cout << "| " << std::setw(16) << "Credit Point" << " | " << std::setw(longestFieldLength) << creditPoint << " |\n";
     cout << "| " << std::setw(16) << "Host Rating" << " | " << std::setw(longestFieldLength) << getHostRating() << " |\n";
     cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::setw(longestFieldLength) << getSupporterRating() << " |\n";

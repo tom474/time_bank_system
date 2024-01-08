@@ -39,6 +39,11 @@ void TableGenerator::generateMemberTable(string title, vector<Member *> members)
         if (width > homeAddressWidth) {
             homeAddressWidth = width;
         }
+        string statusStr = member->getAvailableStatus() ? "Available" : "Unavailable";
+        width = std::max(statusWidth, statusStr.length());
+        if (width > statusWidth) {
+            statusWidth = width;
+        }
     }
 
     // Print the title
@@ -68,6 +73,7 @@ void TableGenerator::generateMemberTable(string title, vector<Member *> members)
 
     // Print the member information
     for (Member *member : members) {
+        string statusStr = member->getAvailableStatus() ? "Available" : "Unavailable";
         cout << "| " << std::left << setw(idWidth) << member->getMemberId() << " | "
                   << setw(fullnameWidth) << member->getFullname() << " | "
                   << setw(skillWidth) << Converter::skillsToString(member->getSkill()) << " | "
@@ -75,7 +81,7 @@ void TableGenerator::generateMemberTable(string title, vector<Member *> members)
                   << setw(emailWidth) << member->getEmail() << " | "
                   << setw(homeAddressWidth) << member->getHomeAddress() << " | "
                   << setw(cityWidth) << member->getAvailableCity() << " | "
-                  << setw(statusWidth) << Converter::boolToString(member->getAvailableStatus()) << " |"
+                  << setw(statusWidth) << statusStr << " |"
                   << "\n";
     }
 
