@@ -13,9 +13,9 @@ using std::string;
 using std::vector;
 
 class MenuOptionsGenerator {
-public:
-    static void showMenu(vector<string> options);
-    static int showMenuWithSelect(const string &message, vector<string> options);
+    public:
+        static void showMenu(vector<string> options);
+        static int showMenuWithSelect(const string &message, vector<string> options);
 };
 
 #endif

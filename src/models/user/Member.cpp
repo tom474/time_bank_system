@@ -47,7 +47,7 @@ void Member::setAvailableStatus(bool status) {
 
 void Member::blockMember(Member &member) {
     blockedUsers.push_back(member.getMemberId());
-    cout << "Block member" << member.getMemberId() << "successfully!\n\n";
+    cout << "Block member " << member.getMemberId() << " successfully!\n";
 }
 
 void Member::unblockMember(Member &member) {
@@ -57,7 +57,7 @@ void Member::unblockMember(Member &member) {
             break;
         }
     }
-    cout << "Unblock member" << member.getMemberId() << "successfully!\n\n";
+    cout << "Unblock member " << member.getMemberId() << " successfully!\n";
 }
 
 void Member::creditsTopUp(int amount) {
@@ -73,6 +73,7 @@ void Member::receiveRequest(Request &request) {
 }
 
 void Member::addAvailability() {
+    cout << "\n---------- Add Availability ----------\n";
     // Unavailable for member that not have any skills
     if (skills.size() == 0) {
         cout << "You have to add at least 1 skill to add availability!\n";
@@ -135,17 +136,16 @@ void Member::addAvailability() {
     // Create availability
     Availability* availability = new Availability(timePeriod, performedSkills, pointPerHour, minHostRating,userID);
     this->availability.push_back(availability);
-    cout << "------------------------------\n";
     cout << "Add availability successfully!\n";
-    cout << "------------------------------\n";
 }
 
 void Member::removeAvailability() {
+    cout << "\n---------- Remove Availability ----------\n";
     if (availability.size() == 0) {
         cout << "You have no availability to remove!\n";
         return;
     }
-    // prompt user input and find the selected availability
+    // Prompt user input and find the selected availability
     Availability *selectedAvailability;
     bool isValidSession = false;
     while (!isValidSession) {
@@ -158,7 +158,7 @@ void Member::removeAvailability() {
         isValidSession = true;
     }
     
-    // delete the selected availability
+    // Delete the selected availability
     for (int i = 0; i < availability.size(); i++) {
         if (availability[i] == selectedAvailability) {
             availability.erase(availability.begin() + i);
@@ -171,13 +171,13 @@ void Member::removeAvailability() {
 void Member::updateAvailability(Request &request, Availability &prevAvailability) {
     TimePeriod* requestPeriod = request.getRequestedTime();
     TimePeriod* availabilityPeriod = prevAvailability.getAvailableTime();
-    // calculate the minutes between 2 time periods
+    // Calculate the minutes between 2 time periods
     int minutesBetweenStartTime = requestPeriod->getStartTime().getMinutesBetween(availabilityPeriod->getStartTime());
     int minutesBetweenEndTime = availabilityPeriod->getEndTime().getMinutesBetween(requestPeriod->getEndTime());
     
-    // check if the minutes between 2 time periods is greater than 60 minutes
+    // Check if the minutes between 2 time periods is greater than 60 minutes
     if (minutesBetweenStartTime >= 60) {
-        // create new Availability
+        // Create new Availability
         TimePeriod* newTimePeriod = new TimePeriod(
             availabilityPeriod->getStartTime(), 
             requestPeriod->getStartTime()
@@ -192,7 +192,7 @@ void Member::updateAvailability(Request &request, Availability &prevAvailability
         availability.push_back(newAvailability);
     } 
     if (minutesBetweenEndTime >= 60) {
-        // create new Availability
+        // Create new Availability
         TimePeriod* newTimePeriod = new TimePeriod(
             requestPeriod->getEndTime(), 
             availabilityPeriod->getEndTime()
@@ -207,13 +207,14 @@ void Member::updateAvailability(Request &request, Availability &prevAvailability
         availability.push_back(newAvailability);
     }
 
-    // find and delete the previous Availability 
+    // Find and delete the previous Availability 
     for (int i = 0; i < availability.size(); i++) {
         if (availability[i] == &prevAvailability) {
             availability.erase(availability.begin() + i);
             break;
         }
     }
+    cout << "Your availabilities has been updated!\n";
 }
 
 void Member::addReview(Review &review) {
@@ -330,7 +331,7 @@ vector<string> Member::getBlockedUsers() {
 
 void Member::showInfo() {
     // Show member basic information
-    size_t longestFieldLength = 10;
+    size_t longestFieldLength = 12;
     vector<string> fields = {
         fullname,
         email,
@@ -358,19 +359,20 @@ void Member::showInfo() {
     cout << string(tableWidth, '-') << "\n";
 
     // Print the member information
-    cout << "| " << std::setw(16) << "Member ID" << " | " << std::left << std::setw(longestFieldLength) << memberID << " |\n";
-    cout << "| " << std::setw(16) << "Fullname" << " | " << std::left << std::setw(longestFieldLength) << fullname << " |\n";
-    cout << "| " << std::setw(16) << "Username" << " | " << std::left << std::setw(longestFieldLength) << User::getUsername() << " |\n";
-    cout << "| " << std::setw(16) << "Password" << " | " << std::left << std::setw(longestFieldLength) << User::getPassword() << " |\n";
-    cout << "| " << std::setw(16) << "Email" << " | " << std::left << std::setw(longestFieldLength) << email << " |\n";
-    cout << "| " << std::setw(16) << "Phone Number" << " | " << std::left << std::setw(longestFieldLength) << phoneNumber << " |\n";
-    cout << "| " << std::setw(16) << "Home Address" << " | " << std::left << std::setw(longestFieldLength) << homeAddress << " |\n";
-    cout << "| " << std::setw(16) << "City" << " | " << std::left << std::setw(longestFieldLength) << getAvailableCity() << " |\n";
-    cout << "| " << std::setw(16) << "Available Status" << " | " << std::left << std::setw(longestFieldLength) << Converter::boolToString(availableStatus) << " |\n";
-    cout << "| " << std::setw(16) << "Credit Point" << " | " << std::left << std::setw(longestFieldLength) << creditPoint << " |\n";
-    cout << "| " << std::setw(16) << "Host Rating" << " | " << std::left << std::setw(longestFieldLength) << getHostRating() << " |\n";
-    cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::left << std::setw(longestFieldLength) << getSupporterRating() << " |\n";
-    cout << "| " << std::setw(16) << "Blocked Users" << " | " << std::left << std::setw(longestFieldLength) << Converter::blockedUsersToString(blockedUsers) << " |\n";
+    string statusString = availableStatus ? "Available" : "Unavailable";
+    cout << std::left << "| " << std::setw(16) << "Member ID" << " | " << std::setw(longestFieldLength) << memberID << " |\n";
+    cout << "| " << std::setw(16) << "Fullname" << " | " << std::setw(longestFieldLength) << fullname << " |\n";
+    cout << "| " << std::setw(16) << "Username" << " | " << std::setw(longestFieldLength) << User::getUsername() << " |\n";
+    cout << "| " << std::setw(16) << "Password" << " | " << std::setw(longestFieldLength) << User::getPassword() << " |\n";
+    cout << "| " << std::setw(16) << "Email" << " | " << std::setw(longestFieldLength) << email << " |\n";
+    cout << "| " << std::setw(16) << "Phone Number" << " | " << std::setw(longestFieldLength) << phoneNumber << " |\n";
+    cout << "| " << std::setw(16) << "Home Address" << " | " << std::setw(longestFieldLength) << homeAddress << " |\n";
+    cout << "| " << std::setw(16) << "City" << " | " << std::setw(longestFieldLength) << getAvailableCity() << " |\n";
+    cout << "| " << std::setw(16) << "Available Status" << " | " << std::setw(longestFieldLength) << statusString << " |\n";
+    cout << "| " << std::setw(16) << "Credit Point" << " | " << std::setw(longestFieldLength) << creditPoint << " |\n";
+    cout << "| " << std::setw(16) << "Host Rating" << " | " << std::setw(longestFieldLength) << getHostRating() << " |\n";
+    cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::setw(longestFieldLength) << getSupporterRating() << " |\n";
+    cout << "| " << std::setw(16) << "Blocked Users" << " | " << std::setw(longestFieldLength) << Converter::blockedUsersToString(blockedUsers) << " |\n";
 
     // Print a line separator
     cout << string(tableWidth, '-') << "\n";

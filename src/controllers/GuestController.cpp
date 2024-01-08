@@ -9,6 +9,7 @@ using std::string;
 using std::vector;
 
 void GuestController::signUp() {
+	cout << "\n---------- Sign Up ----------\n";
 	string memberID = IdGenerator::generateMemberId();
 	int creditPoint = 20;
 	vector<Skill*> skills = {};
@@ -36,6 +37,8 @@ void GuestController::signUp() {
 			isUniqueUsername = true;
 		}
 	}
+
+	// Get other information
 	string password = InputValidator::getString("Enter your password: ");
 	string fullname = InputValidator::getString("Enter your fullname: ");
 	string phoneNumber = InputValidator::getPhoneNumber("Enter your phone number: ");
@@ -43,7 +46,6 @@ void GuestController::signUp() {
 	availableCity city = InputValidator::getCity("Enter the city where you are living");
 	string homeAddress = InputValidator::getString("Enter your home address: ");
 	bool availableStatus = InputValidator::getBool("Are you available to support other members now? (yes/no): ");
-
 	cout << "Now you will have to enter at least 1 skill\n";
 	bool isAddingSkill = true;
 	while (isAddingSkill) {
@@ -54,9 +56,9 @@ void GuestController::signUp() {
 		isAddingSkill = InputValidator::getBool("Do you want to enter another skill? (yes/no): ");
 	}
 	bool isResetPassword = false;
+
 	Member* newMember = new (std::nothrow) Member(username, password, memberID, fullname, creditPoint, phoneNumber, email, homeAddress, city, availableStatus, isResetPassword, skills, availability, blockedUsers, sendingRequests, receivingRequests, reviews);
 	Menu::allMembers.push_back(newMember);
 	FileManager::saveMemberDatabase(Menu::allMembers);
-	cout << "Register Successfully! Now you can login as Member!\n";
-	Menu::loginAsMember();
+	cout << "Register Successfully!\n";
 };

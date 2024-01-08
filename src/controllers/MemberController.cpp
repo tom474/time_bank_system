@@ -44,12 +44,34 @@ void MemberController::resetPassword(Member* member) {
 
 vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
     // Show current member's information
-    cout << "--------- Your Information --------\n";
-    cout << "| " << std::left << std::setw(16) << "Credit Point" << " | " << std::setw(12) << currentMember->getCreditPoint() << " |\n";
-    cout << "| " << std::left << std::setw(16) << "Host Rating" << " | " << std::setw(12) << currentMember->getHostRating() << " |\n";
-    cout << "| " << std::left << std::setw(16) << "City" << " | " << std::setw(12) << currentMember->getAvailableCity() << " |\n";
-    cout << "-----------------------------------\n\n";
+    size_t width = 12;
+    if (Converter::blockedUsersToString(currentMember->getBlockedUsers()).length() > width) {
+        width = Converter::blockedUsersToString(currentMember->getBlockedUsers()).length();
+    }
 
+    // Print the title
+    string title = "Your Information";
+    size_t titleLength = title.length() + 2;
+    size_t tableWidth = width + 23;
+    size_t leftPadding = (tableWidth - titleLength) / 2;
+    size_t rightPadding = tableWidth - titleLength - leftPadding;
+
+    cout << "\n";
+    std::cout << std::string(leftPadding, '-') << " " << title << " " << std::string(rightPadding, '-') << "\n";
+
+    // Print the line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    // Print the information
+    cout << "| " << std::left << std::setw(16) << "Credit Point" << " | " << std::setw(width) << currentMember->getCreditPoint() << " |\n";
+    cout << "| " << std::left << std::setw(16) << "Host Rating" << " | " << std::setw(width) << currentMember->getHostRating() << " |\n";
+    cout << "| " << std::left << std::setw(16) << "City" << " | " << std::setw(width) << currentMember->getAvailableCity() << " |\n";
+    cout << "| " << std::left << std::setw(16) << "Blocked Users" << " | " << std::setw(width) << Converter::blockedUsersToString(currentMember->getBlockedUsers()) << " |\n";
+
+    // Print the line separator
+    std::cout << std::string(tableWidth, '-') << "\n";
+
+    cout << "\n---------- Search for Supporters ----------\n";
     // Prompt the current member to enter their desired time
     string startDate, startTime;
     string endDate, endTime;
@@ -81,13 +103,31 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
         }
 
         // Check if the supporter is blocked by the current member
-        if (std::find(currentMember->getBlockedUsers().begin(), currentMember->getBlockedUsers().end(), supporter->getMemberId()) != currentMember->getBlockedUsers().end()) {
-            continue;
+        if (currentMember->getBlockedUsers().size() > 0) {
+            bool isBlocked = false;
+            for (string blockedUser : currentMember->getBlockedUsers()) {
+                if (blockedUser == supporter->getMemberId()) {
+                    isBlocked = true;
+                    break;
+                }
+            }
+            if (isBlocked) {
+                continue;
+            }
         }
 
         // Check if the current member is blocked by the supporter
-        if (std::find(supporter->getBlockedUsers().begin(), supporter->getBlockedUsers().end(), currentMember->getMemberId()) != supporter->getBlockedUsers().end()) {
-            continue;
+        if (supporter->getBlockedUsers().size() > 0) {
+            bool isBlocked = false;
+            for (string blockedUser : supporter->getBlockedUsers()) {
+                if (blockedUser == currentMember->getMemberId()) {
+                    isBlocked = true;
+                    break;
+                }
+            }
+            if (isBlocked) {
+                continue;
+            }
         }
 
         // Check available status of the supporter
@@ -132,6 +172,7 @@ void MemberController::createRequest(Member *currentMember) {
         return;
     }
 
+    cout << "\n---------- Create a Request ----------\n";
     // Choose a supporter to create a request
     bool isValidID = false;
     Member *supporter;
@@ -148,7 +189,6 @@ void MemberController::createRequest(Member *currentMember) {
             cout << "Invalid ID. Please enter again!\n";
         }
     }
-    cout << "\n";
 
     // Get suitable availability of the supporter
     vector<Availability *> suitableAvailability = {};
@@ -185,7 +225,12 @@ void MemberController::createRequest(Member *currentMember) {
     }
 
     // Check the maximum hours that the current member can request
-    int maxHours = currentMember->getCreditPoint() / selectedAvailability->getPointPerHour();
+    int maxHours;
+    if (selectedAvailability->getAvailableTime()->getHourDuration() < (currentMember->getCreditPoint() / selectedAvailability->getPointPerHour())) {
+        maxHours = selectedAvailability->getAvailableTime()->getHourDuration();
+    } else {
+        maxHours = currentMember->getCreditPoint() / selectedAvailability->getPointPerHour();
+    }
     cout << "You can request for " << maxHours << " hours at most!\n";
 
     // Get desired time
@@ -272,7 +317,6 @@ void MemberController::createRequest(Member *currentMember) {
 
 void MemberController::adjustBlockedMembersList(Member *currentMember) {
     vector<string> blockedMembersStr = currentMember->getBlockedUsers();
-
     vector<Member *> blockedMembers = {};
     vector<Member *> notBlockedMembers = {};
     for (Member *member : Menu::allMembers) {
@@ -283,11 +327,12 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
         }
     }
 
-    cout << "---------- Block/Unblock Member ----------\n";
+    cout << "\n---------- Block/Unblock Member ----------\n";
     int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action: ", {"Block member", "Unblock member"});
     switch (choice) {
     case 1: {
         TableGenerator::generateMemberTable("Not Blocked Members", notBlockedMembers);
+        cout << "\n---------- Block Member ----------\n";
         bool isValidID = false;
         while (!isValidID) {
             string blockedMemberID = InputValidator::getString("Enter the member's ID that you want to block: ");
@@ -306,6 +351,7 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
     }
     case 2: {
         TableGenerator::generateMemberTable("Blocked Members", blockedMembers);
+        cout << "\n---------- Unblock Member ----------\n";
         bool isValidID = false;
         while (!isValidID) {
             string unblockedMemberID = InputValidator::getString("Enter the member's ID that you want to unblock: ");
@@ -332,42 +378,43 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
 void MemberController::manageAvailability(Member* currentMember) {
     bool exitChoice = false;
     while (!exitChoice) {
+        cout << "\n---------- Manage Availability ----------\n";
         int choice = MenuOptionsGenerator::showMenuWithSelect(
-            "Choose an action: ",
-            {"Exit",
+            "Choose an action: ", {
+                "Exit",
                 "Set your availability",
                 "Add availability",
                 "Remove availability"
             }
         );
-        string statusStr = currentMember->getAvailableStatus() ? "Available" : "Not available";
         switch (choice) {
             case 0:
                 exitChoice = true;
                 break;
             case 1: {
-                cout << "Current status: " << statusStr << "\n";
+                cout << "\n---------- Set Availability ----------\n";
+                cout << "Current available status: " << (currentMember->getAvailableStatus() ? "Available" : "Unavailable") << "\n";
                 bool isAvailable = InputValidator::getBool("Do you want to change your status? (yes/no): ");
                 if (isAvailable) {
                     currentMember->setAvailableStatus(!currentMember->getAvailableStatus());
-                    cout << "Available status has been updated!\n";
+                    cout << "Your available status has been updated! Your available status: " << (currentMember->getAvailableStatus() ? "Available" : "Unavailable") << "\n";
                 }
                 break;
             }
             case 2: {
                 if (currentMember->getAvailability().size() > 0) {
-                    TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                    TableGenerator::generateAvailabilityTable("Your Current Availability", currentMember->getAvailability());
                 }
                 currentMember->addAvailability();
                 break;
             }
             case 3: {
                 if (currentMember->getAvailability().size() > 0) {
-                    TableGenerator::generateAvailabilityTable("Your Availability", currentMember->getAvailability());
+                    TableGenerator::generateAvailabilityTable("Your Current Availability", currentMember->getAvailability());
                     currentMember->removeAvailability();
                     break;
                 } else {
-                    cout << "There are no availability to remove!\n";
+                    cout << "There is no availability to remove!\n";
                     break;
                 }
             }
@@ -443,6 +490,7 @@ void MemberController::acceptRequest(Member* currentMember) {
     TableGenerator::generateRequestTable("Pending Requests", pendingRequests);
 
     // Choose a request to accept
+    cout << "\n---------- Accept Request ----------\n";
     bool isValidID = false;
     Request* selectedRequest;
     while (!isValidID) {
@@ -470,7 +518,7 @@ void MemberController::acceptRequest(Member* currentMember) {
     }
 
     // Get the current member's availability whose time overlaps with the request's time
-    Availability* selectedAvailability;
+    Availability *selectedAvailability;
     for (Availability* availability : currentMember->getAvailability()) {
         if (availability->getAvailableTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
             selectedAvailability = availability;
@@ -497,16 +545,17 @@ void MemberController::acceptRequest(Member* currentMember) {
     requestingMember->setCreditPoint(requestingMember->getCreditPoint() - consumingCreditPoint);
 
     // Update the request list of the current member and requesting member (automatically reject non-accepted requests with overlapped time)
+    // Check if the requests in the pending request list of the current member overlaps with any availabilities of the current member
     for (Request* request : currentMember->getReceivingRequest()) {
-        if (request->getRequestID() != selectedRequest->getRequestID()) {
-            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
-                request->setStatus(requestStatus::Rejected);
+        if (request->getStatus() == "Pending") {
+            bool isOverLaps = false;
+            for (Availability* availability : currentMember->getAvailability()) {
+                if (availability->getAvailableTime()->isOverlapsWith(*request->getRequestedTime())) {
+                    isOverLaps = true;
+                    break;
+                }
             }
-        }
-    }
-    for (Request* request : requestingMember->getSendingRequest()) {
-        if (request->getRequestID() != selectedRequest->getRequestID()) {
-            if (request->getRequestedTime()->isOverlapsWith(*selectedRequest->getRequestedTime())) {
+            if (!isOverLaps) {
                 request->setStatus(requestStatus::Rejected);
             }
         }
@@ -533,6 +582,7 @@ void MemberController::rejectRequest(Member* currentMember) {
     }
     TableGenerator::generateRequestTable("Pending Requests", pendingRequests);
 
+    cout << "\n---------- Reject Request ----------\n";
     // Choose a request to reject
     bool isValidID = false;
     Request* selectedRequest;
@@ -567,12 +617,12 @@ void MemberController::topUpCredits(Member* currentMember) {
         return;
     }
 
-    std::cout << "\n---------- Credit Top-Up ----------\n";
+    cout << "\n---------- Top Up Credit Point ----------\n";
     // Show current credit point
     std::cout << "Your current credit point: " << currentMember->getCreditPoint() << std::endl;
 
     // Get the amount to top up
-    int amount = InputValidator::getInt("Enter the amount to top up: ");
+    int amount = InputValidator::getInt("Enter the amount that you want to top up: ");
 
     // Verify password
     string password = InputValidator::getString("Enter your password to confirm: ");
@@ -705,7 +755,6 @@ void MemberController::rateHost(Member* currentMember) {
 
     Review* review = new Review(reviewID, reviewerID, reviewedID, type, comment, ratingScore);
     host->addReview(*review);
-
     cout << "Rate & review host successfully!\n";
 }
 
@@ -778,21 +827,38 @@ void MemberController::rateSupporter(Member* currentMember) {
     supporter->addReview(*review);
 
     // Rate supporter's skills
+    cout << "\n---------- Rate Supporter's Skills ----------\n";
     for (int i = 0; i < selectedRequest->getRequestedSkills().size(); i++) {
         Skill* skill = selectedRequest->getRequestedSkills()[i];
         bool isValidRatingScore = false;
-        cout << "\nSkill 1: " << skill->getName() << "\n";
+        cout << "Skill "<< (i + 1) << ": " << skill->getName() << "\n";
         int ratingScore;
         while (!isValidRatingScore) {
             ratingScore = InputValidator::getInt("Enter the rating score for the supporter's '" + skill->getName() + "' skill (1-5): ");
             if (ratingScore < 1 || ratingScore > 5) {
-                cout << "Invalid rating score. Please enter again!\n";
+                cout << "Invalid rating score! Please enter again!\n";
             } else {
                 isValidRatingScore = true;
             }
         }
-        skill->addRatingScore(ratingScore);
-    }
+        
+        // Get the supporter whose skill is rated
+        string supporterID = selectedRequest->getSupporterID();
+        Member* supporter;
+        for (Member* member : Menu::allMembers) {
+            if (member->getMemberId() == supporterID) {
+                supporter = member;
+                break;
+            }
+        }
 
+        // Find the skill in the supporter's skills
+        for (Skill* supporterSkill : supporter->getSkill()) {
+            if (supporterSkill->getName() == skill->getName()) {
+                supporterSkill->addRatingScore(ratingScore);
+                break;
+            }
+        }        
+    }
     cout << "Rate & review supporter successfully!\n";
 }

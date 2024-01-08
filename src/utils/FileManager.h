@@ -19,9 +19,8 @@ using std::vector;
 
 class Admin;
 class Member;
-class FileManager
-{
-private:
+class FileManager {
+    private:
         /**
          * Reset the database files
          *
@@ -30,7 +29,7 @@ private:
          */
         static void resetDatabase();
 
-public:
+    public:
         /**
          * Save all members to member.csv file
          *
