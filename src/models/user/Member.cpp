@@ -370,8 +370,8 @@ void Member::showInfo() {
     cout << "| " << std::setw(16) << "City" << " | " << std::setw(longestFieldLength) << getAvailableCity() << " |\n";
     cout << "| " << std::setw(16) << "Available Status" << " | " << std::setw(longestFieldLength) << statusString << " |\n";
     cout << "| " << std::setw(16) << "Credit Point" << " | " << std::setw(longestFieldLength) << creditPoint << " |\n";
-    cout << "| " << std::setw(16) << "Host Rating" << " | " << std::setw(longestFieldLength) << getHostRating() << " |\n";
-    cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::setw(longestFieldLength) << getSupporterRating() << " |\n";
+    cout << "| " << std::setw(16) << "Host Rating" << " | " << std::setw(longestFieldLength) << std::fixed << std::setprecision(1) << getHostRating() << " |\n";
+    cout << "| " << std::setw(16) << "Supporter Rating" << " | " << std::setw(longestFieldLength) << std::fixed << std::setprecision(1) << getSupporterRating() << " |\n";
     cout << "| " << std::setw(16) << "Blocked Users" << " | " << std::setw(longestFieldLength) << Converter::blockedUsersToString(blockedUsers) << " |\n";
 
     // Print a line separator

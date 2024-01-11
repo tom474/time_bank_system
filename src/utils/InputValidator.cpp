@@ -187,7 +187,7 @@ availableCity InputValidator::getCity(const string& prompt) {
         } else if (input == "Hanoi" || input == "Ha Noi") {
             return availableCity::HaNoi;
         } else {
-            std::cerr << "Invalid input. Please enter 'Sai Gon' or 'Ha Noi'.\n";
+            std::cerr << "Invalid input! Please enter 'Sai Gon' or 'Ha Noi'!\n";
         }
     }
 }

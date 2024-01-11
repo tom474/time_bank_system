@@ -285,7 +285,7 @@ void TableGenerator::generateSkillTable(string title, vector<Skill *> skills) {
     for (Skill *skill : skills) {
         std::cout << "| " << std::left << std::setw(nameWidth) << skill->getName() << " | "
                   << std::setw(descriptionWidth) << skill->getDescription() << " | "
-                  << std::setw(ratingWidth) << skill->getAverageRatingScore() << " |\n";
+                  << std::setw(ratingWidth) << std::fixed << std::setprecision(1) << skill->getAverageRatingScore() << " |\n";
     }
 
     // Print a line separator
@@ -343,7 +343,7 @@ void TableGenerator::generateHostTable(string title, vector<Member *> hosts) {
                   << std::setw(phoneNumberWidth) << host->getPhoneNumber() << " | "
                   << std::setw(emailWidth) << host->getEmail() << " | "
                   << std::setw(cityWidth) << host->getAvailableCity() << " | "
-                  << std::setw(hostRatingWidth) << host->getHostRating() << " |\n";
+                  << std::setw(hostRatingWidth) << std::fixed << std::setprecision(1) << host->getHostRating() << " |\n";
     }
 
     // Print a line separator
@@ -408,7 +408,7 @@ void TableGenerator::generateSupporterTable(string title, vector<Member *> suppo
                   << std::setw(emailWidth) << supporter->getEmail() << " | "
                   << std::setw(cityWidth) << supporter->getAvailableCity() << " | "
                   << std::setw(skillWidth) << Converter::skillsToString(supporter->getSkill()) << " | "
-                  << std::setw(supporterRatingWidth) << supporter->getSupporterRating() << " |\n";
+                  << std::setw(supporterRatingWidth) << std::fixed << std::setprecision(1) << supporter->getSupporterRating() << " |\n";
     }
 
     // Print a line separator
