@@ -64,7 +64,7 @@ vector<Member *> MemberController::searchForSupporters(Member *currentMember) {
 
     // Print the information
     cout << "| " << std::left << std::setw(16) << "Credit Point" << " | " << std::setw(width) << currentMember->getCreditPoint() << " |\n";
-    cout << "| " << std::left << std::setw(16) << "Host Rating" << " | " << std::setw(width) << currentMember->getHostRating() << " |\n";
+    cout << "| " << std::left << std::setw(16) << "Host Rating" << " | " << std::setw(width) << std::fixed << std::setprecision(1) << currentMember->getHostRating() << " |\n";
     cout << "| " << std::left << std::setw(16) << "City" << " | " << std::setw(width) << currentMember->getAvailableCity() << " |\n";
     cout << "| " << std::left << std::setw(16) << "Blocked Users" << " | " << std::setw(width) << Converter::blockedUsersToString(currentMember->getBlockedUsers()) << " |\n";
 
@@ -382,7 +382,7 @@ void MemberController::manageAvailability(Member* currentMember) {
         int choice = MenuOptionsGenerator::showMenuWithSelect(
             "Choose an action: ", {
                 "Exit",
-                "Set your availability",
+                "Set your available status",
                 "Add availability",
                 "Remove availability"
             }
@@ -513,7 +513,7 @@ void MemberController::acceptRequest(Member* currentMember) {
                 cout << "Request acceptance canceled!\n";
             }
         } else {
-            cout << "Invalid ID. Please enter again!\n";
+            cout << "Invalid ID! Please enter again!\n";
         }
     }
 
@@ -606,7 +606,7 @@ void MemberController::rejectRequest(Member* currentMember) {
                 cout << "Request rejection canceled!\n";
             }
         } else {
-            cout << "Invalid ID. Please enter again!\n";
+            cout << "Invalid ID! Please enter again!\n";
         }
     }
 }
@@ -643,7 +643,7 @@ void MemberController::topUpCredits(Member* currentMember) {
 void MemberController::rateMember(Member* currentMember) {
     bool exitLoop = false;
     while (!exitLoop) {
-        cout << "\n---------- Rate Member ----------\n";
+        cout << "\n---------- Rate & Review Member ----------\n";
         int choice = MenuOptionsGenerator::showMenuWithSelect(
             "Choose an action: ",
             {"Exit",
@@ -691,7 +691,7 @@ void MemberController::viewRequestHistory(Member* currentMember) {
 void MemberController::rateHost(Member* currentMember) {
     // Get the accepted receiving request
     vector<Request*> acceptedReceivingRequests = {};
-    for (Request* request : currentMember->getSendingRequest()) {
+    for (Request* request : currentMember->getReceivingRequest()) {
         if (request->getStatus() == "Accepted") {
             acceptedReceivingRequests.push_back(request);
         }
