@@ -27,6 +27,10 @@ void Admin::resetPassword() {
     // Show all members
     TableGenerator::generateMemberTable("All members", Menu::allMembers);
 
+    if (Menu::allMembers.size() == 0) {
+        return;
+    }
+
     cout << "\n---------- Reset Password ----------\n";
     bool isGetMemberId = false;
     Member* targetMember = nullptr;

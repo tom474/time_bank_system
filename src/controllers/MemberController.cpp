@@ -331,6 +331,10 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
     int choice = MenuOptionsGenerator::showMenuWithSelect("Choose an action: ", {"Block member", "Unblock member"});
     switch (choice) {
     case 1: {
+        if (notBlockedMembers.size() == 0) {
+            cout << "There is no member left to block!\n";
+            break;
+        }
         TableGenerator::generateMemberTable("Not Blocked Members", notBlockedMembers);
         cout << "\n---------- Block Member ----------\n";
         bool isValidID = false;
@@ -350,6 +354,10 @@ void MemberController::adjustBlockedMembersList(Member *currentMember) {
         break;
     }
     case 2: {
+        if (blockedMembers.size() == 0) {
+            cout << "You didn't blocked any members!\n";
+            break;
+        }
         TableGenerator::generateMemberTable("Blocked Members", blockedMembers);
         cout << "\n---------- Unblock Member ----------\n";
         bool isValidID = false;

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <filesystem>
 
 using std::cout;
 using std::string;
@@ -13,14 +14,15 @@ using std::fstream;
 using std::cerr;
 using std::endl;
 
-#define ADMIN_DATABASE "../data/admin.csv"
-#define MEMBER_DATABASE "../data/member.csv"
-#define AVAILABILITY_DATABASE "../data/availability.csv"
-#define REQUEST_DATABASE "../data/request.csv"
-#define REVIEW_DATABASE "../data/review.csv"
-#define SKILL_DATABASE "../data/skill.csv"
+#define ADMIN_DATABASE "./data/admin.csv"
+#define MEMBER_DATABASE "./data/member.csv"
+#define AVAILABILITY_DATABASE "./data/availability.csv"
+#define REQUEST_DATABASE "./data/request.csv"
+#define REVIEW_DATABASE "./data/review.csv"
+#define SKILL_DATABASE "./data/skill.csv"
 
 void FileManager::resetDatabase() {
+    std::filesystem::create_directory("./data");
     fstream myFile;
 
     myFile.open(MEMBER_DATABASE, std::ios::out);
@@ -64,6 +66,17 @@ void FileManager::resetDatabase() {
     }
 }
 
+void FileManager::saveAdminDatabase(Admin admin) {
+    fstream adminFile;
+    adminFile.open(ADMIN_DATABASE, std::ios::out);
+
+    if (!adminFile.is_open()) {
+        cerr << "Fail to save the Admin database!\n";   
+    }
+
+    adminFile << admin.getUsername() << "," << admin.getPassword() << ", " << endl;
+    adminFile.close();
+}
 
 void FileManager::saveMemberDatabase(vector<Member*> members) {
     resetDatabase();
@@ -75,7 +88,7 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
     memberFile.open(MEMBER_DATABASE, std::ios::out);
 
     if (!memberFile.is_open()) {
-        cerr << "Fail to create/open member.csv file!\n";   
+        cerr << "Fail to save the Member database!\n";   
     }
 
     for (auto &member : members) {
@@ -115,6 +128,7 @@ void FileManager::saveMemberDatabase(vector<Member*> members) {
     saveReviewDatabase(allReviews);
     saveSkillDatabase(allSkills);
     memberFile.close();
+    saveAdminDatabase(loadAdminDatabase());
 }
 
 
@@ -123,7 +137,7 @@ void FileManager::saveAvailabilityDatabase(vector<Availability*> availabilities)
     availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out);
 
     if (!availabilityFile.is_open()) {
-        cerr << "Fail to create/open availability.csv file!\n";   
+        cerr << "Fail to save the Availability database!\n";   
     }
 
     for (auto availability : availabilities) {
@@ -153,7 +167,7 @@ void FileManager::saveRequestDatabase(vector<Request*> requests) {
     requestFile.open(REQUEST_DATABASE, std::ios::out);
 
     if (!requestFile.is_open()) {
-        cerr << "Fail to create/open request.csv file!\n"; 
+        cerr << "Fail to save the Request database!\n"; 
         return;
     }
 
@@ -185,7 +199,7 @@ void FileManager::saveReviewDatabase(vector<Review*> reviews) {
     reviewFile.open(REVIEW_DATABASE, std::ios::out);
 
     if (!reviewFile.is_open()) {
-        cerr << "Fail to create/open review.csv file!\n"; 
+        cerr << "Fail to save the Review database!\n"; 
         return;
     }
 
@@ -208,7 +222,7 @@ void FileManager::saveSkillDatabase(vector<Skill*> skills) {
     skillFile.open(SKILL_DATABASE, std::ios::out);
 
     if (!skillFile.is_open()) {
-        cerr << "Fail to create/open skill.csv file!\n"; 
+        cerr << "Fail to save the Skill database!\n"; 
         return;
     }
 
@@ -232,12 +246,11 @@ Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
     if (!adminFile.is_open()) {
-        cerr << "Fail to create/open admin.csv file!\n";
-        return {};
+        return Admin("admin", "admin");
     }
     string username, password;
     getline(adminFile, username, ',');
-    getline(adminFile, password);
+    getline(adminFile, password, ',');
     Admin admin(username, password);
     adminFile.close();
     return admin;
@@ -254,7 +267,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
     fstream memberFile;
     memberFile.open(MEMBER_DATABASE, std::ios::in);
     if (!memberFile.is_open()) {
-        cerr << "Fail to create/open member.csv file!\n";
+        cerr << "Fail to load the Member database!\n";
         return {};
     }
     
@@ -392,7 +405,7 @@ vector<Availability*> FileManager::loadAvailabilityDatabase() {
     fstream availabilityFile;
     availabilityFile.open(AVAILABILITY_DATABASE, std::ios::in);
     if (!availabilityFile.is_open()) {
-        cerr << "Fail to create/open availability.csv file!\n";
+        cerr << "Fail to load the Availability database!\n";
         return {};
     }
     while (true) {
@@ -452,7 +465,7 @@ vector<Request*> FileManager::loadRequestDatabase() {
     requestFile.open(REQUEST_DATABASE, std::ios::in);
 
     if (!requestFile.is_open()) {
-        cerr << "Fail to create/open request.csv file!\n"; 
+        cerr << "Fail to load the Request database!\n"; 
         return {};
     }
 
@@ -513,7 +526,7 @@ vector<Review*> FileManager::loadReviewDatabase() {
     reviewFile.open(REVIEW_DATABASE, std::ios::in);
 
     if (!reviewFile.is_open()) {
-        cerr << "Fail to create/open review.csv file!\n"; 
+        cerr << "Fail to load the Review database!\n"; 
         return {};
     }
 
@@ -545,7 +558,7 @@ vector<Skill*> FileManager::loadSkillDatabase() {
     skillFile.open(SKILL_DATABASE, std::ios::in);
 
     if (!skillFile.is_open()) {
-        cerr << "Fail to create/open skill.csv file!\n"; 
+        cerr << "Fail to load the Skill database!\n"; 
         return {};
     }
 
