@@ -86,8 +86,8 @@ void Menu::loginAsMember() {
             {"Exit",
             "View your information",
             "Top up your credit point",
-            "Manage your requests",
             "Manage your availability",
+            "Manage your requests",
             "Search for supporters",
             "Create new request",
             "Rate and review host/supporter",
@@ -107,10 +107,10 @@ void Menu::loginAsMember() {
                 MemberController::topUpCredits(currentMember);
                 break;
             case 3:
-                MemberController::manageRequests(currentMember);
+                MemberController::manageAvailability(currentMember);
                 break;
             case 4:
-                MemberController::manageAvailability(currentMember);
+                MemberController::manageRequests(currentMember);
                 break;
             case 5:
                 MemberController::searchForSupporters(currentMember);

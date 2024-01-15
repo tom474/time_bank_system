@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 using std::cout;
 using std::vector;
@@ -30,6 +31,14 @@ class FileManager {
         static void resetDatabase();
 
     public:
+        /**
+         * Save admin's details to admin.csv file
+         *
+         * @param Admin: an Admin object
+         * @return void
+         */
+        static void saveAdminDatabase(Admin admin);
+
         /**
          * Save all members to member.csv file
          *

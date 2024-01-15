@@ -11,6 +11,11 @@ using std::setw;
 using std::max;
 
 void TableGenerator::generateMemberTable(string title, vector<Member *> members) {
+    if (members.size() == 0) {
+        cout << "There is no member in the database!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t idWidth = 8;
     size_t fullnameWidth = 8;
@@ -90,6 +95,11 @@ void TableGenerator::generateMemberTable(string title, vector<Member *> members)
 }
 
 void TableGenerator::generateAvailabilityTable(string title, vector<Availability *> availabilities) {
+    if (availabilities.size() == 0) {
+        cout << "There is no availability to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t skillWidth = 6;
 
@@ -137,6 +147,11 @@ void TableGenerator::generateAvailabilityTable(string title, vector<Availability
 }
 
 void TableGenerator::generateRequestTable(string title, vector<Request *> requests) {
+    if (requests.size() == 0) {
+        cout << "There is no request to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t requestIDWidth = 10;
     size_t hostIDWidth = 8;
@@ -193,6 +208,11 @@ void TableGenerator::generateRequestTable(string title, vector<Request *> reques
 }
 
 void TableGenerator::generateReviewTable(string title, vector<Review *> reviews) {
+    if (reviews.size() == 0) {
+        cout << "There is no review to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t reviewIDWidth = 10;
     size_t reviewerIDWidth = 12;
@@ -244,6 +264,11 @@ void TableGenerator::generateReviewTable(string title, vector<Review *> reviews)
 }
 
 void TableGenerator::generateSkillTable(string title, vector<Skill *> skills) {
+    if (skills.size() == 0) {
+        cout << "There is no skill to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t nameWidth = 4;
     size_t descriptionWidth = 11;
@@ -293,6 +318,11 @@ void TableGenerator::generateSkillTable(string title, vector<Skill *> skills) {
 }
 
 void TableGenerator::generateHostTable(string title, vector<Member *> hosts) {
+    if (hosts.size() == 0) {
+        cout << "There is no host to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t idWidth = 8;
     size_t fullnameWidth = 8;
@@ -351,6 +381,11 @@ void TableGenerator::generateHostTable(string title, vector<Member *> hosts) {
 }
 
 void TableGenerator::generateSupporterTable(string title, vector<Member *> supporters) {
+    if (supporters.size() == 0) {
+        cout << "There is no supporter to display!\n";
+        return;
+    }
+
     // Calculate the maximum length for each column
     size_t idWidth = 8;
     size_t fullnameWidth = 8;
