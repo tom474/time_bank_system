@@ -78,7 +78,6 @@ void FileManager::saveAdminDatabase(Admin admin) {
     adminFile.close();
 }
 
-
 void FileManager::saveMemberDatabase(vector<Member*> members) {
     resetDatabase();
     vector<Availability*> allAvailabilities = {};
