@@ -246,7 +246,7 @@ Admin FileManager::loadAdminDatabase() {
     fstream adminFile;
     adminFile.open(ADMIN_DATABASE, std::ios::in);
     if (!adminFile.is_open()) {
-        return Admin("admin", "admin");
+        return Admin("admin", "rmit1234");
     }
     string username, password;
     getline(adminFile, username, ',');
