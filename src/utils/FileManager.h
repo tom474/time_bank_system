@@ -23,6 +23,14 @@ class Member;
 class FileManager {
     private:
         /**
+         * Check if the database files exist. If not, create them
+         * 
+         * @param none
+         * @return void
+        */
+        static void initializeDatabase();
+
+        /**
          * Reset the database files
          *
          * @param none
