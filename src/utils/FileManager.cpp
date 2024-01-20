@@ -21,8 +21,92 @@ using std::endl;
 #define REVIEW_DATABASE "./data/review.csv"
 #define SKILL_DATABASE "./data/skill.csv"
 
+void FileManager::initializeDatabase() {
+    // Create data folder if it does not exist
+    if (!std::filesystem::exists("./data")) {
+        std::filesystem::create_directory("./data");
+    }
+
+    // Create admin database if it does not exist
+    if (!std::filesystem::exists(ADMIN_DATABASE)) {
+        fstream adminFile;
+        adminFile.open(ADMIN_DATABASE, std::ios::out);
+        if (!adminFile.is_open()) {
+            cerr << "Fail to create admin.csv file!\n";
+        } else {
+            adminFile << "admin,rmit1234," << endl;
+            cout << "Initialize Admin database successfully!\n";
+            adminFile.close();
+        }
+    }
+
+    // Create member database if it does not exist
+    if (!std::filesystem::exists(MEMBER_DATABASE)) {
+        fstream memberFile;
+        memberFile.open(MEMBER_DATABASE, std::ios::out);
+        if (!memberFile.is_open()) {
+            cerr << "Fail to create member.csv file!\n";
+        } else {
+            memberFile << "";
+            cout << "Initialize Member database successfully!\n";
+            memberFile.close();
+        }
+    }
+
+    // Create availability database if it does not exist
+    if (!std::filesystem::exists(AVAILABILITY_DATABASE)) {
+        fstream availabilityFile;
+        availabilityFile.open(AVAILABILITY_DATABASE, std::ios::out);
+        if (!availabilityFile.is_open()) {
+            cerr << "Fail to create availability.csv file!\n";
+        } else {
+            availabilityFile << "";
+            cout << "Initialize Availability database successfully!\n";
+            availabilityFile.close();
+        }
+    }
+
+    // Create request database if it does not exist
+    if (!std::filesystem::exists(REQUEST_DATABASE)) {
+        fstream requestFile;
+        requestFile.open(REQUEST_DATABASE, std::ios::out);
+        if (!requestFile.is_open()) {
+            cerr << "Fail to create request.csv file!\n";
+        } else {
+            requestFile << "";
+            cout << "Initialize Request database successfully!\n";
+            requestFile.close();
+        }
+    }
+
+    // Create review database if it does not exist
+    if (!std::filesystem::exists(REVIEW_DATABASE)) {
+        fstream reviewFile;
+        reviewFile.open(REVIEW_DATABASE, std::ios::out);
+        if (!reviewFile.is_open()) {
+            cerr << "Fail to create review.csv file!\n";
+        } else {
+            reviewFile << "";
+            cout << "Initialize Review database successfully!\n";
+            reviewFile.close();
+        }
+    }
+
+    // Create skill database if it does not exist
+    if (!std::filesystem::exists(SKILL_DATABASE)) {
+        fstream skillFile;
+        skillFile.open(SKILL_DATABASE, std::ios::out);
+        if (!skillFile.is_open()) {
+            cerr << "Fail to create skill.csv file!\n";
+        } else {
+            skillFile << "";
+            cout << "Initialize Skill database successfully!\n";
+            skillFile.close();
+        }
+    }
+}
+
 void FileManager::resetDatabase() {
-    std::filesystem::create_directory("./data");
     fstream myFile;
 
     myFile.open(MEMBER_DATABASE, std::ios::out);
@@ -267,7 +351,7 @@ vector<Member*> FileManager::loadMemberDatabase() {
     fstream memberFile;
     memberFile.open(MEMBER_DATABASE, std::ios::in);
     if (!memberFile.is_open()) {
-        cerr << "Fail to load the Member database!\n";
+        initializeDatabase();
         return {};
     }
     
@@ -405,7 +489,6 @@ vector<Availability*> FileManager::loadAvailabilityDatabase() {
     fstream availabilityFile;
     availabilityFile.open(AVAILABILITY_DATABASE, std::ios::in);
     if (!availabilityFile.is_open()) {
-        cerr << "Fail to load the Availability database!\n";
         return {};
     }
     while (true) {
@@ -465,7 +548,6 @@ vector<Request*> FileManager::loadRequestDatabase() {
     requestFile.open(REQUEST_DATABASE, std::ios::in);
 
     if (!requestFile.is_open()) {
-        cerr << "Fail to load the Request database!\n"; 
         return {};
     }
 
@@ -526,7 +608,6 @@ vector<Review*> FileManager::loadReviewDatabase() {
     reviewFile.open(REVIEW_DATABASE, std::ios::in);
 
     if (!reviewFile.is_open()) {
-        cerr << "Fail to load the Review database!\n"; 
         return {};
     }
 
@@ -558,7 +639,6 @@ vector<Skill*> FileManager::loadSkillDatabase() {
     skillFile.open(SKILL_DATABASE, std::ios::in);
 
     if (!skillFile.is_open()) {
-        cerr << "Fail to load the Skill database!\n"; 
         return {};
     }
 
